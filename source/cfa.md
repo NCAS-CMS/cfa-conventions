@@ -2,17 +2,16 @@
 
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
-*v0.6b1 David Hassell and Neil Massey, 2021-02-19*
+*v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, and Bryan Lawrence 2021-02-19*
 
 An *aggregated variable* does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
-the data from other sources. When created by an application program,
-the data of an aggregated variable is called its *aggregated
-data*. The aggregated data is composed of one or more *fragments*,
-each of which provides the values for a unique part of the aggregated
-data. Each fragment is contained in an external file, or may be
-another contained in the same file as the aggregated variable (i.e the
-*parent file*).
+data from other sources. When created by an application program, the
+data of an aggregated variable is called its *aggregated data*. The
+aggregated data is composed of one or more *fragments*, each of which
+provides the values for a unique part of the aggregated data. Each
+fragment is contained in an external file, or may be another contained
+in the same file as the aggregated variable (i.e the *parent file*).
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
@@ -35,7 +34,7 @@ empty string.
 If the aggregated variable is a data variable then any coordinate
 variable that shares its name with an aggregation dimension given by
 the `aggregated_dimensions` attribute is considered as part of the
-data variables's domain definition.
+definition of the data variable's domain.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions as the aggregated data. Therefore
@@ -95,7 +94,7 @@ external files are netCDF files, the file format term of the
     variables:
       // Data variable
       float temp ;
-        temp:standare_name = "air_temperature" ;
+        temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:aggregation_dimensions = "time level latitude longitude" ;
         temp:aggregation_data = "index: fragment_index 
@@ -159,7 +158,7 @@ data and has a generic form for which
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
 the fragment to its generic form prior to it being used within the
-aggregated data. This manipluation of the fragment is carried out by
+aggregated data. This manipulation of the fragment is carried out by
 the application program that is managing the aggregation.
 
 Note that only fragment metadata that are taken into consideration in
@@ -284,7 +283,7 @@ equivalent units, and omits the size 1 `level` dimension.
 Terms defining the aggregation instructions given by the
 `aggregated_data` attribute.
 
-### `index`
+#### `index`
 
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
@@ -293,7 +292,7 @@ Terms defining the aggregation instructions given by the
   trailing dimension whose size is equal to the number of fragment
   dimensions.
 
-### `location`
+#### `location`
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated data that correspond to each fragment. For each fragment
@@ -304,7 +303,7 @@ Terms defining the aggregation instructions given by the
   trailing dimensions. The size of the first is equal to the number of
   fragment dimensions, and the second has size 2.
 
-### `file`
+#### `file`
 
 * Names the string-valued variable containing the URIs of the
   fragments. Each value identifies the external resource which
@@ -322,7 +321,7 @@ Terms defining the aggregation instructions given by the
   others then the trailing dimension must be padded with missing
   values.
 	       
-### `format`
+#### `format`
 
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.q
@@ -346,7 +345,7 @@ Terms defining the aggregation instructions given by the
 * Specification of other file formats is allowed, but not described in
   these conventions.
 
-### `address`
+#### `address`
 
 * Names the variable containing each fragment's address within its
   file. If the fragment is in the parent file then the address is the
