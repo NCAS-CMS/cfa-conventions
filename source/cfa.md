@@ -2,7 +2,8 @@
 
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
-*v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, and Bryan Lawrence 2021-02-19*
+*v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, and Bryan
+ Lawrence 2021-02-18*
 
 An *aggregated variable* does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
