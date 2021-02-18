@@ -48,13 +48,13 @@ will have size 4. An aggregated dimension of any size may be
 associated with a fragment dimension of size 1.
 
 The definitions of the fragments and the instructions on how to
-aggregate them, i.e. the *aggregation metadata*, are provided by the
+aggregate them, i.e. the *aggregation definition*, are provided by the
 `aggregated_data` attribute. This attribute takes a string value, the
 string being comprised of blank-separated elements of the form `"term:
 variable"`, where `term` is a case-insensitive keyword that identifies
-a component of the aggregation metadata, and `variable` is the name of
-a variable that contains the values that configure the metadata for
-each fragment. The order of elements is not significant.
+a component of the aggregation defintion, and `variable` is the name
+of a variable that contains the values that configure the component
+for each fragment. The order of elements is not significant.
 
 Each variable referenced by the `aggregated_data` attribute must span
 the fragment dimensions in the same relative order as the aggregated
@@ -63,10 +63,10 @@ individual fragments and the aggregated data. If an instruction
 requires multiple values to be provided per fragment then a variable
 may also have one or more extra trailing dimensions.
 
-The terms defining the aggregation instructions, some of which are
-optional, are defined in Appendix A. Additional terms are allowed with
-the understanding that application programs should ignore terms that
-they do not recognise or which are irrelevant for their purposes.
+The terms defining the aggregation instructions are defined in
+Appendix A. Additional terms are allowed with the understanding that
+application programs should ignore terms that they do not recognise or
+which are irrelevant for their purposes.
 
 ### Example 1
 
@@ -143,8 +143,8 @@ data and has a generic form for which
 * each dimension of the fragment's data corresponds to a unique
   aggregated dimension;
 
-* the fragment's data dimensions have the same order as the aggregated
-  dimensions in the aggregated data;
+* the fragment's data dimensions have the same relative order as the
+  aggregated dimensions in the aggregated data;
 
 * each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing) as its
@@ -161,17 +161,12 @@ the fragment to its generic form prior to it being used within the
 aggregated data. This manipulation of the fragment is carried out by
 the application program that is managing the aggregation.
 
-Note that only fragment metadata that are taken into consideration in
-the aggregation process are the data dimensions, the units, and the
-calendar. In particular, metadata that defines the physical nature of
-the data (such as the `standard_name` attribute) and metadata that
-provides coordinate values for the data (such as association
-coordinate variables) are ignored, if present.
-
-If the fragment has identifiers of the physical nature of the data,
-other than its units, then these are ignored in the aggregation
-process, as are any variables associated with the fragment, such as
-coordinate variables
+Note that the only fragment metadata that are taken into consideration
+in the aggregation process are the units and the calendar. In
+particular, metadata that defines the physical nature of the data
+(such as the `standard_name` attribute) and metadata that provides
+coordinate values for the data (such as association coordinate
+variables) are ignored, if present.
 
 The conventions support the following fragment manipulations:
 
@@ -182,16 +177,17 @@ aggregated variable. The fragment's units must be changed to the
 aggregated variable's units, unless they are already equal, by
 applying the appropriate additive offset and/or multiplicative scale
 factor to the fragment's data. For reference time units, the calendars
-of the aggregated variable and a fragment must be equivalent. For
+of the aggregated variable and a fragment must also be equivalent. For
 fragments contained in the parent file or external netCDF files, the
-fragment's units and calendar are defined int he usual way as variable
+fragment's units and calendar are defined in the usual way as variable
 attributes. Specification of the units and calendar for fragments
 stored in other file formats is not described in these conventions.
 
 For instance, if the aggregated variable units are `"days since
-2001-01-01"` and a fragment has units of `"days since 2002-01-1"` then
-the reference time of the fragments units are changed to the earlier
-date by subtracting 365 from the fragment's data.
+2001-01-01"` in the Gregorian calendar, and a fragment has units of
+`"days since 2002-01-1"` in the same calendar then the reference time
+of the fragment's units are changed to the earlier date by subtracting
+365 from the fragment's data.
 
 ### Missing dimensions
 
