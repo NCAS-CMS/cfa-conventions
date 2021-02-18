@@ -304,7 +304,7 @@ Terms defining the aggregation instructions given by the
 * Names the string-valued variable containing the URIs of the
   fragments. Each value identifies the external resource which
   contains the fragment. Fragments stored as variables in the parent
-  file are represented by missing values.
+  file must be represented by missing values.
 
 * The `file` term must be omitted if all fragments are stored as
   variables in the parent file.
@@ -320,7 +320,7 @@ Terms defining the aggregation instructions given by the
 #### `format`
 
 * Names the string-valued variable containing the case-insensitive
-  file formats for fragments stored in external files.q
+  file formats for fragments stored in external files.
 
 * The `format` term must be omitted if there is no `file` variable.
 
