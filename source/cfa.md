@@ -97,11 +97,11 @@ external files are netCDF files, the `format` term of the
       float temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
-        temp:aggregation_dimensions = "time level latitude longitude" ;
-        temp:aggregation_data = "index: aggregation_index 
-                                 location: aggregation_location
-                                 file: aggregation_file
-                                 address: aggregation_address" ;
+        temp:aggregated_dimensions = "time level latitude longitude" ;
+        temp:aggregated_data = "index: aggregation_index 
+                                location: aggregation_location
+                                file: aggregation_file
+                                address: aggregation_address" ;
       // Aggregation definition variables			 	  
       int aggregation_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
@@ -231,12 +231,12 @@ equivalent units, and omits the size 1 `level` dimension.
       float temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
-        temp:aggregation_dimensions = "time level latitude longitude" ;
-        temp:aggregation_data = "index: aggregation_index 
-                                 location: aggregation_location
-                                 file: aggregation_file
-                                 address: aggregation_address" ;
-      // Aggregated definition variables			 	  
+        temp:aggregated_dimensions = "time level latitude longitude" ;
+        temp:aggregated_data = "index: aggregation_index 
+                                location: aggregation_location
+                                file: aggregation_file
+                                address: aggregation_address" ;
+      // Aggregation definition variables			 	  
       int aggregation_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
@@ -295,10 +295,10 @@ case are stored in a child group called `aggregation`.
       float temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
-        temp:aggregation_dimensions = "time level latitude longitude" ;
-        temp:aggregation_data = "index: /aggregation/index 
-                                 location: /aggregation/location
-                                 address: /aggregation/address" ;
+        temp:aggregated_dimensions = "time level latitude longitude" ;
+        temp:aggregated_data = "index: /aggregation/index 
+                                location: /aggregation/location
+                                address: /aggregation/address" ;
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
@@ -326,7 +326,7 @@ case are stored in a child group called `aggregation`.
         X = 4 ;
         Y = 2 ;
       variables:
-        // Aggregated definition variables			 	  
+        // Aggregation definition variables			 	  
         int index(f_time, f_level, f_latitude, f_longitude, X) ;
         int location(f_time, f_level, f_latitude, f_longitude, X, Y) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
