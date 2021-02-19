@@ -26,8 +26,8 @@ stored with the `aggregated_dimensions` attribute, and the presence of
 an `aggregated_dimensions` attribute will identify an aggregated
 variable. Therefore the `aggregated_data` attribute must not be
 present on any variables that do not have aggregated data. The value
-of the dimensions attribute is a blank separated list of the
-aggregated dimension names given in the order which matches the
+of the `aggregated_dimensions` attribute is a blank separated list of
+the aggregated dimension names given in the order which matches the
 dimensions of the aggregated data. If the aggregated data is scalar
 then the value of the `aggregated_dimensions` attribute must be an
 empty string.
@@ -103,7 +103,7 @@ external files are netCDF files, the `format` term of the
       j = 2 ;
     variables:
       // Data variable
-      float temp ;
+      double temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
@@ -113,16 +113,16 @@ external files are netCDF files, the `format` term of the
                                 file: aggregation_file
                                 address: aggregation_address" ;
       // Coordinate variables
-      float time(time) ;
+      double time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2002-01-01" ;
-      float level(level) ;
+      double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
-      float latitude(latitude) ;
+      double latitude(latitude) ;
         latitude:standard_name = "latitude" ;
         latitude:units = "degrees_north" ;
-      float longitude(longitude) ;
+      double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
@@ -173,13 +173,6 @@ the fragment to its generic form prior to it being used within the
 aggregated data. This manipulation of the fragment is carried out by
 the application program that is managing the aggregation.
 
-Note that the only fragment metadata that are taken into consideration
-in the aggregation process are the units and the calendar. In
-particular, metadata that defines the physical nature of the data
-(such as the `standard_name` attribute) and metadata that provides
-coordinate values for the data (such as association coordinate
-variables) are ignored, if present.
-
 The conventions support the following fragment manipulations:
 
 ### Units and calendar
@@ -201,6 +194,11 @@ For instance, if the aggregated variable units are `"days since
 `"days since 2002-01-1"` in the same calendar then the reference time
 of the fragment's units are changed to the earlier date by subtracting
 365 from the fragment's data.
+
+Note that the only fragment metadata that are taken into consideration
+in the aggregation process are the units and the calendar. All other
+attributes and any associated metadata variables (such as coordinate
+variables) are ignored, if present.
 
 ### Missing dimensions
 
@@ -239,7 +237,7 @@ equivalent units, and omits the size 1 `level` dimension.
       j = 2 ;
     variables:
       // Data variable
-      float temp ;
+      double temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
@@ -249,16 +247,16 @@ equivalent units, and omits the size 1 `level` dimension.
                                 file: aggregation_file
                                 address: aggregation_address" ;
       // Coordinate variables
-      float time(time) ;
+      double time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2002-01-01" ;
-      float level(level) ;
+      double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
-      float latitude(latitude) ;
+      double latitude(latitude) ;
         latitude:standard_name = "latitude" ;
         latitude:units = "degrees_north" ;
-      float longitude(longitude) ;
+      double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
@@ -267,7 +265,7 @@ equivalent units, and omits the size 1 `level` dimension.
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Fragment variable
-      float temp2(time, latitude, longitude) ;
+      double temp2(time, latitude, longitude) ;
         temp:units = "degreesC" ;
 	
     data:
@@ -285,7 +283,7 @@ equivalent units, and omits the size 1 `level` dimension.
                              0, 143 ;
       aggregation_file = "January-June.nc", _ ;
       aggregation_address = "temp", "temp2" ;
-      temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
+      temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
 ### Example 3
@@ -306,7 +304,7 @@ case are stored in a child group called `aggregation`.
       longitude = 144 ;
      variables:
       // Data variable
-      float temp ;
+      double temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
@@ -315,16 +313,16 @@ case are stored in a child group called `aggregation`.
                                 location: /aggregation/location
                                 address: /aggregation/address" ;
       // Coordinate variables
-      float time(time) ;
+      double time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2002-01-01" ;
-      float level(level) ;
+      double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
-      float latitude(latitude) ;
+      double latitude(latitude) ;
         latitude:standard_name = "latitude" ;
         latitude:units = "degrees_north" ;
-      float longitude(longitude) ;
+      double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
     data:
@@ -347,9 +345,9 @@ case are stored in a child group called `aggregation`.
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
         // Fragment variables
-        float temp1(time, latitude, longitude) ;
+        double temp1(time, latitude, longitude) ;
           temp:units = "Kelvin" ;
-        float temp2(time, latitude, longitude) ;
+        double temp2(time, latitude, longitude) ;
           temp2:units = "degreesC" ;
 
       data:    	   
@@ -365,7 +363,7 @@ case are stored in a child group called `aggregation`.
                    0, 143 ;
        address = "temp1", "temp2" ;
        temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
-       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
+       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
 ### Example 4
@@ -391,7 +389,7 @@ aggregated data.
       longitude = 144 ;
     variables:
       // Data variable
-      float temp ;
+      double temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
@@ -401,16 +399,16 @@ aggregated data.
                                 file: /aggregation/file
                                 address: /aggregation/address" ;
       // Coordinate variables
-      float time(time) ;
+      double time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2002-01-01" ;
-      float level(level) ;
+      double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
-      float latitude(latitude) ;
+      double latitude(latitude) ;
         latitude:standard_name = "latitude" ;
         latitude:units = "degrees_north" ;
-      float longitude(longitude) ;
+      double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
     data:
@@ -438,7 +436,7 @@ aggregated data.
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
         // Fragment variable
-        float temp2(time, latitude, longitude) ;
+        double temp2(time, latitude, longitude) ;
           temp2:long_name = "July-December, southern hemisphere" ;
           temp2:units = "degreesC" ;
 	      
@@ -471,7 +469,7 @@ aggregated data.
                  "temp2", _
                  "temp3", "t3",
                  "temp4", _ ;
-       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
+       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 ### Example 5
 
@@ -500,7 +498,7 @@ external file names that apply to both aggregation variables.
       j = 2 ;
     variables:
       // Data variable
-      float temp ;
+      double temp ;
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
@@ -510,7 +508,7 @@ external file names that apply to both aggregation variables.
                                 file: aggregation_file	
                                 address: /aggregation_temp/address" ;
       // Coordinate variables
-      float time ;
+      double time ;
         time:standard_name = "time" ;
         time:units = "days since 2002-01-01" ;
         temp:aggregated_dimensions = "time" ;
@@ -518,13 +516,13 @@ external file names that apply to both aggregation variables.
                                 location: /aggregation_time/location
                                 file: aggregation_file	
                                 address: /aggregation_time/address" ;
-      float level(level) ;
+      double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
-      float latitude(latitude) ;
+      double latitude(latitude) ;
         latitude:standard_name = "latitude" ;
         latitude:units = "degrees_north" ;
-      float longitude(longitude) ;
+      double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variable
@@ -575,7 +573,7 @@ external file names that apply to both aggregation variables.
 Terms defining the aggregation instructions given by the
 `aggregated_data` attribute.
 
-#### `index`
+`index`
 
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
@@ -584,7 +582,7 @@ Terms defining the aggregation instructions given by the
   trailing dimension whose size is equal to the number of fragment
   dimensions.
 
-#### `location`
+`location`
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated data that correspond to each fragment. For each fragment
@@ -595,7 +593,7 @@ Terms defining the aggregation instructions given by the
   trailing dimensions. The size of the first is equal to the number of
   fragment dimensions, and the second has size 2.
 
-#### `file`
+`file`
 
 * Names the string-valued variable containing the URIs of the
   fragments. Each value identifies the external resource which
@@ -616,7 +614,7 @@ Terms defining the aggregation instructions given by the
   case the trailing dimension for this fragment position must be
   completely filled with missing values.
   
-#### `format`
+`format`
 
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.
@@ -640,7 +638,7 @@ Terms defining the aggregation instructions given by the
 * Specification of other file formats is allowed, but not described in
   these conventions.
 
-#### `address`
+`address`
 
 * Names the variable containing each fragment's address within its
   file. If the fragment is in the parent file then the address is the
