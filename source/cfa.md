@@ -110,7 +110,7 @@ external files are netCDF files, the `format` term of the
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2000-01-01" ;
+        time:units = "days since 2002-01-01" ;
       float level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -122,6 +122,7 @@ external files are netCDF files, the `format` term of the
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
       aggregation_index = 0, 0, 0, 0,
                           1, 0, 0, 0 ;
       aggregation_location = 0, 5,
@@ -247,7 +248,7 @@ equivalent units, and omits the size 1 `level` dimension.
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2000-01-01" ;
+        time:units = "days since 2002-01-01" ;
       float level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -259,6 +260,7 @@ equivalent units, and omits the size 1 `level` dimension.
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
       aggregation_index = 0, 0, 0, 0,
                           1, 0, 0, 0 ;
       aggregation_location = 0, 5,
@@ -302,7 +304,7 @@ case are stored in a child group called `aggregation`.
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2000-01-01" ;
+        time:units = "days since 2002-01-01" ;
       float level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -314,6 +316,7 @@ case are stored in a child group called `aggregation`.
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
 
     group: aggregation {
       dimensions:
@@ -386,7 +389,7 @@ aggregated data.
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2000-01-01" ;
+        time:units = "days since 2002-01-01" ;
       float level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -398,6 +401,10 @@ aggregated data.
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
+      latitude = -90.0, -87.5, -85., -82.5, -80.0, -77.5, -75.0, ...,
+                 ..., 0.0,  2.5, 5.0, 7.5, 10.0, 12.5, 15.0,  ...,
+                 ..., 75.0, 77.5,  80.0, 82.5, 85.0, 87.5, 90.0 ;
 
     group: aggregation {
       dimensions:
@@ -416,13 +423,14 @@ aggregated data.
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
+        // Fragment variable
         float temp2(time, latitude, longitude) ;
-          temp2:long_name = "January-June, southern hemisphere" ;
+          temp2:long_name = "July-December, southern hemisphere" ;
           temp2:units = "degreesC" ;
 	      
       data:    	   
         index = 0, 0, 0, 0,
-                1, 0, 0, 0 ;
+                1, 0, 0, 0,
                 0, 0, 1, 0,
                 1, 0, 1, 0 ;
         location = 0, 5,
@@ -432,18 +440,18 @@ aggregated data.
                    6, 11,
                    0, 0,
                    0, 35,
-                   0, 143 ;
+                   0, 143,
                    0, 5,
                    0, 0,
                    36, 72,
-                   0, 143 ;
+                   0, 143,
                    6, 11,
                    0, 0,
                    36, 72,
                    0, 143 ;
        file = "/remote/January-June_SH.nc", _,
               _, _ ;
-              "/local/July-December_NH.nc", "/remote/July-December_NH.nc";
+              "/local/January-June_NH.nc", "/remote/January-June_NH.nc";
               "/remote/July-December_NH.nc", _,
        address = "temp1", _,
                  "temp2", _
