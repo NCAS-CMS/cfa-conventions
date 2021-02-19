@@ -179,10 +179,11 @@ aggregated variable's units, unless they are already equal, by
 applying the appropriate additive offset and/or multiplicative scale
 factor to the fragment's data. For reference time units, the calendars
 of the aggregated variable and a fragment must also be equivalent. For
-fragments contained in the parent file or external netCDF files, the
-fragment's units and calendar are defined in the usual way as variable
-attributes. Specification of the units and calendar for fragments
-stored in other file formats is not described in these conventions.
+fragments contained in the parent file or in external netCDF files,
+the units attribute must be defined for data that represent
+dimensional quantities. Specification of the units and calendar for
+fragments stored in other file formats is not described in these
+conventions.
 
 For instance, if the aggregated variable units are `"days since
 2001-01-01"` in the Gregorian calendar, and a fragment has units of
