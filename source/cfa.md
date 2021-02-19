@@ -417,7 +417,7 @@ aggregated data.
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
         float temp2(time, latitude, longitude) ;
-          temp2:long_name = "January-June, northern hemisphere" ;
+          temp2:long_name = "January-June, southern hemisphere" ;
           temp2:units = "degreesC" ;
 	      
       data:    	   
