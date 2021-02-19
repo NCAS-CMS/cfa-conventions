@@ -98,15 +98,15 @@ external files are netCDF files, the `format` term of the
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:aggregation_dimensions = "time level latitude longitude" ;
-        temp:aggregation_data = "index: fragment_index 
-                                 location: fragment_location
-                                 file: fragment_file
-                                 address: fragment_address" ;
+        temp:aggregation_data = "index: aggregation_index 
+                                 location: aggregation_location
+                                 file: aggregation_file
+                                 address: aggregation_address" ;
       // Aggregation definition variables			 	  
-      int fragment_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
-      int fragment_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
-      string fragment_file(f_time, f_level, f_latitude, f_longitude) ;
-      string fragment_address(f_time, f_level, f_latitude, f_longitude) ;
+      int aggregation_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
+      int aggregation_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
+      string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Coordinate variables
       float time(time) ;
         time:standard_name = "time" ;
@@ -122,18 +122,18 @@ external files are netCDF files, the `format` term of the
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
-      fragment_index = 0, 0, 0, 0,
-                       1, 0, 0, 0 ;
-      fragment_location = 0, 5,
-                          0, 0,
-                          0, 72,
-                          0, 143,
-                          6, 11,
-                          0, 0,
-                          0, 72,
-                          0, 143 ;
-      fragment_file = "January-June.nc", "July-December.nc" ;
-      fragment_address = "temp", "temp" ;
+      aggregation_index = 0, 0, 0, 0,
+                          1, 0, 0, 0 ;
+      aggregation_location = 0, 5,
+                            0, 0,
+                            0, 72,
+                            0, 143,
+                            6, 11,
+                            0, 0,
+                            0, 72,
+                            0, 143 ;
+      aggregation_file = "January-June.nc", "July-December.nc" ;
+      aggregation_address = "temp", "temp" ;
 
 
 ## Fragment Storage
@@ -232,15 +232,15 @@ equivalent units, and omits the size 1 `level` dimension.
         temp:standard_name = "air_temperature" ;
         temp:units = "K" ;
         temp:aggregation_dimensions = "time level latitude longitude" ;
-        temp:aggregation_data = "index: fragment_index 
-                                 location: fragment_location
-                                 file: fragment_file
-                                 address: fragment_address" ;
+        temp:aggregation_data = "index: aggregation_index 
+                                 location: aggregation_location
+                                 file: aggregation_file
+                                 address: aggregation_address" ;
       // Aggregated definition variables			 	  
-      int fragment_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
-      int fragment_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
-      string fragment_file(f_time, f_level, f_latitude, f_longitude) ;
-      string fragment_address(f_time, f_level, f_latitude, f_longitude) ;
+      int aggregation_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
+      int aggregation_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
+      string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Fragment variable
       float temp2(time, latitude, longitude) ;
         temp:units = "degreesC" ;
@@ -259,18 +259,18 @@ equivalent units, and omits the size 1 `level` dimension.
         longitude:units = "degrees_east" ;
     data:
       temp = _ ;
-      fragment_index = 0, 0, 0, 0,
-                       1, 0, 0, 0 ;
-      fragment_location = 0, 5,
-                          0, 0,
-                          0, 72,
-                          0, 143,
-                          6, 11,
-                          0, 0,
-                          0, 72,
-                          0, 143 ;
-      fragment_file = "January-June.nc", _ ;
-      fragment_address = "temp", "temp2" ;
+      aggregation_index = 0, 0, 0, 0,
+                          1, 0, 0, 0 ;
+      aggregation_location = 0, 5,
+                             0, 0,
+                             0, 72,
+                             0, 143,
+                             6, 11,
+                             0, 0,
+                             0, 72,
+                             0, 143 ;
+      aggregation_file = "January-June.nc", _ ;
+      aggregation_address = "temp", "temp2" ;
       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
 
 
@@ -337,17 +337,17 @@ case are stored in a child group called `aggregation`.
           temp2:units = "degreesC" ;
 
       data:    	   
-        fragment_index = 0, 0, 0, 0,
-                         1, 0, 0, 0 ;
-        fragment_location = 0, 5,
-                            0, 0,
-                            0, 72,
-                            0, 143,
-                            6, 11,
-                            0, 0,
-                            0, 72,
-                            0, 143 ;
-       fragment_address = "temp1", "temp2" ;
+        index = 0, 0, 0, 0,
+                1, 0, 0, 0 ;
+        location = 0, 5,
+                   0, 0,
+                   0, 72,
+                   0, 143,
+                   6, 11,
+                   0, 0,
+                   0, 72,
+                   0, 143 ;
+       address = "temp1", "temp2" ;
        temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
        temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
 
