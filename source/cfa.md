@@ -32,10 +32,19 @@ dimensions of the aggregated data. If the aggregated data is scalar
 then the value of the `aggregated_dimensions` attribute must be an
 empty string.
 
-If the aggregated variable is a data variable then any coordinate
-variable that shares its name with an aggregation dimension given by
-the `aggregated_dimensions` attribute is considered as part of the
-definition of the data variable's domain.
+The dimensions listed by the `aggregated_dimensions` attribute
+constrain the dimensions that may be spanned by variables referenced
+from any of the other attributes, in the same way that the array
+dimensions perform that role for a non-aggregated variable. For
+instance, all variables named by the `cell_measures` attribute of an
+aggregated data variable must span a subset of zero or more of the
+dimensions given by the `aggregated_dimensions` attribute; or the
+variable named by the `bounds` attribute of an aggregated coordinate
+variable must span all of the aggregated dimensions in the same order,
+as well as the trailing bounds dimension. Any coordinate variable that
+shares its name with an aggregated dimension of an aggregated data
+variable will be considered as part of the data variable's domain
+definition.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions as the aggregated data. Therefore
@@ -407,9 +416,9 @@ aggregated data.
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
-      latitude = -90.0, -87.5, -85., -82.5, -80.0, -77.5, -75.0, ...,
-                 ..., 0.0,  2.5, 5.0, 7.5, 10.0, 12.5, 15.0,  ...,
-                 ..., 75.0, 77.5,  80.0, 82.5, 85.0, 87.5, 90.0 ;
+      latitude = -90.0, -87.5, -85.0, -82.5, -80.0, -77.5, -75.0, ...,
+                 ..., 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, ...,
+                 ..., 75.0, 77.5, 80.0, 82.5, 85.0, 87.5, 90.0 ;
 
     group: aggregation {
       dimensions:
