@@ -318,10 +318,10 @@ case are stored in a child group called `aggregation`.
     group: aggregation {
       dimensions:
         // Fragment dimensions
-        time = 2 ;
-        level = 1 ;
-        latitude = 1 ;
-        longitude = 1 ;
+        f_time = 2 ;
+        f_level = 1 ;
+        f_latitude = 1 ;
+        f_longitude = 1 ;
         // Extra dimensions
         X = 4 ;
         Y = 2 ;
