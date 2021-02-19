@@ -168,11 +168,6 @@ Additional terms are allowed with the understanding that application
 programs should ignore terms that they do not recognise or which are
 irrelevant for their purposes.
 
-The terms defining the aggregation instructions are defined in
-Appendix A. Additional terms are allowed with the understanding that
-application programs should ignore terms that they do not recognise or
-which are irrelevant for their purposes.
-
 ### Example 1
 
 An aggregated data variable whose aggregated data comprises two
@@ -662,96 +657,4 @@ external file names that apply to both aggregation variables.
                    6, 11 ;
         address = "time", "time" ;
 
-
-# Appendix A
-
-Terms defining the aggregation instructions given by the
-`aggregated_data` attribute.
-
-`index`
-
-* Names the integer-valued variable containing the indices of each
-  fragment along the fragment dimensions. For each fragment, this
-  variable stores the zero-based index of its position along each
-  fragment dimension. Therefore, the variable requires one extra
-  trailing dimension whose size is equal to the number of fragment
-  dimensions.
-
-`location`
-
-* Names the integer-valued variable containing the index ranges of the
-  aggregated data that correspond to each fragment. For each fragment
-  and each aggregated dimension, this variable stores the two
-  zero-based indices giving the beginning and end of the range of
-  indices that defines the position of the fragment along the
-  aggregated dimension. Therefore, the variable requires two extra
-  trailing dimensions. The size of the first is equal to the number of
-  fragment dimensions, and the second has size 2.
-
-`file`
-
-* Names the string-valued variable containing the URIs of the
-  fragments. Each value identifies the external resource which
-  contains the fragment. Fragments stored as variables in the parent
-  file must be represented by missing values.
-
-* The `file` term must be omitted if all fragments are stored as
-  variables in the parent file.
-
-* An extra trailing dimension may included to describe multiple URIs
-  for the same fragment, any one of which may equally be used to fill
-  its position in the aggregated data. In this case, it is up to
-  application programs to choose the version of the fragment that it
-  finds the most preferable. If a fragment has fewer versions than
-  others then the trailing dimension must be padded with missing
-  values. When a fragment is stored in the parent file it is not
-  possible to use an alternative fragment in external file, so in this
-  case the trailing dimension for this fragment position must be
-  completely filled with missing values.
-  
-`format`
-
-* Names the string-valued variable containing the case-insensitive
-  file formats for fragments stored in external files.
-
-* The `format` term must be omitted if there is no `file` variable.
-
-* If all fragments are in external netCDF files then the `format` term
-  may be omitted.
-	  
-* A fragment stored as a variable in the parent file is represented by
-  a missing value.
-
-* A fragment in an external netCDF file is signified by a value of
-  `"nc"`.
-
-* The `format` variable must span exactly the same dimensions in the
-  same order as the `file` variable. Missing values should be used
-  whenever the corresponding location in the `file` variable is a
-  missing value.
-
-* Specification of other file formats is allowed, but not described in
-  these conventions.
-
-`address`
-
-* Names the variable containing each fragment's address within its
-  file. If the fragment is in the parent file then the address is the
-  variable name, otherwise the address is dependent on the format of
-  the fragment's external file. For an external netCDF file, the
-  address is also the name of the variable that contains the fragment.
-
-* If the `file` variable does not exist then no extra trailing
-  dimensions nor missing values are allowed.
-
-* If there is a `file` variable then the `address` variable must span
-  the same dimensions in the same order. Missing values should be used
-  whenever the corresponding location in the `file` variable has a
-  missing value, except for fragments stored in the parent file. For a
-  fragment stored in the parent file, exactly one address must be
-  provided, and if there is a trailing dimension then it must be
-  padded with missing values.
-	       
-* Addressing for other file formats is allowed, but not described in
-  these conventions.
 
