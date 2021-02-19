@@ -75,7 +75,7 @@ An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
 in an external netCDF file in a variable call `temp`. As all of the
-external files are netCDF files, the file format term of the
+external files are netCDF files, the `format` term of the
 `aggregated_data` attribute is not required.
 
     dimensions:
@@ -207,7 +207,7 @@ fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions. One fragment
 is stored in an external file and the other is stored the parent file
 as variable `temp2`. As all of the external files are netCDF files,
-the file format term of the `aggregated_data` attribute is not
+the `format` term of the `aggregated_data` attribute is not
 required. The fragment stored in the parent file has different but
 equivalent units, and omits the size 1 `level` dimension.
 
@@ -235,7 +235,7 @@ equivalent units, and omits the size 1 `level` dimension.
                                  location: fragment_location
                                  file: fragment_file
                                  address: fragment_address" ;
-      // Aggregated data variables			 	  
+      // Aggregated definition variables			 	  
       int fragment_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
       int fragment_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
       string fragment_file(f_time, f_level, f_latitude, f_longitude) ;
@@ -271,6 +271,84 @@ equivalent units, and omits the size 1 `level` dimension.
       fragment_file = "January-June.nc", _ ;
       fragment_address = "temp", "temp2" ;
       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
+
+
+### Example 3
+
+An aggregated data variable whose aggregated data comprises two
+fragments. Each fragment spans half of the aggregated `time` dimension
+and the whole of the other three aggregated dimensions, and is stored
+in the parent file. As there are no external files, the `file` and
+`format` terms of the `aggregated_data` attribute are not
+required. The fragments and aggregation defintion variables in this
+case are stored in a child group called `aggregation`.
+
+    dimensions:
+      // Aggregated dimensions
+      time = 12 ;
+      level = 1 ;
+      latitude = 73 ;
+      longitude = 144 ;
+     variables:
+      // Data variable
+      float temp ;
+        temp:standard_name = "air_temperature" ;
+        temp:units = "K" ;
+        temp:aggregation_dimensions = "time level latitude longitude" ;
+        temp:aggregation_data = "index: /aggregation/index 
+                                 location: /aggregation/location
+                                 address: /aggregation/address" ;
+      // Coordinate variables
+      float time(time) ;
+        time:standard_name = "time" ;
+        time:units = "days since 2000-01-01" ;
+      float level(level) ;
+        level:standard_name = "height_above_mean_sea_level" ;
+        level:units = "m" ;
+      float latitude(latitude) ;
+        latitude:standard_name = "latitude" ;
+        latitude:units = "degrees_north" ;
+      float longitude(longitude) ;
+        longitude:standard_name = "longitude" ;
+        longitude:units = "degrees_east" ;
+    data:
+      temp = _ ;
+
+    group: aggregation {
+      dimensions:
+        // Fragment dimensions
+        time = 2 ;
+        level = 1 ;
+        latitude = 1 ;
+        longitude = 1 ;
+        // Extra dimensions
+        X = 4 ;
+        Y = 2 ;
+      variables:
+        // Aggregated definition variables			 	  
+        int index(f_time, f_level, f_latitude, f_longitude, X) ;
+        int location(f_time, f_level, f_latitude, f_longitude, X, Y) ;
+        string address(f_time, f_level, f_latitude, f_longitude) ;
+	// Fragment variables
+        float temp1(time, latitude, longitude) ;
+          temp:units = "Kelvin" ;
+        float temp2(time, latitude, longitude) ;
+          temp2:units = "degreesC" ;
+
+      data:    	   
+        fragment_index = 0, 0, 0, 0,
+                         1, 0, 0, 0 ;
+        fragment_location = 0, 5,
+                            0, 0,
+                            0, 72,
+                            0, 143,
+                            6, 11,
+                            0, 0,
+                            0, 72,
+                            0, 143 ;
+       fragment_address = "temp1", "temp2" ;
+       temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
+       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
 
 
 
