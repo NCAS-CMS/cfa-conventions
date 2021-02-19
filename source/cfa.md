@@ -102,7 +102,7 @@ external files are netCDF files, the `format` term of the
                                  location: fragment_location
                                  file: fragment_file
                                  address: fragment_address" ;
-      // Aggregated data variables			 	  
+      // Aggregation definition variables			 	  
       int fragment_index(p_time, f_level, f_latitude, f_longitude, f_X) ;
       int fragment_location(f_time, f_level, f_latitude, f_longitude, f_X, f_Y) ;
       string fragment_file(f_time, f_level, f_latitude, f_longitude) ;
