@@ -443,7 +443,7 @@ aggregated data.
                    0, 143 ;
        file = "/remote/January-June_SH.nc", _,
               _, _ ;
-              "/local/January-June_NH.nc", "/remote/January-June_NH.nc";
+              "/local/July-December_NH.nc", "/remote/July-December_NH.nc";
               "/remote/July-December_NH.nc", _,
        address = "temp1", _,
                  "temp2", _
