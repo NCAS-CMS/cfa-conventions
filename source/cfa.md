@@ -422,7 +422,7 @@ aggregated data.
         int index(f_time, f_level, f_latitude, f_longitude, i) ;
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
-        string address(f_time, f_level, f_latitude, f_longitude) ;
+        string address(f_time, f_level, f_latitude, f_longitude, k) ;
         // Fragment variable
         float temp2(time, latitude, longitude) ;
           temp2:long_name = "July-December, southern hemisphere" ;
