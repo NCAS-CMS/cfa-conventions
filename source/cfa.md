@@ -354,17 +354,18 @@ case are stored in a child group called `aggregation`.
 
 ### Example 4
 
-An aggregated data variable whose aggregated data comprises two
-fragments. Each fragment spans half of the aggregated `time` dimension
-and the whole of the other three aggregated dimensions. The fragments
-are stored in external netCDF files. As all of the external files are
-netCDF files, the `format` term of the `aggregated_data` attribute is
-not required. The aggregation defintion variables are stored in a
-child group called `aggregation`. One of the fragments has been
-defined by two different external resources (one "local" and one
-"remote"), each of which is provided with its own file address
-(`temp2` and `t2` respectively). Either of resources, but not both,
-may be used in the aggregated data.
+An aggregated data variable whose aggregated data comprises four
+fragments. Each fragment spans half of the aggregated `time`
+dimension, either the northern or southern, and the whole of the other
+two aggregated dimensions. The fragments are stored in external netCDF
+files. As all of the external files are netCDF files, the `format`
+term of the `aggregated_data` attribute is not required. The
+aggregation defintion variables are stored in a child group called
+`aggregation`. One of the fragments has been defined by two different
+external resources (one "local" and one "remote"), each of which is
+provided with its own address within its file (`temp3` and `t3`
+respectively). Either of resources, but not both, may be used in the
+aggregated data.
 
     dimensions:
       // Aggregated dimensions
@@ -403,7 +404,7 @@ may be used in the aggregated data.
         // Fragment dimensions
         f_time = 2 ;
         f_level = 1 ;
-        f_latitude = 1 ;
+        f_latitude = 2 ;
         f_longitude = 1 ;
         // Extra dimensions
         i = 4 ;
@@ -415,22 +416,40 @@ may be used in the aggregated data.
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
-	
+        float temp2(time, latitude, longitude) ;
+          temp2:long_name = "January-June, northern hemisphere" ;
+          temp2:units = "degreesC" ;
+	      
       data:    	   
         index = 0, 0, 0, 0,
                 1, 0, 0, 0 ;
+                0, 0, 1, 0,
+                1, 0, 1, 0 ;
         location = 0, 5,
                    0, 0,
-                   0, 72,
+                   0, 35,
                    0, 143,
                    6, 11,
                    0, 0,
-                   0, 72,
+                   0, 35,
                    0, 143 ;
-       file = "/local/January-June.nc", _,
-              "/local/July-December.nc", "/remote/July-December.nc";
+                   0, 5,
+                   0, 0,
+                   36, 72,
+                   0, 143 ;
+                   6, 11,
+                   0, 0,
+                   36, 72,
+                   0, 143 ;
+       file = "/remote/January-June_SH.nc", _,
+              _, _ ;
+              "/local/January-June_NH.nc", "/remote/January-June_NH.nc";
+              "/remote/July-December_NH.nc", _,
        address = "temp1", _,
-                 "temp2", "t2";
+                 "temp2", _
+                 "temp3", "t3",
+                 "temp4", _ ;
+       temp2 = 4.5, 3.0, 0,0, -2.6, -5.6, -10.2, ... ;
 
 
 # Appendix A
@@ -474,8 +493,11 @@ Terms defining the aggregation instructions given by the
   application programs to choose the version of the fragment that it
   finds the most preferable. If a fragment has fewer versions than
   others then the trailing dimension must be padded with missing
-  values.
-	       
+  values. When a fragment is stored in the parent file it is not
+  possible to use an alternative fragment in external file, so in this
+  case the trailing dimension for this fragment position must be
+  completely filled with missing values.
+  
 #### `format`
 
 * Names the string-valued variable containing the case-insensitive
@@ -508,11 +530,16 @@ Terms defining the aggregation instructions given by the
   the fragment's external file. For an external netCDF file, the
   address is also the name of the variable that contains the fragment.
 
-* If the `file` variable exists then the `address` variable must span
-  the same dimensions in the same order, and missing values should be
-  used whenever the corresponding location in the `file` variable has
-  a missing value. Otherwise no extra trailing dimensions nor missing
-  values are allowed.
+* If the `file` variable does not exist then no extra trailing
+  dimensions nor missing values are allowed.
+
+* If there is a `file` variable then the `adddress` variable must span
+  the same dimensions in the same order. Missing values should be used
+  whenever the corresponding location in the `file` variable has a
+  missing value, except for fragments stored in the parent file. For a
+  fragment stored in the parent file, exactly one address must be
+  provided, and if there is a trailing dimension then it must be
+  padded with missing values.
 	       
 * Addressing for other file formats is allowed, but not described in
   these conventions.
