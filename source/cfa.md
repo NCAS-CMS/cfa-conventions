@@ -69,9 +69,9 @@ for each fragment. The order of elements is not significant.
 Each variable referenced by the `aggregated_data` attribute must span
 the fragment dimensions in the same relative order as the aggregated
 dimensions, so that its values are easily associated with both
-individual fragments and the aggregated data. If an instruction
-requires multiple values to be provided per fragment then a variable
-may also have one or more extra trailing dimensions.
+individual fragments and the aggregated data. If an aggregation
+definition component requires multiple values per fragment then a
+variable may also have one or more extra trailing dimensions.
 
 The terms of the aggregation definition are `index`, `location`,
 `file`, `format` and `address`. The variables referenced by each of
@@ -89,48 +89,48 @@ these are defined as follows:
 `location`
 
 * Names the integer-valued variable containing the index ranges of the
-  aggregated data that correspond to each fragment. For each fragment
-  and each aggregated dimension, this variable stores the two
-  zero-based indices giving the beginning and end of the range of
-  indices that defines the position of the fragment along the
-  aggregated dimension. Therefore, the variable requires two extra
-  trailing dimensions. The size of the first is equal to the number of
-  fragment dimensions, and the second has size 2.
+  aggregated dimensions that correspond to each fragment. For each
+  fragment and each aggregated dimension, this variable stores the two
+  zero-based indices for the beginning and end of the range of indices
+  that defines the position of the fragment along the aggregated
+  dimension. Therefore, the variable requires two extra trailing
+  dimensions. The size of the first is equal to the number of fragment
+  dimensions, and the second has size 2.
 
 `file`
 
 * Names the string-valued variable containing the URIs of the
   fragments. Each value identifies the external resource which
-  contains the fragment. Fragments stored as variables in the parent
-  file must be represented by missing values.
+  contains the fragment. Fragments stored in the parent file must be
+  represented by missing values.
 
-* The `file` term must be omitted if all fragments are stored as
+* The `file` term may be omitted if all fragments are stored as
   variables in the parent file.
 
-* An extra trailing dimension may included to describe multiple URIs
-  for the same fragment, any one of which may equally be used to fill
-  its position in the aggregated data. In this case, it is up to
+* An extra trailing dimension may be included to describe multiple
+  URIs for the same fragment, any one of which may equally be used to
+  fill its position in the aggregated data. In this case, it is up to
   application programs to choose the version of the fragment that it
-  finds the most preferable. If a fragment has fewer versions than
-  others then the trailing dimension must be padded with missing
-  values. When a fragment is stored in the parent file it is not
-  possible to use an alternative fragment in external file, so in this
-  case the trailing dimension for this fragment position must be
-  completely filled with missing values.
+  finds most preferable. If a fragment has fewer versions than others
+  then the trailing dimension must be padded with missing values. When
+  a fragment is stored in the parent file alternative fragments in
+  external files are not allowed, so the extra trailing dimension for
+  such a fragment must always be completely filled with missing
+  values.
   
 `format`
 
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.
 
-* The `format` term must be omitted if there is no `file` variable.
+* The `format` term must be omitted if there is no `file` term.
 
-* If all fragments are in external netCDF files then the `format` term
-  may be omitted.
+* If all fragments are stored in the parent file or in external netCDF
+  files then the `format` term may be omitted.
 	  
-* A fragment stored as a variable in the parent file is represented by
-  a missing value.
-
+* A fragment stored in the parent file is represented by a missing
+  value.
+  
 * A fragment in an external netCDF file is signified by a value of
   `"nc"`.
 
@@ -150,17 +150,18 @@ these are defined as follows:
   the fragment's external file. For an external netCDF file, the
   address is also the name of the variable that contains the fragment.
 
-* If the `file` variable does not exist then no extra trailing
-  dimensions nor missing values are allowed.
-
 * If there is a `file` variable then the `address` variable must span
-  the same dimensions in the same order. Missing values should be used
-  whenever the corresponding location in the `file` variable has a
-  missing value, except for fragments stored in the parent file. For a
-  fragment stored in the parent file, exactly one address must be
-  provided, and if there is a trailing dimension then it must be
-  padded with missing values.
-	       
+  exactly the same dimensions in the same order. Missing values should
+  be used whenever the corresponding location in the `file` variable
+  has a missing value, except for fragments stored in the parent
+  file. For a fragment stored in the parent file, exactly one address
+  must be provided, and if there is a trailing dimension then it must
+  be padded with missing values.
+	  
+* If there is no `file` term the all fragments must be stored in the
+  parent file, and so no extra trailing dimensions nor missing values
+  are allowed.
+     
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
@@ -205,7 +206,7 @@ external files are netCDF files, the `format` term of the
       // Coordinate variables
       double time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2002-01-01" ;
+        time:units = "days since 2001-01-01" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -226,21 +227,26 @@ external files are netCDF files, the `format` term of the
       aggregation_index = 0, 0, 0, 0,
                           1, 0, 0, 0 ;
       aggregation_location = 0, 5,
-                            0, 0,
-                            0, 72,
-                            0, 143,
-                            6, 11,
-                            0, 0,
-                            0, 72,
-                            0, 143 ;
+                             0, 0,
+                             0, 72,
+                             0, 143,
+                             6, 11,
+                             0, 0,
+                             0, 72,
+                             0, 143 ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
       aggregation_address = "temp", "temp" ;
 
 
 ## Fragment Storage
 
-Each fragment provides the values for a unique part of the aggregated
-data and has a generic form for which
+Each fragment has a generic form for which
+
+* the entirety of the fragment's data contributes to the aggregated
+  data;
+
+* the fragment's data contributes provides the values for a unique
+  part of the aggregated data;
 
 * each dimension of the fragment's data corresponds to a unique
   aggregated dimension;
@@ -252,10 +258,11 @@ data and has a generic form for which
   directionality (i.e. the sense in which it increasing) as its
   corresponding aggregated dimension;
 
-* the entirety of the fragment's data contributes to the aggregated
-  data;
+* the fragment has the same physical units as the aggregated variable;
 
-* the fragment has the same physical units as the aggregated variable.
+* any other fragment attributes, and associated metadata variables
+  associated with the fragment (such as coordinate variables) are
+  ignored.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
@@ -263,7 +270,7 @@ the fragment to its generic form prior to it being used within the
 aggregated data. This manipulation of the fragment is carried out by
 the application program that is managing the aggregation.
 
-The conventions support the following fragment manipulations:
+The following fragment manipulations are supported:
 
 ### Units and calendar
 
@@ -281,14 +288,9 @@ conventions.
 
 For instance, if the aggregated variable units are `"days since
 2001-01-01"` in the Gregorian calendar, and a fragment has units of
-`"days since 2002-01-1"` in the same calendar then the reference time
+`"days since 2002-01-1"` in the same calendar, then the reference time
 of the fragment's units are changed to the earlier date by subtracting
 365 from the fragment's data.
-
-Note that the only fragment metadata that are taken into consideration
-in the aggregation process are the units and the calendar. All other
-attributes and any associated metadata variables (such as coordinate
-variables) are ignored, if present.
 
 ### Missing dimensions
 
@@ -309,7 +311,8 @@ is stored in an external file and the other is stored the parent file
 as variable `temp2`. As all of the external files are netCDF files,
 the `format` term of the `aggregated_data` attribute is not
 required. The fragment stored in the parent file has different but
-equivalent units, and omits the size 1 `level` dimension.
+equivalent units to the aggregated variable, and omits the size 1
+`level` dimension.
 
     dimensions:
       // Aggregated dimensions
@@ -339,7 +342,7 @@ equivalent units, and omits the size 1 `level` dimension.
       // Coordinate variables
       double time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2002-01-01" ;
+        time:units = "days since 2001-01-01" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -405,7 +408,7 @@ case are stored in a child group called `aggregation`.
       // Coordinate variables
       double time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2002-01-01" ;
+        time:units = "days since 2001-01-01" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -460,16 +463,16 @@ case are stored in a child group called `aggregation`.
 
 An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
-dimension, either the northern or southern, and the whole of the other
-two aggregated dimensions. The fragments are stored in external netCDF
-files. As all of the external files are netCDF files, the `format`
-term of the `aggregated_data` attribute is not required. The
-aggregation definition variables are stored in a child group called
-`aggregation`. One of the fragments has been defined by two different
-external resources (one "local" and one "remote"), each of which is
-provided with its own address within its file (`temp3` and `t3`
-respectively). Either of resources, but not both, may be used in the
-aggregated data.
+dimension, either the northern or southern hemisphere, and the whole
+of the other two aggregated dimensions. The fragments are stored in
+external netCDF files. As all of the external files are netCDF files,
+the `format` term of the `aggregated_data` attribute is not
+required. The aggregation definition variables are stored in a child
+group called `aggregation`. One of the fragments has been defined by
+two different external resources (one "local" and one "remote"), each
+of which is provided with its own address within its file (`temp3` and
+`t3` respectively). Either of these resources, but not both, may be
+used in the aggregated data.
 
     dimensions:
       // Aggregated dimensions
@@ -491,7 +494,7 @@ aggregated data.
       // Coordinate variables
       double time(time) ;
         time:standard_name = "time" ;
-        time:units = "days since 2002-01-01" ;
+        time:units = "days since 2001-01-01" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
         level:units = "m" ;
@@ -600,7 +603,7 @@ external file names that apply to both aggregation variables.
       // Coordinate variables
       double time ;
         time:standard_name = "time" ;
-        time:units = "days since 2002-01-01" ;
+        time:units = "days since 2001-01-01" ;
         temp:aggregated_dimensions = "time" ;
         temp:aggregated_data = "index: /aggregation_time/index 
                                 location: /aggregation_time/location
