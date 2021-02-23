@@ -11,8 +11,9 @@ data from other sources. When created by an application program, the
 data of an aggregated variable is called its *aggregated data*. The
 aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
-fragment is contained in an external file, or may be another contained
-in the same file as the aggregated variable (i.e the *parent file*).
+fragment is contained in an external file, or may be another variable
+contained in the same file as the aggregated variable (i.e the *parent
+file*).
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
@@ -70,7 +71,7 @@ Each variable referenced by the `aggregated_data` attribute must span
 the fragment dimensions in the same relative order as the aggregated
 dimensions, so that its values are easily associated with both
 individual fragments and the aggregated data. If an aggregation
-definition component requires multiple values per fragment then a
+definition component requires multiple values per fragment then its
 variable may also have one or more extra trailing dimensions.
 
 The terms of the aggregation definition are `index`, `location`,
@@ -158,7 +159,7 @@ these are defined as follows:
   must be provided, and if there is a trailing dimension then it must
   be padded with missing values.
 	  
-* If there is no `file` term the all fragments must be stored in the
+* If there is no `file` term then all fragments must be stored in the
   parent file, and so no extra trailing dimensions nor missing values
   are allowed.
      
@@ -242,23 +243,23 @@ external files are netCDF files, the `format` term of the
 
 Each fragment has a generic form for which
 
-* the entirety of the fragment's data contributes to the aggregated
-  data;
+* the fragment's data provides the values for a unique part of the
+  aggregated data,
 
-* the fragment's data contributes provides the values for a unique
-  part of the aggregated data;
+* the entirety of the fragment's data contributes to the aggregated
+  data,
 
 * each dimension of the fragment's data corresponds to a unique
-  aggregated dimension;
+  aggregated dimension,
 
 * the fragment's data dimensions have the same relative order as the
-  aggregated dimensions in the aggregated data;
+  aggregated dimensions in the aggregated data,
 
 * each dimension of the fragment's data has the same sense of
-  directionality (i.e. the sense in which it increasing) as its
-  corresponding aggregated dimension;
+  directionality (i.e. the sense in which it increasing in physical
+  space) as its corresponding aggregated dimension,
 
-* the fragment has the same physical units as the aggregated variable;
+* the fragment has the same physical units as the aggregated variable,
 
 * any other fragment attributes, and associated metadata variables
   associated with the fragment (such as coordinate variables) are
@@ -270,14 +271,14 @@ the fragment to its generic form prior to it being used within the
 aggregated data. This manipulation of the fragment is carried out by
 the application program that is managing the aggregation.
 
-The following fragment manipulations are supported:
+The following fragment manipulations are allowed:
 
 ### Units and calendar
 
-A fragment may have any units that are equivalent to the units of the
-aggregated variable. The fragment's units must be changed to the
-aggregated variable's units, unless they are already equal, by
-applying the appropriate additive offset and/or multiplicative scale
+A fragment may have any units that are equivalent, but not necessarily
+equals, to the units of the aggregated variable. The fragment's units
+are changed to the aggregated variable's units, if required, by
+applying an appropriate additive offset and/or multiplicative scale
 factor to the fragment's data. For reference time units, the calendars
 of the aggregated variable and a fragment must also be equivalent. For
 fragments contained in the parent file or in external netCDF files,
@@ -555,11 +556,11 @@ used in the aggregated data.
                    36, 72,
                    0, 143 ;
        file = "/remote/January-June_SH.nc", _,
-              _, _ ;
-              "/local/January-June_NH.nc", "/remote/January-June_NH.nc";
-              "/remote/July-December_NH.nc", _,
+              _, _,
+              "/local/January-June_NH.nc", "/remote/January-June_NH.nc",
+              "/remote/July-December_NH.nc", _ ;
        address = "temp1", _,
-                 "temp2", _
+                 "temp2", _,
                  "temp3", "t3",
                  "temp4", _ ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
