@@ -78,7 +78,7 @@ variables, are as follows:
 `index`
 
 * For each fragment, identifies its position in the orthogonal
-  multidimensional array of fragements.
+  multidimensional array of fragments.
 
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
@@ -107,8 +107,10 @@ variables, are as follows:
 
 * Names the string-valued variable containing the URIs of the files
   containing the fragments. Each value identifies the external
-  resource which contains the fragment. Fragments stored in the parent
-  file must be represented by missing values.
+  resource which contains the fragment.
+
+* Fragments stored in the parent file must be represented by missing
+  values.
 
 * The `file` term may be omitted if all fragments are stored as
   variables in the parent file.
