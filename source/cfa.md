@@ -276,6 +276,12 @@ Each fragment has a generic form for which
   variables associated with the fragment (such as coordinate
   variables), are ignored.
 
+For fragments contained in the parent file or in external netCDF
+files, the units attribute must be defined for data that represent
+dimensional quantities. Specification of the units and calendar for
+fragments stored in other file formats is not described in these
+conventions.
+
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
 the fragment to its generic form prior to it being used within the
@@ -290,18 +296,15 @@ A fragment may have any units that are equivalent, but not necessarily
 equal, to the units of the aggregated variable. The fragment's units
 will be changed to the aggregated variable's units, if required, by
 applying the appropriate multiplicative scale factor and/or additive
-offset to the fragment's data. For reference time units, the calendars
-of the aggregated variable and a fragment must also be equivalent. For
-fragments contained in the parent file or in external netCDF files,
-the units attribute must be defined for data that represent
-dimensional quantities. Specification of the units and calendar for
-fragments stored in other file formats is not described in these
-conventions.
+offset to the fragment's data.
 
 For instance, if the aggregated variable units are degrees Fahrenheit
 and a fragment has units of degrees Celsius, then the fragment's units
 are changed to degrees Fahrenheit by multiplying the fragment's data
 by 1.8 and then adding 32.
+
+For reference time units, the calendars of the aggregated variable and
+a fragment must also be equivalent.
 
 For instance, if the aggregated variable units are `"days since
 2001-01-01"` in the Gregorian calendar and a fragment has units of
@@ -313,12 +316,12 @@ of the fragment's units are changed to the earlier date by subtracting
 
 A fragment may omit any size 1 dimension for which the size of the
 fragment's location along the corresponding aggregated dimension is
-also size 1. Any nissing size 1 dimensions will be inserted into the
-fragment's data in the approriate positions.
+also size 1. Any missing size 1 dimensions will be inserted into the
+fragment's data in the appropriate positions.
 
 For instance, if a fragment's shape given by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the
-fragement's data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
+fragment's data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 
 ### Example 2
