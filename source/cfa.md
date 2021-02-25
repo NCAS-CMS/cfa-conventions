@@ -63,22 +63,22 @@ aggregate them are provided by the `aggregated_data` attribute. This
 attribute takes a string value, the string being comprised of
 blank-separated elements of the form `"term: variable"`, where `term`
 is a case-insensitive keyword that identifies a particular aggregation
-instruction, and `variable` is the name of a variable that contains
-values that configure that instruction for each fragment. The order of
-elements is not significant.
+instruction, and `variable` is the name of a variable that configures
+that instruction for each fragment. The order of elements is not
+significant.
 
-Each variable referenced by the `aggregated_data` attribute must span
-the fragment dimensions in the same relative order as the aggregated
-dimensions, so that its values are easily associated with both
-individual fragments and the aggregated data. If an aggregation
-definition component requires multiple values per fragment then its
-variable may also have one or more extra trailing dimensions.
+A variable referenced by the `aggregated_data` attribute must span
+only the fragment dimensions in the same relative order as the
+aggregated dimensions, with the possibility of extra trailing
+dimensions if these are allowed by the aggregation instruction.
 
-The terms of the aggregation definition are `index`, `location`,
-`file`, `format` and `address`. The variables referenced by each of
-these are defined as follows:
+The terms of the aggregation instructions, with descriptions of their
+variables, are as follows:
 
 `index`
+
+* For each fragment, identifies its position in the orthogonal
+  multidimensional array of fragements.
 
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
@@ -88,6 +88,9 @@ these are defined as follows:
   dimensions.
 
 `location`
+
+* For each fragment, identifies the part of the aggregated data for
+  which the fragment provides values.
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated dimensions that correspond to each fragment. For each
@@ -100,10 +103,12 @@ these are defined as follows:
 
 `file`
 
-* Names the string-valued variable containing the URIs of the
-  fragments. Each value identifies the external resource which
-  contains the fragment. Fragments stored in the parent file must be
-  represented by missing values.
+* For each fragment, identifies the file in which it is stored.
+
+* Names the string-valued variable containing the URIs of the files
+  containing the fragments. Each value identifies the external
+  resource which contains the fragment. Fragments stored in the parent
+  file must be represented by missing values.
 
 * The `file` term may be omitted if all fragments are stored as
   variables in the parent file.
@@ -120,6 +125,9 @@ these are defined as follows:
   values.
   
 `format`
+
+* For each fragment, identifies the format of the file in which it is
+  stored.
 
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.
@@ -144,6 +152,9 @@ these are defined as follows:
   these conventions.
 
 `address`
+
+* For each fragment, identifies the address of the fragment within its
+  file.
 
 * Names the variable containing each fragment's address within its
   file. If the fragment is in the parent file then the address is the
