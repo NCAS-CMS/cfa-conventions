@@ -11,9 +11,9 @@ data from other sources. When created by an application program, the
 data of an aggregated variable is called its *aggregated data*. The
 aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
-fragment is contained in an external file, or may be another variable
-contained in the same file as the aggregated variable (i.e the *parent
-file*).
+fragment is contained in either an external file or else is described
+by another variable contained in the same file as the aggregated
+variable (i.e the *parent file*).
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
@@ -25,7 +25,7 @@ The dimensions of the aggregated data, called the *aggregated
 dimensions* must exist as dimensions in the parent file and must be
 stored with the `aggregated_dimensions` attribute, and the presence of
 an `aggregated_dimensions` attribute will identify an aggregated
-variable. Therefore the `aggregated_data` attribute must not be
+variable. Therefore the `aggregated_dimensions` attribute must not be
 present on any variables that do not have aggregated data. The value
 of the `aggregated_dimensions` attribute is a blank separated list of
 the aggregated dimension names given in the order which matches the
@@ -59,13 +59,13 @@ will have size 4. An aggregated dimension of any size may be
 associated with a fragment dimension of size 1.
 
 The definitions of the fragments and the instructions on how to
-aggregate them, i.e. the *aggregation definition*, are provided by the
-`aggregated_data` attribute. This attribute takes a string value, the
-string being comprised of blank-separated elements of the form `"term:
-variable"`, where `term` is a case-insensitive keyword that identifies
-a component of the aggregation definition, and `variable` is the name
-of a variable that contains the values that configure the component
-for each fragment. The order of elements is not significant.
+aggregate them are provided by the `aggregated_data` attribute. This
+attribute takes a string value, the string being comprised of
+blank-separated elements of the form `"term: variable"`, where `term`
+is a case-insensitive keyword that identifies a particular aggregation
+instruction, and `variable` is the name of a variable that contains
+values that configure that instruction for each fragment. The order of
+elements is not significant.
 
 Each variable referenced by the `aggregated_data` attribute must span
 the fragment dimensions in the same relative order as the aggregated
