@@ -257,16 +257,14 @@ external files are netCDF files, the `format` term of the
 Each fragment has a generic form for which
 
 * the fragment's data provides the values for a unique part of the
-  aggregated data,
+  aggregated data, as defined by the `location` term of the
+  aggregation instructions,
 
 * the entirety of the fragment's data contributes to the aggregated
   data,
 
-* each dimension of the fragment's data corresponds to a unique
-  aggregated dimension,
-
-* the fragment's data dimensions have the same relative order as the
-  aggregated dimensions in the aggregated data,
+* the fragment's data has the same number of dimensions in the same
+  order as the aggregated data,
 
 * each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
@@ -274,9 +272,9 @@ Each fragment has a generic form for which
 
 * the fragment has the same physical units as the aggregated variable,
 
-* any other fragment attributes, and associated metadata variables
-  associated with the fragment (such as coordinate variables) are
-  ignored.
+* any other fragment attributes, as well as all associated metadata
+  variables associated with the fragment (such as coordinate
+  variables), are ignored.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
@@ -289,10 +287,10 @@ The following fragment manipulations are allowed:
 ### Units and calendar
 
 A fragment may have any units that are equivalent, but not necessarily
-equals, to the units of the aggregated variable. The fragment's units
-are changed to the aggregated variable's units, if required, by
-applying an appropriate additive offset and/or multiplicative scale
-factor to the fragment's data. For reference time units, the calendars
+equal, to the units of the aggregated variable. The fragment's units
+will be changed to the aggregated variable's units, if required, by
+applying the appropriate multiplicative scale factor and/or additive
+offset to the fragment's data. For reference time units, the calendars
 of the aggregated variable and a fragment must also be equivalent. For
 fragments contained in the parent file or in external netCDF files,
 the units attribute must be defined for data that represent
@@ -300,21 +298,28 @@ dimensional quantities. Specification of the units and calendar for
 fragments stored in other file formats is not described in these
 conventions.
 
+For instance, if the aggregated variable units are degrees Fahrenheit
+and a fragment has units of degrees Celsius, then the fragment's units
+are changed to degrees Fahrenheit by multiplying the fragment's data
+by 1.8 and then adding 32.
+
 For instance, if the aggregated variable units are `"days since
-2001-01-01"` in the Gregorian calendar, and a fragment has units of
+2001-01-01"` in the Gregorian calendar and a fragment has units of
 `"days since 2002-01-1"` in the same calendar, then the reference time
 of the fragment's units are changed to the earlier date by subtracting
 365 from the fragment's data.
 
-### Missing dimensions
+### Missing size 1 dimensions
 
-If a fragment has fewer dimensions than the aggregated data then the
-missing dimensions must be inserted into the fragment's data as size 1
-dimensions.
+A fragment may omit any size 1 dimension for which the size of the
+fragment's location along the corresponding aggregated dimension is
+also size 1. Any nissing size 1 dimensions will be inserted into the
+fragment's data in the approriate positions.
 
-For instance, in Example 1 each fragment's data in the external files
-could have shape `(6, 73, 144)`, instead of the shape `(6, 1, 73,
-144)` required by the generic form.
+For instance, if a fragment's shape given by the `location` term of
+the aggregation instructions is `(6, 1, 73, 144)`, then the
+fragement's data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
+
 
 ### Example 2
 
