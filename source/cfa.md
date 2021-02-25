@@ -277,10 +277,9 @@ Each fragment has a generic form for which
   variables), are ignored.
 
 For fragments contained in the parent file or in external netCDF
-files, the units attribute must be defined for data that represent
-dimensional quantities. Specification of the units and calendar for
-fragments stored in other file formats is not described in these
-conventions.
+files, the units must be defined for data that represent dimensional
+quantities. Specification of the units for fragments stored in other
+file formats is not described in these conventions.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
