@@ -18,34 +18,35 @@ variable (i.e the *parent file*).
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
-`standard_name` and `units`), with the addition of special attributes
-that provide instructions on how to create the aggregated data.
+**`standard_name`** and **`units`**), with the addition of special
+attributes that provide instructions on how to create the aggregated
+data.
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
 stored with the **`aggregated_dimensions`** attribute. The presence of
-an `aggregated_dimensions` attribute will identify an aggregated
-variable, therefore the `aggregated_dimensions` attribute must not be
-present on any variables that do not have aggregated data. The value
-of the `aggregated_dimensions` attribute is a blank separated list of
-the aggregated dimension names given in the order which matches the
-dimensions of the aggregated data. If the aggregated data is scalar
-then the value of the `aggregated_dimensions` attribute must be an
-empty string.
+an **`aggregated_dimensions`** attribute will identify an aggregated
+variable, therefore the **`aggregated_dimensions`** attribute must not
+be present on any variables that do not have aggregated data. The
+value of the **`aggregated_dimensions`** attribute is a blank
+separated list of the aggregated dimension names given in the order
+which matches the dimensions of the aggregated data. If the aggregated
+data is scalar then the value of the **`aggregated_dimensions`**
+attribute must be an empty string.
 
 The dimensions listed by the **`aggregated_dimensions`** attribute
 constrain the dimensions that may be spanned by variables referenced
 from any of the other attributes, in the same way that the array
 dimensions perform that role for a non-aggregated variable. For
-instance, all variables named by the `cell_measures` attribute of an
-aggregated data variable must span a subset of zero or more of the
-dimensions given by the `aggregated_dimensions` attribute; or the
-variable named by the `bounds` attribute of an aggregated coordinate
-variable must span all of the aggregated dimensions in the same order,
-as well as the trailing bounds dimension. Any coordinate variable that
-shares its name with an aggregated dimension of an aggregated data
-variable will be considered as part of the data variable's domain
-definition.
+instance, all variables named by the **`cell_measures`** attribute of
+an aggregated data variable must span a subset of zero or more of the
+dimensions given by the **`aggregated_dimensions`** attribute; or the
+variable named by the **`bounds`** attribute of an aggregated
+coordinate variable must span all of the aggregated dimensions in the
+same order, as well as the trailing bounds dimension. Any coordinate
+variable that shares its name with an aggregated dimension of an
+aggregated data variable will be considered as part of the data
+variable's domain definition.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions, called *fragment dimensions", as
@@ -199,7 +200,7 @@ fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
 in an external netCDF file in a variable call `temp`. As all of the
 external files are netCDF files, the `format` term of the
-`aggregated_data` attribute is not required.
+**`aggregated_data`** attribute is not required.
 
     dimensions:
       // Aggregated dimensions
@@ -337,7 +338,7 @@ fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions. One fragment
 is stored in an external file and the other is stored the parent file
 as variable `temp2`. As all of the external files are netCDF files,
-the `format` term of the `aggregated_data` attribute is not
+the `format` term of the **`aggregated_data`** attribute is not
 required. The fragment stored in the parent file has different but
 equivalent units to the aggregated variable, and omits the size 1
 `level` dimension.
@@ -413,7 +414,7 @@ An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
 in the parent file. As there are no external files, the `file` and
-`format` terms of the `aggregated_data` attribute are not
+`format` terms of the **`aggregated_data`** attribute are not
 required. The fragments and aggregation definition variables in this
 case are stored in a child group called `aggregation`.
 
@@ -494,7 +495,7 @@ fragments. Each fragment spans half of the aggregated `time`
 dimension, either the northern or southern hemisphere, and the whole
 of the other two aggregated dimensions. The fragments are stored in
 external netCDF files. As all of the external files are netCDF files,
-the `format` term of the `aggregated_data` attribute is not
+the `format` term of the **`aggregated_data`** attribute is not
 required. The aggregation definition variables are stored in a child
 group called `aggregation`. One of the fragments has been defined by
 two different external resources (one "local" and one "remote"), each
@@ -599,7 +600,7 @@ the same parent file. There are two external netCDF files, each of
 which contains a fragment for each aggregated variable. The
 aggregation definition variables for each aggregated variable are
 stored in different groups (`aggregation_temp` and
-`aggregation_time`), but the `file` terms of the `aggregated_data`
+`aggregation_time`), but the `file` terms of the **`aggregated_data`**
 attributes refer to a variable in the root group that stores the
 external file names that apply to both aggregation variables.
 
