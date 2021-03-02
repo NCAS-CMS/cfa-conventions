@@ -22,10 +22,10 @@ container for the usual attributes that define the data (such as
 that provide instructions on how to create the aggregated data.
 
 The dimensions of the aggregated data, called the *aggregated
-dimensions* must exist as dimensions in the parent file and must be
-stored with the `aggregated_dimensions` attribute, and the presence of
+dimensions*, must exist as dimensions in the parent file and must be
+stored with the **`aggregated_dimensions`** attribute. The presence of
 an `aggregated_dimensions` attribute will identify an aggregated
-variable. Therefore the `aggregated_dimensions` attribute must not be
+variable, therefore the `aggregated_dimensions` attribute must not be
 present on any variables that do not have aggregated data. The value
 of the `aggregated_dimensions` attribute is a blank separated list of
 the aggregated dimension names given in the order which matches the
@@ -33,7 +33,7 @@ dimensions of the aggregated data. If the aggregated data is scalar
 then the value of the `aggregated_dimensions` attribute must be an
 empty string.
 
-The dimensions listed by the `aggregated_dimensions` attribute
+The dimensions listed by the **`aggregated_dimensions`** attribute
 constrain the dimensions that may be spanned by variables referenced
 from any of the other attributes, in the same way that the array
 dimensions perform that role for a non-aggregated variable. For
@@ -48,37 +48,42 @@ variable will be considered as part of the data variable's domain
 definition.
 
 The fragments are organised into an orthogonal multidimensional array
-with the same number of dimensions as the aggregated data. Therefore
-each aggregated dimension has a corresponding *fragment dimension*
-whose size is the number of fragments along an aggregated dimension,
-and this size must be no greater than the aggregated dimension
-size. For instance, if an aggregated dimension of size 100 has been
-fragmented into three fragments spanning 20 values each and one
-fragment spanning 40 values, then the corresponding fragment dimension
-will have size 4. An aggregated dimension of any size may be
-associated with a fragment dimension of size 1.
+with the same number of dimensions, called *fragment dimensions", as
+the aggregated data. The size of a fragment dimension is the number of
+fragments that span its corresponding aggregated dimension. For
+instance, if an aggregated dimension of size 100 has been fragmented
+into three fragments spanning 20 values each and one fragment spanning
+40 values, then the corresponding fragment dimension will have size 4;
+and an aggregated dimension of any size may be associated with a
+fragment dimension of size 1.
 
 The definitions of the fragments and the instructions on how to
-aggregate them are provided by the `aggregated_data` attribute. This
-attribute takes a string value, the string being comprised of
+aggregate them are provided by the **`aggregated_data`**
+attribute. This attribute takes a string value comprising
 blank-separated elements of the form `"term: variable"`, where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
 significant.
 
-A variable referenced by the `aggregated_data` attribute must span
-only the fragment dimensions in the same relative order as the
-aggregated dimensions, with the possibility of extra trailing
-dimensions if these are allowed by the aggregation instruction.
+A variable referenced by the **`aggregated_data`** attribute must span
+the fragment dimensions in the same relative order as the aggregated
+dimensions with the possibility of extra trailing dimensions if these
+are allowed by the aggregation instruction. No other dimensions may be
+spanned by variables acting as aggregation instructions.
 
-The terms of the aggregation instructions, with descriptions of their
-variables, are as follows:
+An aggregation instruction `term` may be standardized or
+non-standardized, with the understanding that application programs
+should ignore terms that they do not recognise or which are irrelevant
+for their purposes. The standardized aggregation instruction terms,
+some of which are mandatory, are:
 
 `index`
 
 * For each fragment, identifies its position in the orthogonal
   multidimensional array of fragments.
+
+* This term must be defined.
 
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
@@ -91,6 +96,8 @@ variables, are as follows:
 
 * For each fragment, identifies the part of the aggregated data for
   which the fragment provides values.
+
+* This term must be defined.
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated dimensions that correspond to each fragment. For each
@@ -157,6 +164,8 @@ variables, are as follows:
 
 * For each fragment, identifies the address of the fragment within its
   file.
+
+* This term must be defined.
 
 * Names the variable containing each fragment's address within its
   file. If the fragment is in the parent file then the address is the
