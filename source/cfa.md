@@ -313,8 +313,8 @@ a fragment must also be equivalent.
 For instance, if the aggregated variable units are `"days since
 2001-01-01"` in the Gregorian calendar and a fragment has units of
 `"days since 2002-01-1"` in the same calendar, then the reference time
-of the fragment's units are changed to the earlier date by subtracting
-365 from the fragment's data.
+of the fragment's units are changed to the earlier date by adding 365
+to the fragment's data.
 
 ### Missing size 1 dimensions
 
@@ -322,8 +322,8 @@ A fragment may omit any size 1 dimension for which the size of the
 fragment's location along the corresponding aggregated dimension is
 also size 1. Any missing size 1 dimensions will be inserted into the
 fragment's data in the appropriate positions. For instance, if a
-fragment's shape defined by the `location` term of the aggregation
-instructions is `(6, 1, 73, 144)`, then the fragment's data could have
+fragment's shape is defined by the `location` term of the aggregation
+instructions as `(6, 1, 73, 144)`, then the fragment's data could have
 shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 ### Example 2
@@ -406,12 +406,14 @@ equivalent units to the aggregated variable, and omits the size 1
 ### Example 3
 
 An aggregated data variable whose aggregated data comprises two
-fragments. Each fragment spans half of the aggregated `time` dimension
-and the whole of the other three aggregated dimensions, and is stored
-in the parent file. As there are no external files, the `file` and
-`format` terms of the **`aggregated_data`** attribute are not
-required. The fragments and aggregation definition variables in this
-case are stored in a child group called `aggregation`.
+fragments. Each fragment is stored in the parent file and spans half
+of the aggregated `time` dimension and the whole of the `latitude` and
+`longitude` dimensions, but does not span the size 1 `level`
+dimension. As there are no external files, the `file` and `format`
+terms of the **`aggregated_data`** attribute are not required. The
+fragments and aggregation definition variables in this case are stored
+in a child group called `aggregation`. The `temp2` fragment has
+different but equivalent units to the aggregated varable.
 
     dimensions:
       // Aggregated dimensions
