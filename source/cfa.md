@@ -50,10 +50,10 @@ variable's domain definition.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions as the aggregated data. Each
-dimension of this array is called a *fragment dimension* and
+dimension of this array is called a *fragment dimension*, and
 corresponds to the aggregated dimension with the same relative
-poistion in the aggregeted data. The size of a fragment dimension is
-the numbber of fragments that span its corresponding aggregated
+position in the aggregated data. The size of a fragment dimension is
+the number of fragments that span its corresponding aggregated
 dimension. For instance, if an aggregated dimension of size 100 has
 been fragmented into three fragments spanning 20 values each and one
 fragment spanning 40 values, then the corresponding fragment dimension
@@ -76,7 +76,7 @@ are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
 
-The value of a `term` token indentifiying an aggregation instruction
+The value of a `term` token identifying an aggregation instruction
 may be standardized or non-standardized, with the understanding that
 application programs should ignore terms that they do not recognise or
 which are irrelevant for their purposes. The standardized aggregation
@@ -263,32 +263,29 @@ external files are netCDF files, the `format` term of the
 
 ## Fragment Storage
 
-Each fragment has a generic form for which
+Each fragment has a generic form for which:
 
-* the fragment's data provides the values for a unique part of the
+* The fragment's data provides the values for a unique part of the
   aggregated data, as defined by the `location` term of the
-  aggregation instructions,
+  aggregation instructions.
 
-* the entirety of the fragment's data contributes to the aggregated
-  data,
+* The entirety of the fragment's data contributes to the aggregated
+  data.
 
-* the fragment's data has the same number of dimensions in the same
-  order as the aggregated data,
+* The fragment's data has the same number of dimensions in the same
+  order as the aggregated data.
 
-* each dimension of the fragment's data has the same sense of
+* Each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
-  space) as its corresponding aggregated dimension,
+  space) as its corresponding aggregated dimension.
 
-* the fragment has the same physical units as the aggregated variable,
+* The fragment has the same physical units as the aggregated variable,
+  and if the fragment has no defined units then its data is assumed to
+  have the same units as the aggregated variable.
 
-* any other fragment attributes, as well as all associated metadata
+* Any other fragment attributes, as well as all associated metadata
   variables associated with the fragment (such as coordinate
   variables), are ignored.
-
-For fragments contained in the parent file or in external netCDF
-files, the units must be defined for data that represent dimensional
-quantities. Specification of the units for fragments stored in other
-file formats is not described in these conventions.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements, providing that it is possible to unambiguously convert
@@ -299,16 +296,16 @@ the application program that is managing the aggregation.
 The following fragment manipulations are allowed:
 
 ### Units and calendar
-
-A fragment may have any units that are equivalent, but not necessarily
-equal, to the units of the aggregated variable. The fragment's units
-will be changed to the aggregated variable's units, if required, by
-applying the appropriate multiplicative scale factor and/or additive
-offset to the fragment's data. For instance, if the aggregated
-variable units are degrees Fahrenheit and a fragment has units of
-degrees Celsius, then the fragment's units are changed to degrees
-Fahrenheit by multiplying the fragment's data by 1.8 and then adding
-32.
+ 
+When a fragment has defined units then they must be equivalent, but
+not necessarily equal, to the units of the aggregated variable. The
+fragment's units must be changed to the aggregated variable's units,
+if required, by applying the appropriate multiplicative scale factor
+and/or additive offset to the fragment's data. For instance, if the
+aggregated variable units are degrees Fahrenheit and a fragment has
+units of degrees Celsius, then the fragment's units are changed to
+degrees Fahrenheit by multiplying the fragment's data by 1.8 and then
+adding 32.
 
 For reference time units, the calendars of the aggregated variable and
 a fragment must also be equivalent.
@@ -325,10 +322,9 @@ A fragment may omit any size 1 dimension for which the size of the
 fragment's location along the corresponding aggregated dimension is
 also size 1. Any missing size 1 dimensions will be inserted into the
 fragment's data in the appropriate positions. For instance, if a
-fragment's shape given by the `location` term of the aggregation
+fragment's shape defined by the `location` term of the aggregation
 instructions is `(6, 1, 73, 144)`, then the fragment's data could have
 shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
-
 
 ### Example 2
 
