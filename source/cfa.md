@@ -49,14 +49,16 @@ aggregated data variable will be considered as part of the data
 variable's domain definition.
 
 The fragments are organised into an orthogonal multidimensional array
-with the same number of dimensions, called *fragment dimensions", as
-the aggregated data. The size of a fragment dimension is the number of
-fragments that span its corresponding aggregated dimension. For
-instance, if an aggregated dimension of size 100 has been fragmented
-into three fragments spanning 20 values each and one fragment spanning
-40 values, then the corresponding fragment dimension will have size 4;
-and an aggregated dimension of any size may be associated with a
-fragment dimension of size 1.
+with the same number of dimensions as the aggregated data. Each
+dimension of this array is called a *fragment dimension* and
+corresponds to the aggregated dimension with the same relative
+poistion in the aggregeted data. The size of a fragment dimension is
+the numbber of fragments that span its corresponding aggregated
+dimension. For instance, if an aggregated dimension of size 100 has
+been fragmented into three fragments spanning 20 values each and one
+fragment spanning 40 values, then the corresponding fragment dimension
+will have size 4; an aggregated dimension of any size may be
+associated with a fragment dimension of size 1.
 
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
@@ -70,14 +72,15 @@ significant.
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
 dimensions with the possibility of extra trailing dimensions if these
-are allowed by the aggregation instruction. No other dimensions may be
-spanned by variables acting as aggregation instructions.
+are allowed or required by the aggregation instruction. No other
+dimensions may be spanned by variables containing aggregation
+instructions.
 
-An aggregation instruction `term` may be standardized or
-non-standardized, with the understanding that application programs
-should ignore terms that they do not recognise or which are irrelevant
-for their purposes. The standardized aggregation instruction terms,
-some of which are mandatory, are:
+The value of a `term` token indentifiying an aggregation instruction
+may be standardized or non-standardized, with the understanding that
+application programs should ignore terms that they do not recognise or
+which are irrelevant for their purposes. The standardized aggregation
+instruction terms, some of which are mandatory, are:
 
 `index`
 
@@ -89,9 +92,9 @@ some of which are mandatory, are:
 * Names the integer-valued variable containing the indices of each
   fragment along the fragment dimensions. For each fragment, this
   variable stores the zero-based index of its position along each
-  fragment dimension. Therefore, the variable requires one extra
-  trailing dimension whose size is equal to the number of fragment
-  dimensions.
+  fragment dimension. Therefore, the `index` variable requires one
+  extra trailing dimension whose size is equal to the number of
+  fragment dimensions.
 
 `location`
 
@@ -102,12 +105,12 @@ some of which are mandatory, are:
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated dimensions that correspond to each fragment. For each
-  fragment and each aggregated dimension, this variable stores the two
-  zero-based indices for the beginning and end of the range of indices
-  that defines the position of the fragment along the aggregated
-  dimension. Therefore, the variable requires two extra trailing
-  dimensions. The size of the first is equal to the number of fragment
-  dimensions, and the second has size 2.
+  fragment and each aggregated dimension, this variable stores the
+  first and last of the range of zero-based indices that defines the
+  position of the fragment along the aggregated dimension. Therefore,
+  the `location` variable requires two extra trailing dimensions. The
+  size of the first is equal to the number of aggregation dimensions,
+  and the second has size 2.
 
 `file`
 
@@ -154,8 +157,8 @@ some of which are mandatory, are:
   `"nc"`.
 
 * The `format` variable must span exactly the same dimensions in the
-  same order as the `file` variable. Missing values should be used
-  whenever the corresponding location in the `file` variable is a
+  same order as the `file` variable. Missing values should only be
+  used whenever the corresponding location in the `file` variable is a
   missing value.
 
 * Specification of other file formats is allowed, but not described in
@@ -183,15 +186,11 @@ some of which are mandatory, are:
   be padded with missing values.
 	  
 * If there is no `file` term then all fragments must be stored in the
-  parent file, and so no extra trailing dimensions nor missing values
-  are allowed.
+  parent file, and no extra trailing dimensions nor missing values are
+  allowed.
      
 * Addressing for other file formats is allowed, but not described in
   these conventions.
-
-Additional terms are allowed with the understanding that application
-programs should ignore terms that they do not recognise or which are
-irrelevant for their purposes.
 
 ### Example 1
 
