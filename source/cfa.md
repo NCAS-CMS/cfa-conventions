@@ -24,7 +24,7 @@ data. The data type of the aggregated variable is the data type of the
 aggregated data.
 
 An aggregated variable must not define any of techniques for the
-reduction of dataset size, such as (but no limited to) packing,
+reduction of dataset size, such as (but not limited to) packing,
 compression by gathering, discrete sampling geometry ragged array
 representations, etc. However, any individual fragment may be packed
 or compressed, with the understanding that the fragment's data will be
