@@ -90,14 +90,12 @@ The value of a `term` token identifying an aggregation instruction
 may be standardized or non-standardized, with the understanding that
 application programs should ignore terms that they do not recognise or
 which are irrelevant for their purposes. The standardized aggregation
-instruction terms, some of which are mandatory, are:
+instruction terms, all of which are mandatory, are:
 
 `location`
 
 * For each fragment, identifies the part of the aggregated data for
   which the fragment provides values.
-
-* This term must be defined.
 
 * Names the integer-valued variable containing the index ranges of the
   aggregated dimensions that correspond to each fragment. For each
@@ -116,12 +114,6 @@ instruction terms, some of which are mandatory, are:
   which may be fully qualified URLs, containing the fragments. Each
   value identifies the external resource which contains the fragment.
 
-* Fragments stored in the parent file must be represented by missing
-  values.
-
-* The `file` term may be omitted if all fragments are stored as
-  variables in the parent file.
-
 * An extra trailing dimension may be included to describe multiple
   URIs for the same fragment, any one of which may equally be used to
   fill its position in the aggregated data. In this case, it is up to
@@ -132,7 +124,12 @@ instruction terms, some of which are mandatory, are:
   external files are not allowed, so the extra trailing dimension for
   such a fragment must always be completely filled with missing
   values.
-  
+
+* Fragments stored in the parent file are be represented by a missing
+  value in conjunction with a non-missing value in the corresponding
+  location of the `address` variable. If there is a trailing dimension
+  then it must be padded with missing values.
+ 
 `format`
 
 * For each fragment, identifies the format of the file in which it is
@@ -141,21 +138,13 @@ instruction terms, some of which are mandatory, are:
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.
 
-* The `format` term must be omitted if there is no `file` term.
-
-* If all fragments are stored in the parent file or in external netCDF
-  files then the `format` term may be omitted.
-	  
-* A fragment stored in the parent file is represented by a missing
-  value.
+* The `format` variable must span exactly the same dimensions in the
+  same order as the `file` variable. Missing values must be used
+  whenever the corresponding location in the `file` variable is a
+  missing value.
   
 * A fragment in an external netCDF file is signified by a value of
   `"nc"`.
-
-* The `format` variable must span exactly the same dimensions in the
-  same order as the `file` variable. Missing values should only be
-  used whenever the corresponding location in the `file` variable is a
-  missing value.
 
 * Specification of other file formats is allowed, but not described in
   these conventions.
@@ -165,26 +154,29 @@ instruction terms, some of which are mandatory, are:
 * For each fragment, identifies the address of the fragment within its
   file.
 
-* This term must be defined.
-
-* Names the variable containing each fragment's address within its
-  file. If the fragment is in the parent file then the address is the
+* The `address` variable must span exactly the same dimensions in the
+  same order as the `file` variable.
+  
+* If the fragment is in the parent file then the address is the
   variable name, otherwise the address is dependent on the format of
   the fragment's external file. For an external netCDF file, the
   address is also the name of the variable that contains the fragment.
 
-* If there is a `file` variable then the `address` variable must span
-  exactly the same dimensions in the same order. Missing values should
-  be used whenever the corresponding location in the `file` variable
-  has a missing value, except for fragments stored in the parent
-  file. For a fragment stored in the parent file, exactly one address
-  must be provided, and if there is a trailing dimension then it must
-  be padded with missing values.
-	  
-* If there is no `file` term then all fragments must be stored in the
-  parent file, and no extra trailing dimensions nor missing values are
-  allowed.
-     
+* For fragments stored external files, an address must be provided
+  corresponding to each named file, and missing values must be used
+  whenever the corresponding location in the `file` variable is a
+  missing value.
+
+* For fragments stored in the parent file, exactly one address must
+  be provided, and if there is a trailing dimension then it must be
+  padded with missing values.
+
+* Fragments that are undefined both in external files and in the
+  parent file are indicated by a missing value both in the `file`
+  variable and in the corresponding location in the `address`
+  variable. If there is a trailing dimension then it must be padded
+  with missing values for both variables.
+  
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
