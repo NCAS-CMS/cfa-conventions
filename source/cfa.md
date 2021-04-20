@@ -13,14 +13,22 @@ aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
 fragment is contained in either an external file or else is described
 by another variable contained in the same file as the aggregated
-variable (i.e the *parent file*).
+variable (i.e. the *parent file*).
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data.
+data. The data type of the aggregated variable is the data type of the
+aggregated data.
+
+An aggregated variable must not define any of techniques for the
+reduction of dataset size, such as (but not limited to) packing,
+compression by gathering, discrete sampling geometry ragged array
+representations, etc. However, any individual fragment may be packed
+or compressed, with the understanding that the fragment's data will be
+unpacked or uncompressed prior to use in the aggregated data.
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
@@ -58,7 +66,9 @@ dimension. For instance, if an aggregated dimension of size 100 has
 been fragmented into three fragments spanning 20 values each and one
 fragment spanning 40 values, then the corresponding fragment dimension
 will have size 4; an aggregated dimension of any size may be
-associated with a fragment dimension of size 1.
+associated with a fragment dimension of size 1. The fragments must be
+arranged in the same relative multidimensional order as their
+positions in the aggregated data.
 
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
@@ -71,7 +81,7 @@ significant.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
-dimensions with the possibility of extra trailing dimensions if these
+dimensions, with the possibility of extra trailing dimensions if these
 are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
@@ -81,20 +91,6 @@ may be standardized or non-standardized, with the understanding that
 application programs should ignore terms that they do not recognise or
 which are irrelevant for their purposes. The standardized aggregation
 instruction terms, some of which are mandatory, are:
-
-`index`
-
-* For each fragment, identifies its position in the orthogonal
-  multidimensional array of fragments.
-
-* This term must be defined.
-
-* Names the integer-valued variable containing the indices of each
-  fragment along the fragment dimensions. For each fragment, this
-  variable stores the zero-based index of its position along each
-  fragment dimension. Therefore, the `index` variable requires one
-  extra trailing dimension whose size is equal to the number of
-  fragment dimensions.
 
 `location`
 
@@ -116,9 +112,9 @@ instruction terms, some of which are mandatory, are:
 
 * For each fragment, identifies the file in which it is stored.
 
-* Names the string-valued variable containing the URIs of the files
-  containing the fragments. Each value identifies the external
-  resource which contains the fragment.
+* Names the string-valued variable containing the URIs of the files,
+  which may be fully qualified URLs, containing the fragments. Each
+  value identifies the external resource which contains the fragment.
 
 * Fragments stored in the parent file must be represented by missing
   values.
@@ -222,8 +218,7 @@ external files are netCDF files, the `format` term of the
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
-        temp:aggregated_data = "index: aggregation_index 
-                                location: aggregation_location
+        temp:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
                                 address: aggregation_address" ;
       // Coordinate variables
@@ -240,15 +235,12 @@ external files are netCDF files, the `format` term of the
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
-      int aggregation_index(p_time, f_level, f_latitude, f_longitude, i) ;
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
-      aggregation_index = 0, 0, 0, 0,
-                          1, 0, 0, 0 ;
       aggregation_location = 0, 5,
                              0, 0,
                              0, 72,
@@ -279,13 +271,13 @@ Each fragment has a generic form for which:
   directionality (i.e. the sense in which it increasing in physical
   space) as its corresponding aggregated dimension.
 
-* The fragment has the same physical units as the aggregated variable,
-  and if the fragment has no defined units then its data is assumed to
-  have the same units as the aggregated variable.
+* The fragment has the same canonical physical units as the aggregated
+  variable, and if the fragment has no defined units then its data is
+  assumed to have the same units as the aggregated variable.
 
 * Any other fragment attributes, as well as all associated metadata
   variables associated with the fragment (such as coordinate
-  variables), are ignored.
+  variables), are ignored by the aggregated variable.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements providing that it is possible to unambiguously convert
@@ -325,6 +317,32 @@ instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
+### Data type
+
+A fragment may have a different data type to that of the aggregated
+variable. The fragment's data must be cast to the aggregated
+variable's data type.
+
+### Missing values
+
+A fragment may use any valid means for defining missing
+values. Missing values must be changed to values that the aggregated
+variable recognises as missing. It is up to the creator of the dataset
+to ensure that non-missing values in a fragment are not registered as
+missing in the aggregated data.
+
+### Packing
+
+A fragment may be packed. The fragment's data must be unpacked prior
+to insertion into the aggregated data.
+
+### Compression
+
+A fragment may be compressed. The fragment's
+data must be uncompressed prior to insertion into the aggregated
+data. In this case, the `location` term of the aggregation
+instructions describes the shape of the uncompressed fragment.
+
 ### Example 2
 
 An aggregated data variable whose aggregated data comprises two
@@ -358,8 +376,7 @@ equivalent units to the aggregated variable, and omits the size 1
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
-        temp:aggregated_data = "index: aggregation_index 
-                                location: aggregation_location
+        temp:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
                                 address: aggregation_address" ;
       // Coordinate variables
@@ -376,7 +393,6 @@ equivalent units to the aggregated variable, and omits the size 1
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
-      int aggregation_index(p_time, f_level, f_latitude, f_longitude, i) ;
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
@@ -387,8 +403,6 @@ equivalent units to the aggregated variable, and omits the size 1
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
-      aggregation_index = 0, 0, 0, 0,
-                          1, 0, 0, 0 ;
       aggregation_location = 0, 5,
                              0, 0,
                              0, 72,
@@ -427,8 +441,7 @@ different but equivalent units to the aggregated variable.
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
-        temp:aggregated_data = "index: /aggregation/index 
-                                location: /aggregation/location
+        temp:aggregated_data = "location: /aggregation/location
                                 address: /aggregation/address" ;
       // Coordinate variables
       double time(time) ;
@@ -459,7 +472,6 @@ different but equivalent units to the aggregated variable.
         j = 2 ;
       variables:
         // Aggregation definition variables
-        int index(f_time, f_level, f_latitude, f_longitude, i) ;
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
         // Fragment variables
@@ -469,8 +481,6 @@ different but equivalent units to the aggregated variable.
           temp2:units = "degreesC" ;
 
       data:    	   
-        index = 0, 0, 0, 0,
-                1, 0, 0, 0 ;
         location = 0, 5,
                    0, 0,
                    0, 72,
@@ -512,8 +522,7 @@ used in the aggregated data.
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
-        temp:aggregated_data = "index: /aggregation/index 
-                                location: /aggregation/location
+        temp:aggregated_data = "location: /aggregation/location
                                 file: /aggregation/file
                                 address: /aggregation/address" ;
       // Coordinate variables
@@ -549,7 +558,6 @@ used in the aggregated data.
         k = 2 ;
       variables:
         // Aggregation definition variables			 	  
-        int index(f_time, f_level, f_latitude, f_longitude, i) ;
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
@@ -559,10 +567,6 @@ used in the aggregated data.
           temp2:units = "degreesC" ;
 	      
       data:    	   
-        index = 0, 0, 0, 0,
-                1, 0, 0, 0,
-                0, 0, 1, 0,
-                1, 0, 1, 0 ;
         location = 0, 5,
                    0, 0,
                    0, 35,
@@ -621,8 +625,7 @@ external file names that apply to both aggregation variables.
         temp:units = "K" ;
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
-        temp:aggregated_data = "index: /aggregation_temp/index 
-                                location: /aggregation_temp/location
+        temp:aggregated_data = "location: /aggregation_temp/location
                                 file: aggregation_file	
                                 address: /aggregation_temp/address" ;
       // Coordinate variables
@@ -630,8 +633,7 @@ external file names that apply to both aggregation variables.
         time:standard_name = "time" ;
         time:units = "days since 2001-01-01" ;
         temp:aggregated_dimensions = "time" ;
-        temp:aggregated_data = "index: /aggregation_time/index 
-                                location: /aggregation_time/location
+        temp:aggregated_data = "location: /aggregation_time/location
                                 file: aggregation_file	
                                 address: /aggregation_time/address" ;
       double level(level) ;
@@ -654,13 +656,10 @@ external file names that apply to both aggregation variables.
     group: aggregation_temp {
       variables:
         // Aggregation definition variables
-        int index(f_time, f_level, f_latitude, f_longitude, i) ;
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
 
       data:    	   
-        index = 0, 0, 0, 0,
-                1, 0, 0, 0 ;
         location = 0, 5,
                    0, 0,
                    0, 72,
@@ -674,13 +673,10 @@ external file names that apply to both aggregation variables.
     group: aggregation_time {
       variables:
         // Aggregation definition variables
-        int index(f_time, f_level, f_latitude, f_longitude, i) ;
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
 
       data:    	   
-        index = 0,
-                1,
         location = 0, 5,
                    6, 11 ;
         address = "time", "time" ;
