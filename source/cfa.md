@@ -112,9 +112,9 @@ instruction terms, some of which are mandatory, are:
 
 * For each fragment, identifies the file in which it is stored.
 
-* Names the string-valued variable containing the URIs of the files
-  containing the fragments. Each value identifies the external
-  resource which contains the fragment.
+* Names the string-valued variable containing the URIs of the files,
+  which may be fully qualified URLs, containing the fragments. Each
+  value identifies the external resource which contains the fragment.
 
 * Fragments stored in the parent file must be represented by missing
   values.
