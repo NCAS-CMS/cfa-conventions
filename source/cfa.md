@@ -169,8 +169,10 @@ instruction terms, all of which are mandatory, are:
   padded with missing values.
 
 * Fragments that have no external files nor exist in the parent file
-  are indicated by a missing value. If there is a trailing dimension
-  then it must be padded with missing values.
+  are indicated by a missing value in conjunction with a missing value
+  in the corresponding location of the `file` variable. If there is a
+  trailing dimension then it must be padded with missing values for
+  both variables.
   
 * If the fragment is in the parent file then the address is the
   variable name, otherwise addresses are dependent on the format of
