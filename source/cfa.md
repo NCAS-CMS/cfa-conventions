@@ -123,9 +123,8 @@ instruction terms, all of which are mandatory, are:
 
 * Fragments stored in the parent file are be represented by a missing
   value in conjunction with a non-missing value in the corresponding
-  location of the `address` variable. Alternative versions of the
-  fragments are not allowed in this case, so if there is a trailing
-  dimension then it must be padded with missing values.
+  location of the `address` variable. If there is a trailing dimension
+  then it must be padded with missing values.
 
 * Fragments that have no external files nor exist in the parent file
   are indicated by a missing value in conjunction with a missing value
