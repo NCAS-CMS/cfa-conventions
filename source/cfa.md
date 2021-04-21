@@ -119,17 +119,20 @@ instruction terms, all of which are mandatory, are:
   fill its position in the aggregated data. In this case, it is up to
   application programs to choose the version of the fragment that it
   finds most preferable. If a fragment has fewer versions than others
-  then the trailing dimension must be padded with missing values. When
-  a fragment is stored in the parent file alternative fragments in
-  external files are not allowed, so the extra trailing dimension for
-  such a fragment must always be completely filled with missing
-  values.
+  then the trailing dimension must be padded with missing values.
 
 * Fragments stored in the parent file are be represented by a missing
   value in conjunction with a non-missing value in the corresponding
-  location of the `address` variable. If there is a trailing dimension
-  then it must be padded with missing values.
- 
+  location of the `address` variable. Alternative versions of the
+  fragments are not allowed in this case, so if there is a trailing
+  dimension then it must be padded with missing values.
+
+* Fragments that have no external files nor exist in the parent file
+  are indicated by a missing value in conjunction with a missing value
+  in the corresponding location of the `address` variable. If there is
+  a trailing dimension then it must be padded with missing values for
+  both variables.
+  
 `format`
 
 * For each fragment, identifies the format of the file in which it is
@@ -157,18 +160,14 @@ instruction terms, all of which are mandatory, are:
 * The `address` variable must span exactly the same dimensions in the
   same order as the `file` variable.
   
-* If the fragment is in the parent file then the address is the
-  variable name, otherwise the address is dependent on the format of
-  the fragment's external file. For an external netCDF file, the
-  address is also the name of the variable that contains the fragment.
-
 * For fragments stored external files, an address must be provided
   corresponding to each named file, and missing values must be used
   whenever the corresponding location in the `file` variable is a
   missing value.
 
-* For fragments stored in the parent file, exactly one address must
-  be provided, and if there is a trailing dimension then it must be
+* For fragments stored in the parent file, exactly one address must be
+  provided, and if there is a trailing dimension then the address must
+  be stored in its first elements and the trailing dimension must be
   padded with missing values.
 
 * Fragments that are undefined both in external files and in the
@@ -177,6 +176,17 @@ instruction terms, all of which are mandatory, are:
   variable. If there is a trailing dimension then it must be padded
   with missing values for both variables.
   
+* Fragments that have no external files nor exist in the parent file
+  are indicated by a missing value. If there is a trailing dimension
+  then it must be padded with missing values.
+  
+* If the fragment is in the parent file then the address is the
+  variable name, otherwise addresses are dependent on the format of
+  the fragment's external file.
+
+* For an external netCDF file, the address is the name of the variable
+  that contains the fragment.
+
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
