@@ -160,22 +160,15 @@ instruction terms, all of which are mandatory, are:
 * The `address` variable must span exactly the same dimensions in the
   same order as the `file` variable.
   
-* For fragments stored external files, an address must be provided
-  corresponding to each named file, and missing values must be used
-  whenever the corresponding location in the `file` variable is a
-  missing value.
+* For fragments stored in external files, an address must be provided
+  corresponding to each named file. If there is a trailing dimension
+  then it must be padded with missing values.
 
 * For fragments stored in the parent file, exactly one address must be
   provided, and if there is a trailing dimension then the address must
-  be stored in its first elements and the trailing dimension must be
+  be stored in its first element and the trailing dimension must be
   padded with missing values.
 
-* Fragments that are undefined both in external files and in the
-  parent file are indicated by a missing value both in the `file`
-  variable and in the corresponding location in the `address`
-  variable. If there is a trailing dimension then it must be padded
-  with missing values for both variables.
-  
 * Fragments that have no external files nor exist in the parent file
   are indicated by a missing value. If there is a trailing dimension
   then it must be padded with missing values.
