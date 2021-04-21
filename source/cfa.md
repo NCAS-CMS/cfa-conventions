@@ -79,9 +79,9 @@ instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
 significant.
 
-The definnition of a fragment alloweds for it to have no external
-files nor exist in the parent file. In this case a virtual fragment is
-assumed to exist that contains only missing values.
+The definition of a fragment allows for it to have no external files
+nor exist in the parent file. In this case a default virtual fragment
+is assumed to exist that contains only missing values.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
