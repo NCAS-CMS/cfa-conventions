@@ -11,9 +11,9 @@ data from other sources. When created by an application program, the
 data of an aggregated variable is called its *aggregated data*. The
 aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
-fragment is contained in either an external file or else is described
-by another variable contained in the same file as the aggregated
-variable (i.e. the *parent file*).
+fragment is contained in either an external file; or is described by
+another variable contained in the same file as the aggregated variable
+(i.e. the *parent file*); or assumes a default value.
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
@@ -78,6 +78,10 @@ is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
 significant.
+
+The definnition of a fragment alloweds for it to have no external
+files nor exist in the parent file. In this case a virtual fragment is
+assumed to exist that contains only missing values.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
