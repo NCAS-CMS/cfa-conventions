@@ -125,7 +125,7 @@ instruction terms, all of which are mandatory, are:
   finds most preferable. If a fragment has fewer versions than others
   then the trailing dimension must be padded with missing values.
 
-* Fragments stored in the parent file are be represented by a missing
+* Fragments stored in the parent file are to be represented by a missing
   value in conjunction with a non-missing value in the corresponding
   location of the `address` variable. If there is a trailing dimension
   then it must be padded with missing values.
@@ -678,5 +678,4 @@ external file names that apply to both aggregation variables.
         location = 0, 5,
                    6, 11 ;
         address = "time", "time" ;
-
 
