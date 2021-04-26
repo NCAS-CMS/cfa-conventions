@@ -3,7 +3,7 @@
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
 *v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, and Bryan
- Lawrence 2021-02-18*
+ Lawrence 2021-02-18 to 2021-04-26*
 
 An *aggregated variable* does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
@@ -571,13 +571,13 @@ used in the aggregated data.
                    0, 0,
                    0, 35,
                    0, 143,
-                   6, 11,
-                   0, 0,
-                   0, 35,
-                   0, 143,
                    0, 5,
                    0, 0,
                    36, 72,
+                   0, 143,
+                   6, 11,
+                   0, 0,
+                   0, 36,
                    0, 143,
                    6, 11,
                    0, 0,
@@ -681,4 +681,39 @@ external file names that apply to both aggregation variables.
                    6, 11 ;
         address = "time", "time" ;
 
+## Glossary
 
+*aggregated data*
+
+The data of an *aggregated variable* that exists as a set of
+instructions on how to build an array from one or more other arrays
+stored elsewhere.
+
+*aggregated variable*   
+
+An aggregated variable is a netCDF variable that does not contain its
+own data, rather it contains instructions on how to create its data
+as an aggregation of data from other sources.
+
+*aggregated dimensions*  
+
+A sequence of the named dimensions of the *aggregated data*, given in
+the same relative order as those dimensions occur in the aggregated
+data.
+
+*fragment*
+
+An indpendent, possibly self-describing, array that defines a
+contiguous part of the *aggregated data*. The aggregated data is
+entirely composed of a multidimensionsional orthogonal array of
+fragments.
+
+*fragment dimension*
+
+A dimension of the multidimensionsional orthogonal array of fragments
+that defines the *aggregated data*.
+
+*parent file*  
+
+The netCDF file that contains the *aggregated variable*, and may also
+contain some or all *fragments*.
