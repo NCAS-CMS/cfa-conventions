@@ -177,7 +177,7 @@ instruction terms, all of which are mandatory, are:
   dimension must comprise missing values.
   
 * If the fragment is a variable in the parent file then the address is
-  the that variable's name, otherwise addresses are dependent on the
+  that variable's name, otherwise addresses are dependent on the
   format of the fragment's external file.
 
 * For an external netCDF file, the address is the name of the variable
@@ -678,4 +678,3 @@ external file names that apply to both aggregation variables.
         location = 0, 5,
                    6, 11 ;
         address = "time", "time" ;
-
