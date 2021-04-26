@@ -683,37 +683,36 @@ external file names that apply to both aggregation variables.
 
 ## Glossary
 
-*aggregated data*
+**aggregated data**
 
 The data of an *aggregated variable* that exists as a set of
 instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
-*aggregated variable*   
+**aggregated variable**
 
-An aggregated variable is a netCDF variable that does not contain its
-own data, rather it contains instructions on how to create its data
-as an aggregation of data from other sources.
+A netCDF variable that does not contain its own data, rather it
+contains instructions on how to create its data as an aggregation of
+data from other sources.
 
-*aggregated dimensions*  
+**aggregated dimensions**
 
 A sequence of the named dimensions of the *aggregated data*, given in
 the same relative order as those dimensions occur in the aggregated
 data.
 
-*fragment*
+**fragment**
 
-An indpendent, possibly self-describing, array that defines a
+An independent, possibly self-describing, array that defines a
 contiguous part of the *aggregated data*. The aggregated data is
-entirely composed of a multidimensionsional orthogonal array of
-fragments.
+composed from a multi-dimensional orthogonal array of fragments.
 
-*fragment dimension*
+**fragment dimension**
 
-A dimension of the multidimensionsional orthogonal array of fragments
+A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
 
-*parent file*  
+**parent file**
 
 The netCDF file that contains the *aggregated variable*, and may also
-contain some or all *fragments*.
+contain some or all of the *fragments*.
