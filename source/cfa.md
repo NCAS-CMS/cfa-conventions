@@ -689,12 +689,6 @@ The data of an *aggregated variable* that exists as a set of
 instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
-**aggregated dimensions**
-
-A sequence of the named dimensions of the *aggregated data*, given in
-the same relative order as those dimensions occur in the aggregated
-data.
-
 **aggregated variable**
 
 A netCDF variable that does not contain its own data, rather it
