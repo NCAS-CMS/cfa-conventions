@@ -25,7 +25,7 @@ data.
 
 The data type of the aggregated variable is the data type of the
 aggregated data. Therefore, if an aggregated variable is defined as
-being packed, via the **`scale_factor`** and **add_offset``**
+being packed, via the **`scale_factor`** and **`add_offset`**
 attributes, then the aggregated data must be considered as being
 packed in the same manner.
 
