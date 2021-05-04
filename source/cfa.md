@@ -24,12 +24,18 @@ attributes that provide instructions on how to create the aggregated
 data. The data type of the aggregated variable is the data type of the
 aggregated data.
 
-An aggregated variable must not define any of techniques for the
-reduction of dataset size, such as (but not limited to) packing,
+An aggregated variable may be compressed by techniques such as
 compression by gathering, discrete sampling geometry ragged array
-representations, etc. However, any individual fragment may be packed
-or compressed, with the understanding that the fragment's data will be
-unpacked or uncompressed prior to use in the aggregated data.
+representations, etc. In this case the fragments are considered as
+parts of the compressed data.
+
+An aggregated variable may be defined as being packed via the use of
+the **`scale_factor`** or **`add_offset`** attributes. In this case
+the data type of the fragments must be identical to the data type of
+the aggregated variable.
+
+This is because the data types of the aggregated variable, and the
+**`scale_factor`** and **`add_offset`** attributes can not 
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
@@ -265,6 +271,8 @@ Each fragment has a generic form for which:
 * The fragment's data has the same number of dimensions in the same
   order as the aggregated data.
 
+* The fragment has the same data type as the aggregated variable.
+
 * Each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
   space) as its corresponding aggregated dimension.
@@ -317,9 +325,12 @@ data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 ### Data type
 
-A fragment may have a different data type to that of the aggregated
-variable. The fragment's data must be cast to the aggregated
-variable's data type.
+If the aggregated variable is not defined as having packed data, then
+a fragment may have a different data type to that of the aggregated
+variable. In this case the fragment's data must be cast to the
+aggregated variable's data type. If the aggregated variable does
+specify packed data, then all fragments must have the same data type
+the aggregated variable.
 
 ### Missing values
 
