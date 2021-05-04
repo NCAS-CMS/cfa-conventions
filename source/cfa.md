@@ -21,8 +21,13 @@ and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data. The data type of the aggregated variable is the data type of the
-aggregated data.
+data.
+
+The data type of the aggregated variable is the data type of the
+aggregated data. Therefore, if an aggregated variable is defined as
+being packed, via the **`scale_factor`** and **add_offset``**
+attributes, then the aggregated data must be considered as being
+packed in the same manner.
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
@@ -320,9 +325,7 @@ data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 If the aggregated variable is not defined as having packed data, then
 a fragment may have a different data type to that of the aggregated
 variable. In this case the fragment's data must be cast to the
-aggregated variable's data type. If the aggregated variable does
-specify packed data, then all fragments must have the same data type
-as the aggregated variable.
+aggregated variable's data type.
 
 ### Missing values
 
