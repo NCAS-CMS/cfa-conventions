@@ -24,19 +24,6 @@ attributes that provide instructions on how to create the aggregated
 data. The data type of the aggregated variable is the data type of the
 aggregated data.
 
-An aggregated variable may be compressed by techniques such as
-compression by gathering, discrete sampling geometry ragged array
-representations, etc. In this case the fragments are considered as
-parts of the compressed data.
-
-An aggregated variable may be defined as being packed via the use of
-the **`scale_factor`** or **`add_offset`** attributes. In this case
-the data type of the fragments must be identical to the data type of
-the aggregated variable.
-
-This is because the data types of the aggregated variable, and the
-**`scale_factor`** and **`add_offset`** attributes can not 
-
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
 stored with the **`aggregated_dimensions`** attribute. The presence of
@@ -76,6 +63,11 @@ will have size 4; an aggregated dimension of any size may be
 associated with a fragment dimension of size 1. The fragments must be
 arranged in the same relative multidimensional order as their
 positions in the aggregated data.
+
+An aggregated variable may be compressed by techniques such as
+compression by gathering, discrete sampling geometry ragged array
+representations, etc. In this case the aggregated dimensions are the
+dimensions of the compressed data.
 
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
@@ -330,7 +322,7 @@ a fragment may have a different data type to that of the aggregated
 variable. In this case the fragment's data must be cast to the
 aggregated variable's data type. If the aggregated variable does
 specify packed data, then all fragments must have the same data type
-the aggregated variable.
+as the aggregated variable.
 
 ### Missing values
 
@@ -343,14 +335,16 @@ missing in the aggregated data.
 ### Packing
 
 A fragment may be packed. The fragment's data must be unpacked prior
-to insertion into the aggregated data.
+to insertion into the aggregated data. The data type of the fragment
+is the data type of the unpacked data.
 
 ### Compression
 
-A fragment may be compressed. The fragment's
-data must be uncompressed prior to insertion into the aggregated
-data. In this case, the `location` term of the aggregation
-instructions describes the shape of the uncompressed fragment.
+A fragment may be compressed. The fragment's data must be uncompressed
+prior to insertion into the aggregated data. In this case, the
+`location` term of the aggregation instructions describes the shape of
+the uncompressed fragment. The data type of the fragment is the data
+type of the uncompressed data.
 
 ### Example 2
 
