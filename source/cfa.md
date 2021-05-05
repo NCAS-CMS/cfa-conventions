@@ -288,14 +288,15 @@ The following fragment manipulations are allowed:
 If a fragment has no defined units then its data is assumed to have
 the same units as the aggregated variable.
 
-When a fragment has units that are equivalent, but not equal, to the
-units of the aggregated variable, then the fragment's units must be
-changed to the aggregated variable's units. This is done by applying
-the appropriate multiplicative scale factor and/or additive offset to
-the fragment's data. For instance, if the aggregated variable units
-are degrees Fahrenheit and a fragment has units of degrees Celsius,
-then the fragment's units are changed to degrees Fahrenheit by
-multiplying the fragment's data by 1.8 and then adding 32.
+When a fragment has units that are physically equivalent, but not
+identical, to the units of the aggregated variable, then the
+fragment's units must be changed to the aggregated variable's
+units. This is done by applying the appropriate multiplicative scale
+factor and/or additive offset to the fragment's data. For instance, if
+the aggregated variable units are degrees Fahrenheit and a fragment
+has units of degrees Celsius, then the fragment's units are changed to
+degrees Fahrenheit by multiplying the fragment's data by 1.8 and then
+adding 32.
 
 For reference time units, the calendar of the aggregated variable and
 the calendars of the fragments must also be equivalent.
