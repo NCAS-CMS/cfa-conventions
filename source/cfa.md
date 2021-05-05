@@ -1,29 +1,29 @@
-# Aggregated Variables
+# Aggregation Variables
 
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
 *v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, Bryan
  Lawrence and Sadie Bartholomew 2021-02-18 - 2021-04-30*
 
-An *aggregated variable* does not contain its own data, rather it
+An *aggregation variable* does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
 data from other sources. When created by an application program, the
-data of an aggregated variable is called its *aggregated data*. The
+data of an aggregation variable is called its *aggregated data*. The
 aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
 fragment is contained in a file, either external to or shared by the
-dataset containing the aggregated variable; or else is assumed to
+dataset containing the aggregation variable; or else is assumed to
 contain wholly missing values.
 
-An aggregated variable should be a scalar (i.e. it has no dimensions)
+An aggregation variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data. The data type of the aggregated variable is the data type of the
-aggregated data.
+data. The data type of the aggregation variable is the data type of
+the aggregated data.
 
-An aggregated variable must not define any of techniques for the
+An aggregation variable must not define any of techniques for the
 reduction of dataset size, such as (but not limited to) packing,
 compression by gathering, discrete sampling geometry ragged array
 representations, etc. However, any individual fragment may be packed
@@ -32,9 +32,9 @@ unpacked or uncompressed prior to use in the aggregated data.
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the dataset containing the
-aggregated variable and must be stored with the
+aggregation variable and must be stored with the
 **`aggregated_dimensions`** attribute. The presence of an
-**`aggregated_dimensions`** attribute will identify an aggregated
+**`aggregated_dimensions`** attribute will identify an aggregation
 variable, therefore the **`aggregated_dimensions`** attribute must not
 be present on any variables that do not have aggregated data. The
 value of the **`aggregated_dimensions`** attribute is a blank
@@ -46,7 +46,7 @@ attribute must be an empty string.
 The dimensions listed by the **`aggregated_dimensions`** attribute
 constrain the dimensions that may be spanned by variables referenced
 from any of the other attributes, in the same way that the array
-dimensions perform that role for a non-aggregated variable. For
+dimensions perform that role for a non-aggregation variable. For
 instance, all variables named by the **`cell_measures`** attribute of
 an aggregated data variable must span a subset of zero or more of the
 dimensions given by the **`aggregated_dimensions`** attribute; or the
@@ -125,7 +125,7 @@ instruction terms, all of which are mandatory, are:
 * A missing value in conjunction with a non-missing value in the
   corresponding location of the `address` variable indicates that the
   fragment is stored within a file shared by the dataset containing
-  the aggregated variable. If there is a trailing dimension then all
+  the aggregation variable. If there is a trailing dimension then all
   of that dimension must comprise missing values.
 
 * A fragment that is assumed to contain wholly missing values, and so
@@ -162,12 +162,12 @@ instruction terms, all of which are mandatory, are:
   same order as the `file` variable.
   
 * For a fragment stored in a file external to the dataset containing
-  the aggregated variable, addresses must be provided that correspond
+  the aggregation variable, addresses must be provided that correspond
   to each named file in the `file` variable. If there is a trailing
   dimension then it must be padded with missing values.
 
 * For a fragment that is stored in a file shared by the dataset
-  containing the aggregated variable, exactly one address must be
+  containing the aggregation variable, exactly one address must be
   provided, and if there is a trailing dimension then the address must
   be stored in its first element and the trailing dimension must be
   padded with missing values.
@@ -178,7 +178,7 @@ instruction terms, all of which are mandatory, are:
   comprise missing values.
   
 * If the fragment is stored in a file shared by the dataset containing
-  the aggregated variable then the address is that variable's name,
+  the aggregation variable then the address is that variable's name,
   otherwise addresses are dependent on the format of the fragment's
   external file.
 
@@ -271,13 +271,14 @@ Each fragment has a generic form for which:
   directionality (i.e. the sense in which it increasing in physical
   space) as its corresponding aggregated dimension.
 
-* The fragment has the same canonical physical units as the aggregated
-  variable, and if the fragment has no defined units then its data is
-  assumed to have the same units as the aggregated variable.
+* The fragment has the same canonical physical units as the
+  aggregation variable, and if the fragment has no defined units then
+  its data is assumed to have the same units as the aggregation
+  variable.
 
 * Any other fragment attributes, as well as all associated metadata
   variables associated with the fragment (such as coordinate
-  variables), are ignored by the aggregated variable.
+  variables), are ignored by the aggregation variable.
 
 In limited circumstances, however, a fragment may deviate from these
 requirements providing that it is possible to unambiguously convert
@@ -290,18 +291,18 @@ The following fragment manipulations are allowed:
 ### Units and calendar
  
 When a fragment has units that are equivalent, but not equal, to the
-units of the aggregated variable, then the fragment's units must be
-changed to the aggregated variable's units. This is done by applying
+units of the aggregation variable, then the fragment's units must be
+changed to the aggregation variable's units. This is done by applying
 the appropriate multiplicative scale factor and/or additive offset to
-the fragment's data. For instance, if the aggregated variable units
+the fragment's data. For instance, if the aggregation variable units
 are degrees Fahrenheit and a fragment has units of degrees Celsius,
 then the fragment's units are changed to degrees Fahrenheit by
 multiplying the fragment's data by 1.8 and then adding 32.
 
-For reference time units, the calendar of the aggregated variable and
+For reference time units, the calendar of the aggregation variable and
 the calendars of the fragments must also be equivalent.
 
-For instance, if the aggregated variable units are `"days since
+For instance, if the aggregation variable units are `"days since
 2001-01-01"` in the Gregorian calendar and a fragment has units of
 `"days since 2002-01-1"` in the same calendar, then the reference time
 of the fragment's units are changed to the earlier date by adding 365
@@ -319,14 +320,14 @@ data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 ### Data type
 
-A fragment may have a different data type to that of the aggregated
-variable. The fragment's data must be cast to the aggregated
+A fragment may have a different data type to that of the aggregation
+variable. The fragment's data must be cast to the aggregation
 variable's data type.
 
 ### Missing values
 
 A fragment may use any valid means for defining missing
-values. Missing values must be changed to values that the aggregated
+values. Missing values must be changed to values that the aggregation
 variable recognises as missing. It is up to the creator of the dataset
 to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
@@ -352,7 +353,7 @@ is stored in an external file and the other is stored in the same
 dataset as variable `temp2`. As all of the external files are netCDF
 files, the `format` term of the **`aggregated_data`** attribute is not
 required. The fragment stored in the same dataset has different but
-equivalent units to the aggregated variable, and omits the size 1
+equivalent units to the aggregation variable, and omits the size 1
 `level` dimension.
 
     dimensions:
@@ -426,7 +427,7 @@ dimension. As there are no external files, the `file` and `format`
 terms of the **`aggregated_data`** attribute are not required. The
 fragments and aggregation definition variables in this case are stored
 in a child group called `aggregation`. The `temp2` fragment has
-different but equivalent units to the aggregated variable.
+different but equivalent units to the aggregation variable.
 
     dimensions:
       // Aggregated dimensions
@@ -597,8 +598,8 @@ used in the aggregated data.
 
 An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
-contains a fragment for each aggregated variable. The aggregation
-definition variables for each aggregated variable are stored in
+contains a fragment for each aggregation variable. The aggregation
+definition variables for each aggregation variable are stored in
 different groups (`aggregation_temp` and `aggregation_time`), but the
 `file` terms of the **`aggregated_data`** attributes refer to a
 variable in the root group that stores the external file names that
@@ -686,11 +687,11 @@ apply to both aggregation variables.
 
 **aggregated data**
 
-The data of an *aggregated variable* that exists as a set of
+The data of an *aggregation variable* that exists as a set of
 instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
-**aggregated variable**
+**aggregation variable**
 
 A netCDF variable that does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
