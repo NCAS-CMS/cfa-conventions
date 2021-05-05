@@ -310,21 +310,6 @@ instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
-### Data type
-
-If the aggregated variable is not defined as having packed data, then
-a fragment may have a different data type to that of the aggregated
-variable. In this case the fragment's data must be cast to the
-aggregated variable's data type.
-
-### Missing values
-
-A fragment may use any valid means for defining missing
-values. Missing values must be changed to values that the aggregated
-variable recognises as missing. It is up to the creator of the dataset
-to ensure that non-missing values in a fragment are not registered as
-missing in the aggregated data.
-
 ### Compression
 
 A fragment may be stored in any compressed form, i.e. stored using
@@ -343,6 +328,22 @@ sampling geometry ragged array representations, packing via the
 **`scale_factor`** and **`add_offset`** attributes, etc.) then the
 uncompressed fragment comprises a part of the compressed aggregated
 data.
+
+### Data type
+
+Unles the aggregated variable is defined as having packed data via the
+**`scale_factor`** and **`add_offset`** attributes, a fragment may
+have a different data type to that of the aggregated variable. In this
+case the fragment's data must be cast to the aggregated variable's
+data type.
+
+### Missing values
+
+A fragment may use any valid means for defining missing
+values. Missing values must be changed to values that the aggregated
+variable recognises as missing. It is up to the creator of the dataset
+to ensure that non-missing values in a fragment are not registered as
+missing in the aggregated data.
 
 ### Example 2
 
