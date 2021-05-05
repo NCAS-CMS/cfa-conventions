@@ -21,13 +21,8 @@ and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data.
-
-The data type of the aggregated variable is the data type of the
-aggregated data. Therefore, if an aggregated variable is defined as
-being packed, via the **`scale_factor`** and **`add_offset`**
-attributes, then the aggregated data must be considered as being
-packed in the same manner.
+data. The data type of the aggregated variable is the data type of the
+aggregated data.
 
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the parent file and must be
@@ -68,11 +63,6 @@ will have size 4; an aggregated dimension of any size may be
 associated with a fragment dimension of size 1. The fragments must be
 arranged in the same relative multidimensional order as their
 positions in the aggregated data.
-
-An aggregated variable may be compressed by techniques such as
-compression by gathering, discrete sampling geometry ragged array
-representations, etc. In this case the aggregated dimensions are the
-dimensions of the compressed data.
 
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
@@ -335,19 +325,24 @@ variable recognises as missing. It is up to the creator of the dataset
 to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
-### Packing
-
-A fragment may be packed. The fragment's data must be unpacked prior
-to insertion into the aggregated data. The data type of the fragment
-is the data type of the unpacked data.
-
 ### Compression
 
-A fragment may be compressed. The fragment's data must be uncompressed
-prior to insertion into the aggregated data. In this case, the
-`location` term of the aggregation instructions describes the shape of
-the uncompressed fragment. The data type of the fragment is the data
-type of the uncompressed data.
+A fragment may be stored in any compressed form, i.e. stored using
+fewer bits than its original, uncompressed representation, for which
+the uncompression algorithm is encoded as part of the fragment's
+metadata and so is available to application program that is managing
+the aggregation. The fragment's data must be uncompressed prior to
+insertion into the aggregated data. In this case, the `location` term
+of the aggregation instructions describes the shape of the
+uncompressed fragment and the data type of the fragment is the data
+type of its uncompressed data.
+
+If the aggregated variable is defined as being compressed by
+convention (with, for instance, compression by gathering, discrete
+sampling geometry ragged array representations, packing via the
+**`scale_factor`** and **`add_offset`** attributes, etc.) then the
+uncompressed fragment comprises a part of the compressed aggregated
+data.
 
 ### Example 2
 
