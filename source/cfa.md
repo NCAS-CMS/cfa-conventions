@@ -11,10 +11,9 @@ data from other sources. When created by an application program, the
 data of an aggregated variable is called its *aggregated data*. The
 aggregated data is composed of one or more *fragments*, each of which
 provides the values for a unique part of the aggregated data. Each
-fragment is contained in either an external file; or is described by
-another variable contained in the same file as the aggregated variable
-(i.e. the *parent file*); or else is assumed to contain wholly missing
-values.
+fragment is contained in a file, either external to or shared by the
+dataset containing the aggregated variable; or else is assumed to
+contain wholly missing values.
 
 An aggregated variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
@@ -32,9 +31,10 @@ or compressed, with the understanding that the fragment's data will be
 unpacked or uncompressed prior to use in the aggregated data.
 
 The dimensions of the aggregated data, called the *aggregated
-dimensions*, must exist as dimensions in the parent file and must be
-stored with the **`aggregated_dimensions`** attribute. The presence of
-an **`aggregated_dimensions`** attribute will identify an aggregated
+dimensions*, must exist as dimensions in the dataset containing the
+aggregated variable and must be stored with the
+**`aggregated_dimensions`** attribute. The presence of an
+**`aggregated_dimensions`** attribute will identify an aggregated
 variable, therefore the **`aggregated_dimensions`** attribute must not
 be present on any variables that do not have aggregated data. The
 value of the **`aggregated_dimensions`** attribute is a blank
@@ -122,17 +122,17 @@ instruction terms, all of which are mandatory, are:
   finds most preferable. If a fragment has fewer versions than others
   then the trailing dimension must be padded with missing values.
 
-* A fragment stored in the parent file is represented by a missing
-  value in conjunction with a non-missing value in the corresponding
-  location of the `address` variable. If there is a trailing dimension
-  then all of that dimension must comprise missing values.
-  
+* A missing value in conjunction with a non-missing value in the
+  corresponding location of the `address` variable indicates that the
+  fragment is stored within a file shared by the dataset containing
+  the aggregated variable. If there is a trailing dimension then all
+  of that dimension must comprise missing values.
+
 * A fragment that is assumed to contain wholly missing values, and so
-  has no external files nor exists in the parent file, is indicated by
-  a missing value in conjunction with a missing value in the
-  corresponding location of the `address` variable. If there is a
-  trailing dimension then all of that dimension must comprise missing
-  values.
+  has no file representation, is indicated by a missing value in
+  conjunction with a missing value in the corresponding location of
+  the `address` variable. If there is a trailing dimension then all of
+  that dimension must comprise missing values.
   
 `format`
 
@@ -161,24 +161,26 @@ instruction terms, all of which are mandatory, are:
 * The `address` variable must span exactly the same dimensions in the
   same order as the `file` variable.
   
-* For a fragment stored in an external file, an addresses must be
-  provided that correspond to each named file in the `file`
-  variable. If there is a trailing dimension then it must be padded
-  with missing values.
+* For a fragment stored in a file external to the dataset containing
+  the aggregated variable, addresses must be provided that correspond
+  to each named file in the `file` variable. If there is a trailing
+  dimension then it must be padded with missing values.
 
-* For a fragment that is stored in the parent file exactly one address
-  must be provided, and if there is a trailing dimension then the
-  address must be stored in its first element and the trailing
-  dimension must be padded with missing values.
+* For a fragment that is stored in a file shared by the dataset
+  containing the aggregated variable, exactly one address must be
+  provided, and if there is a trailing dimension then the address must
+  be stored in its first element and the trailing dimension must be
+  padded with missing values.
 
 * A fragment that is assumed to contain wholly missing values, and so
-  has no external files nor exists in the parent file, is indicated by
-  a missing value. If there is a trailing dimension then all of that
-  dimension must comprise missing values.
+  has no file representation, is indicated by a missing value. If
+  there is a trailing dimension then all of that dimension must
+  comprise missing values.
   
-* If the fragment is a variable in the parent file then the address is
-  that variable's name, otherwise addresses are dependent on the
-  format of the fragment's external file.
+* If the fragment is stored in a file shared by the dataset containing
+  the aggregated variable then the address is that variable's name,
+  otherwise addresses are dependent on the format of the fragment's
+  external file.
 
 * For an external netCDF file, the address is the name of the variable
   that contains the fragment.
@@ -346,10 +348,10 @@ instructions describes the shape of the uncompressed fragment.
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions. One fragment
-is stored in an external file and the other is stored the parent file
-as variable `temp2`. As all of the external files are netCDF files,
-the `format` term of the **`aggregated_data`** attribute is not
-required. The fragment stored in the parent file has different but
+is stored in an external file and the other is stored in the same
+dataset as variable `temp2`. As all of the external files are netCDF
+files, the `format` term of the **`aggregated_data`** attribute is not
+required. The fragment stored in the same dataset has different but
 equivalent units to the aggregated variable, and omits the size 1
 `level` dimension.
 
@@ -417,7 +419,7 @@ equivalent units to the aggregated variable, and omits the size 1
 ### Example 3
 
 An aggregated data variable whose aggregated data comprises two
-fragments. Each fragment is stored in the parent file and spans half
+fragments. Each fragment is stored in the same dataset and spans half
 of the aggregated `time` dimension and the whole of the `latitude` and
 `longitude` dimensions, but does not span the size 1 `level`
 dimension. As there are no external files, the `file` and `format`
@@ -594,13 +596,13 @@ used in the aggregated data.
 ### Example 5
 
 An aggregated data variable and an aggregated coordinate variable in
-the same parent file. There are two external netCDF files, each of
-which contains a fragment for each aggregated variable. The
-aggregation definition variables for each aggregated variable are
-stored in different groups (`aggregation_temp` and
-`aggregation_time`), but the `file` terms of the **`aggregated_data`**
-attributes refer to a variable in the root group that stores the
-external file names that apply to both aggregation variables.
+the same dataset. There are two external netCDF files, each of which
+contains a fragment for each aggregated variable. The aggregation
+definition variables for each aggregated variable are stored in
+different groups (`aggregation_temp` and `aggregation_time`), but the
+`file` terms of the **`aggregated_data`** attributes refer to a
+variable in the root group that stores the external file names that
+apply to both aggregation variables.
 
     dimensions:
       // Aggregated dimensions
@@ -704,9 +706,3 @@ composed from a multi-dimensional orthogonal array of fragments.
 
 A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
-
-**parent file**
-
-The netCDF file that contains the *aggregated variable*, and may also
-contain some or all of the *fragments*.
-
