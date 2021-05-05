@@ -313,7 +313,7 @@ data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 ### Compression
 
 A fragment may be stored in any compressed form, i.e. stored using
-fewer bits than its original, uncompressed representation, for which
+fewer bits than its original uncompressed representation, for which
 the uncompression algorithm is encoded as part of the fragment's
 metadata and so is available to application program that is managing
 the aggregation. The fragment's data must be uncompressed prior to
