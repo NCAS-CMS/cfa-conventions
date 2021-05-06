@@ -331,7 +331,7 @@ data.
 
 ### Data type
 
-Unles the aggregated variable is defined as having packed data via the
+Unless the aggregated variable is defined as having packed data via the
 **`scale_factor`** and **`add_offset`** attributes, a fragment may
 have a different data type to that of the aggregated variable. In this
 case the fragment's data must be cast to the aggregated variable's
@@ -713,4 +713,3 @@ that defines the *aggregated data*.
 
 The netCDF file that contains the *aggregated variable*, and may also
 contain some or all of the *fragments*.
-
