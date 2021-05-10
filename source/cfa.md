@@ -695,7 +695,7 @@ and six observations respectively, giving a total of fifteen
 observations. The timeseries from each location is stored in a
 separate external file.
 
-   dimensions:
+    dimensions:
       // Aggregated dimensions
       station = 3 ;
       obs = 15 ;
@@ -704,7 +704,7 @@ separate external file.
       // Extra dimensions
       i = 1 ;
       j = 2 ;
-   variables:
+    variables:
       // Data variable
       float temp(obs) ;
         temp:standard_name = "air_temperature" ;
@@ -745,8 +745,8 @@ separate external file.
                                 address: aggregation_address_lat" ;
       // Compression encoding variable
       int row_size(station) ;
-          row_size:long_name = "number of observations per station" ;
-          row_size:sample_dimension = "obs" ;
+        row_size:long_name = "number of observations per station" ;
+        row_size:sample_dimension = "obs" ;
       // Aggregation definition variables			 	  
       int aggregation_location(f_station, i, j) ;
       string aggregation_file(f_station) ;
@@ -754,25 +754,26 @@ separate external file.
       string aggregation_address_time(f_station) ;
       string aggregation_address_lat(f_station) ;
       string aggregation_address_lon(f_station) ;
-      
-   // global attributes:
-          :featureType = "timeSeries";
-   data:
-     temp = _ ;    
-     time = _ ;
-     row_size = 4, 5, 6 ;
-     aggregation_location = 0, 3,
-                            4, 8,
-                            9, 14 ;
-     aggregation_location_latlon = 0, 0
-                                   1, 1
-                                   2, 2 ;
-    aggregation_file = "Harwell.nc", "Abingdon.nc", "Lambourne.nc" ;
-    aggregation_format = "nc", "nc", "nc" ;
-    aggregation_address_temp = "tas", "tas", "tas" ;
-    aggregation_address_time = "time", "time", "time" ;
-    aggregation_address_lat = "lat", "lat", "lat" ;
-    aggregation_address_lon = "lon", "lon", "lon" ;
+
+    // global attributes:
+      :featureType = "timeSeries";
+    data:
+      temp = _ ;    
+      time = _ ;
+      row_size = 4, 5, 6 ;
+      aggregation_location = 0, 3,
+                             4, 8,
+                             9, 14 ;
+      aggregation_location_latlon = 0, 0
+                                    1, 1
+                                    2, 2 ;
+      aggregation_file = "Harwell.nc", "Abingdon.nc", "Lambourne.nc" ;
+      aggregation_format = "nc", "nc", "nc" ;
+      aggregation_address_temp = "tas", "tas", "tas" ;
+      aggregation_address_time = "time", "time", "time" ;
+      aggregation_address_lat = "lat", "lat", "lat" ;
+      aggregation_address_lon = "lon", "lon", "lon" ;
+
 
 ### Example 7
 
