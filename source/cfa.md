@@ -716,7 +716,7 @@ separate external file.
                                 format: aggregation_format
                                 address: aggregation_address_temp" ;  
       // Coordinate variables
-      double time ;
+      float time ;
         time:standard_name = "time" ;
         time:long_name = "time of measurement" ;
         time:units = "days since 1970-01-01" ;
@@ -800,7 +800,7 @@ values 270.0, 270.1, ... 271.1.
                                 format: /aggregation/format
                                 address: /aggregation/address" ;
       // Coordinate variables
-      double time(time) ;
+      float time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2001-01-01" ;
     	
