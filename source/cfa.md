@@ -811,8 +811,8 @@ values 270.0, 270.1, ... 271.1.
     
     group: aggregation {
       dimensions:
-	// Time dimension
-	t = 6 ;	
+        // Time dimension
+        t = 6 ;	
         // Fragment dimensions
         f_time = 2 ;
         // Extra dimensions
