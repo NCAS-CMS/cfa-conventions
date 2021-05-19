@@ -265,6 +265,8 @@ Each fragment has a generic form for which:
 * The fragment's data has the same number of dimensions in the same
   order as the aggregated data.
 
+* The fragment's data has the same data type as the aggregated data.
+
 * Each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
   space) as its corresponding aggregated dimension.
@@ -314,12 +316,6 @@ inserted into the fragment's data in the appropriate positions. For
 instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
-
-### Data type
-
-A fragment may have a different data type to that of the aggregated
-variable. The fragment's data must be cast to the aggregated
-variable's data type.
 
 ### Missing values
 
