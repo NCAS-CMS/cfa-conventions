@@ -21,8 +21,8 @@ and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data. The data type of the aggregated variable is the data type of the
-aggregated data.
+data. The data type of the aggregated data is the same as the data
+type of the aggregated variable.
 
 An aggregated variable must not define any of techniques for the
 reduction of dataset size, such as (but not limited to) packing,
