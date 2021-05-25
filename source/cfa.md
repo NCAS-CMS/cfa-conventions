@@ -322,13 +322,6 @@ prior to insertion into the aggregated data. In this case, the
 the uncompressed fragment and the data type of the fragment is the
 data type of its uncompressed data.
 
-If the aggregated variable is defined as being compressed by
-convention (with, for instance, compression by gathering, discrete
-sampling geometry ragged array representations, packing via the
-**`scale_factor`** and **`add_offset`** attributes, etc.) then the
-uncompressed fragment comprises a part of the compressed aggregated
-data.
-
 ### Data type
 
 Unless the aggregated variable is defined as having packed data via the
