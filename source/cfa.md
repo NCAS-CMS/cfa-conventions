@@ -20,8 +20,8 @@ and the value of its single element is immaterial. It acts as a
 container for the usual attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
-data. The data type of the aggregation variable is the data type of
-the aggregated data.
+data. The data type of the aggregated data is the same as the data
+type of the aggregated variable.
 
 An aggregation variable must not define any of techniques for the
 reduction of dataset size, such as (but not limited to) packing,
@@ -267,6 +267,8 @@ Each fragment has a generic form for which:
 * The fragment's data has the same number of dimensions in the same
   order as the aggregated data.
 
+* The fragment's data has the same data type as the aggregated data.
+
 * Each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
   space) as its corresponding aggregated dimension.
@@ -318,12 +320,6 @@ inserted into the fragment's data in the appropriate positions. For
 instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
-
-### Data type
-
-A fragment may have a different data type to that of the aggregation
-variable. The fragment's data must be cast to the aggregation
-variable's data type.
 
 ### Missing values
 
