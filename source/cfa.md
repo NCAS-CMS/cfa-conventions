@@ -23,13 +23,6 @@ attributes that provide instructions on how to create the aggregated
 data. The data type of the aggregated data is the same as the data
 type of the aggregated variable.
 
-An aggregation variable must not define any of techniques for the
-reduction of dataset size, such as (but not limited to) packing,
-compression by gathering, discrete sampling geometry ragged array
-representations, etc. However, any individual fragment may be packed
-or compressed, with the understanding that the fragment's data will be
-unpacked or uncompressed prior to use in the aggregated data.
-
 The dimensions of the aggregated data, called the *aggregated
 dimensions*, must exist as dimensions in the dataset containing the
 aggregation variable and must be stored with the
@@ -267,7 +260,7 @@ Each fragment has a generic form for which:
 * The fragment's data has the same number of dimensions in the same
   order as the aggregated data.
 
-* The fragment's data has the same data type as the aggregated data.
+* The fragment has the same data type as the aggregated variable.
 
 * Each dimension of the fragment's data has the same sense of
   directionality (i.e. the sense in which it increasing in physical
@@ -321,6 +314,18 @@ instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
+### Compression
+
+A fragment may be stored in any compressed form, i.e. stored using
+fewer bits than its original uncompressed representation, for which
+the uncompression algorithm is encoded as part of the fragment's
+metadata and so is available to the application program that is
+managing the aggregation. The fragment's data must be uncompressed
+prior to insertion into the aggregated data. In this case, the
+`location` term of the aggregation instructions describes the shape of
+the uncompressed fragment and the data type of the fragment is the
+data type of its uncompressed data.
+
 ### Missing values
 
 A fragment may use any valid means for defining missing
@@ -328,18 +333,6 @@ values. Missing values must be changed to values that the aggregation
 variable recognises as missing. It is up to the creator of the dataset
 to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
-
-### Packing
-
-A fragment may be packed. The fragment's data must be unpacked prior
-to insertion into the aggregated data.
-
-### Compression
-
-A fragment may be compressed. The fragment's
-data must be uncompressed prior to insertion into the aggregated
-data. In this case, the `location` term of the aggregation
-instructions describes the shape of the uncompressed fragment.
 
 ### Example 2
 
@@ -667,7 +660,8 @@ apply to both aggregation variables.
                    0, 72,
                    0, 143 ;
        address = "temp", "temp" ;
-
+    }
+    
     group: aggregation_time {
       variables:
         // Aggregation definition variables
@@ -678,8 +672,161 @@ apply to both aggregation variables.
         location = 0, 5,
                    6, 11 ;
         address = "time", "time" ;
-        
+   }
+   
+### Example 6
 
+An aggregation data variable for a collection of discrete sampling
+geometry timeseries features that have been compressed by use of a
+contiguous ragged array. The three timeseries of air temperature are
+each from different geographical locations and comprise four, five,
+and six observations respectively, giving a total of fifteen
+observations. The timeseries from each location is stored in a
+separate external file.
+
+    dimensions:
+      // Aggregated dimensions
+      station = 3 ;
+      obs = 15 ;
+      // Fragment dimensions
+      f_station = 3 ;
+      // Extra dimensions
+      i = 1 ;
+      j = 2 ;
+    variables:
+      // Data variable
+      float temp(obs) ;
+        temp:standard_name = "air_temperature" ;
+        temp:units = "Celsius" ;
+        temp:coordinates = "time lat lon alt station_name" ;
+        temp:aggregated_dimensions = "obs" ;
+        temp:aggregated_data = "location: aggregation_location
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address_temp" ;  
+      // Coordinate variables
+      float time ;
+        time:standard_name = "time" ;
+        time:long_name = "time of measurement" ;
+        time:units = "days since 1970-01-01" ;
+        temp:aggregated_dimensions = "obs" ;
+        temp:aggregated_data = "location: aggregation_location
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address_time" ;     
+      float lon(station) ;
+        lon:standard_name = "longitude";
+        lon:long_name = "station longitude";
+        lon:units = "degrees_east";
+        temp:aggregated_dimensions = "obs" ;
+        temp:aggregated_data = "location: aggregation_location_latlon
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address_lon" ;
+      float lat(station) ;
+        lat:standard_name = "latitude";
+        lat:long_name = "station latitude" ;
+        lat:units = "degrees_north" ;
+        temp:aggregated_dimensions = "obs" ;
+        temp:aggregated_data = "location: aggregation_location_latlon
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address_lat" ;
+      // Compression encoding variable
+      int row_size(station) ;
+        row_size:long_name = "number of observations per station" ;
+        row_size:sample_dimension = "obs" ;
+      // Aggregation definition variables			 	  
+      int aggregation_location(f_station, i, j) ;
+      string aggregation_file(f_station) ;
+      string aggregation_address_temp(f_station) ;
+      string aggregation_address_time(f_station) ;
+      string aggregation_address_lat(f_station) ;
+      string aggregation_address_lon(f_station) ;
+
+    // global attributes:
+      :featureType = "timeSeries";
+    data:
+      temp = _ ;    
+      time = _ ;
+      row_size = 4, 5, 6 ;
+      aggregation_location = 0, 3,
+                             4, 8,
+                             9, 14 ;
+      aggregation_location_latlon = 0, 0
+                                    1, 1
+                                    2, 2 ;
+      aggregation_file = "Harwell.nc", "Abingdon.nc", "Lambourne.nc" ;
+      aggregation_format = "nc", "nc", "nc" ;
+      aggregation_address_temp = "tas", "tas", "tas" ;
+      aggregation_address_time = "time", "time", "time" ;
+      aggregation_address_lat = "lat", "lat", "lat" ;
+      aggregation_address_lon = "lon", "lon", "lon" ;
+
+
+### Example 7
+
+An aggregation data variable whose aggregated data represents 32-bit
+floats packed into 16-bit integers. When created, the aggregated data
+contains the 16-bit integer values 0, 5958,..., 65539. These may be
+subsequently unpacked to the 32-bit float values 270.0, 270.1, ...,
+271.10007, which approximate the original, pre-packed 32-bit float
+values 270.0, 270.1, ... 271.1.
+
+    dimensions:
+      // Aggregated dimensions
+      time = 12 ;
+    variables:
+      // Data variable
+      short temp ;
+        temp:standard_name = "air_temperature" ;
+        temp:units = "K" ;
+        temp:cell_methods = "time: mean" ;
+        temp:scale_factor = 1.6785949e-05f
+        temp:add_offset = 270.0f ;
+        temp:aggregated_dimensions = "time" ;
+        temp:aggregated_data = "location: /aggregation/location
+                                file: /aggregation/file
+                                format: /aggregation/format
+                                address: /aggregation/address" ;
+      // Coordinate variables
+      float time(time) ;
+        time:standard_name = "time" ;
+        time:units = "days since 2001-01-01" ;
+    	
+    data:
+      temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
+    
+    group: aggregation {
+      dimensions:
+        // Time dimension
+        t = 6 ;	
+        // Fragment dimensions
+        f_time = 2 ;
+        // Extra dimensions
+        i = 1 ;
+        j = 2 ;
+      variables:
+        // Fragment variables
+        short temp1(t) ;
+        short temp2(t) ;
+        // Aggregation definition variables
+        int location(f_time, i, j) ;
+        string file(f_time) ;
+        string format(f_time) ;	
+        string address(f_time) ;
+      
+      data:    	  
+        temp1 = 0, 5958, 11916, 17874, 23832, 29790 ;
+        temp2 = 35749, 41707, 47665, 53623, 59581, 65539 ; 
+        location = 0, 5,
+                   6, 11,
+        file = _, _ ;
+        format = _, _ ;
+        address = "/aggregation/temp1", "/aggregation/temp2" ;
+   }
+   
 ## Glossary
 
 **aggregated data**
@@ -704,3 +851,9 @@ composed from a multi-dimensional orthogonal array of fragments.
 
 A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
+
+**parent file**
+
+The netCDF file that contains the *aggregated variable*, and may also
+contain some or all of the *fragments*.
+
