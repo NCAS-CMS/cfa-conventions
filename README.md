@@ -1,2 +1,4 @@
-# cfa-conventions
-NetCDF Climate and Forecast Aggregation (CFA) Conventions
+# CFA Conventions
+
+Conventions for the storage of aggreagtion variables within CF-netCDF
+datasets.
