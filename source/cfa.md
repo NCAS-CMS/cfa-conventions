@@ -2,6 +2,8 @@
 
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
+*v0.5 Neil Massey, 2020*
+
 *v0.6 David Hassell, Jonathan Gregory, Neil Massey, Bryan
  Lawrence and Sadie Bartholomew 2021-06-16*
 
