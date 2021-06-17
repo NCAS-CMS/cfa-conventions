@@ -2,8 +2,8 @@
 
 *v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
 
-*v0.6b1 David Hassell, Jonathan Gregory, Neil Massey, Bryan
- Lawrence and Sadie Bartholomew 2021-02-18 - 2021-04-30*
+*v0.6 David Hassell, Jonathan Gregory, Neil Massey, Bryan
+ Lawrence and Sadie Bartholomew 2021-06-16*
 
 An *aggregation variable* does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
