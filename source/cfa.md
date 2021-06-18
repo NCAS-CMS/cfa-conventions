@@ -1,56 +1,142 @@
-# Aggregation Variables
+# CF Aggregation (CFA) Conventions
 
-*v0.1 - v0.4 David Hassell and Jonathan Gregory, 2012 - 2019*
+---
 
-*v0.5 Neil Massey, 2020*
+David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
+Bartholomew
 
-*v0.6 David Hassell, Jonathan Gregory, Neil Massey, Bryan
- Lawrence and Sadie Bartholomew 2021-06-16*
+Version 0.6, 2021-06-??
 
-An *aggregation variable* does not contain its own data, rather it
+---
+
+## Abstract
+
+This document describes the CFA (Climate and Forecast Aggregation)
+conventions for storing climate and forecast datasets which do not
+contain the data of selected variables, rather those variables contain
+metadata that provide instructions on how to create their data as an
+aggregation of data from other sources. The CFA conventions are only
+concerned with the aggregation of external data sources, and so must
+be used in conjunction with the CF (Climate and Forecast) metadata
+conventions, that provide all of the metadata required to physically
+interpret geoscientific variables.
+
+---
+
+## Introduction
+
+Some backgound here ... on the need and what the CFA convnetions provide
+
+
+The CF (Climate and Forecast) metadata conventions are designed to
+describe the geoscientific nature of climate and forecast data,
+i.e. for a netCDF data variable, they provide a description of the
+physical meaning of data and of its spatial, temporal, and other
+dimensional properties. The CFA (Climate and Forecast Aggregation)
+conventions described here are, by contrast, only concerned with the
+storage of the *data*, rather than the *metadata*, of selected netCDF
+variables. The CFA conventions do not duplicate nor re-define any of
+the metadata elements defined by the CF conventions.
+
+---
+
+## Identification of Conventions
+
+Files that follow this version of the CFA Conventions must indicate
+this by setting the CF defined global attribute **`Conventions`** to a
+string value that contains `"CFA-0.6"`, in addition to the version of
+the CF conventions that, where not superceded by the CFA conventions,
+define the file structure and metadata. For instance, a dataset which
+follows CF-1.9 and also CFA-0.6 could have a **`Conventions`**
+attribute of `"CF-1.9 CFA-0.6"`.
+
+---
+
+## Terminology
+
+**aggregated data**
+
+The data of an *aggregation variable* that exists as a set of
+instructions on how to build an array from one or more other arrays
+stored elsewhere.
+
+**aggregation variable**
+
+A netCDF variable that does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
-data from other sources. When created by an application program, the
-data of an aggregation variable is called its *aggregated data*. The
-aggregated data is composed of one or more *fragments*, each of which
-provides the values for a unique part of the aggregated data. Each
-fragment is contained in a file, either external to or shared by the
-dataset containing the aggregation variable; or else is assumed to
-contain wholly missing values.
+data from other sources.
+
+**fragment**
+
+An independent, possibly self-describing, array that defines a
+contiguous part of the *aggregated data*. The aggregated data is
+composed from a multi-dimensional orthogonal array of fragments.
+
+**fragment dimension**
+
+A dimension of the multi-dimensional orthogonal array of fragments
+that defines the *aggregated data*.
+
+**parent file**
+
+The netCDF file that contains the *aggregated variable*, and may also
+contain some or all of the *fragments*.
+
+---
+
+## Aggregation variables
+
+A *aggregation variable* does not contain its own data, as is ususal
+for CF-netCDF variables, instead it contains instructions on how to
+create its data as an aggregation of data from other sources.
+
+When created by an application program, the data of an aggregation
+variable is called its *aggregated data*. The aggregated data is
+composed of one or more *fragments*, each of which provides the values
+for a unique part of the aggregated data. Each fragment is contained
+in a file that is either external to, or shared by, the dataset
+containing the aggregation variable; or else is assumed to contain
+wholly missing values.
 
 An aggregation variable should be a scalar (i.e. it has no dimensions)
 and the value of its single element is immaterial. It acts as a
-container for the usual attributes that define the data (such as
+container for the usual CF attributes that define the data (such as
 **`standard_name`** and **`units`**), with the addition of special
 attributes that provide instructions on how to create the aggregated
 data. The data type of the aggregated data is the same as the data
 type of the aggregated variable.
 
 The dimensions of the aggregated data, called the *aggregated
-dimensions*, must exist as dimensions in the dataset containing the
-aggregation variable and must be stored with the
-**`aggregated_dimensions`** attribute. The presence of an
-**`aggregated_dimensions`** attribute will identify an aggregation
-variable, therefore the **`aggregated_dimensions`** attribute must not
-be present on any variables that do not have aggregated data. The
-value of the **`aggregated_dimensions`** attribute is a blank
-separated list of the aggregated dimension names given in the order
-which matches the dimensions of the aggregated data. If the aggregated
-data is scalar then the value of the **`aggregated_dimensions`**
-attribute must be an empty string.
+dimensions*, must be stored with the scalar aggregation variable's
+**`aggregated_dimensions`** attribute. The value of the
+**`aggregated_dimensions`** attribute is a blank separated list of the
+aggregated dimension names given in the order which matches the
+dimensions of the aggregated data. If the aggregated data is scalar
+then the value of the **`aggregated_dimensions`** attribute must be an
+empty string. The named aggregated dimensions must exist as dimensions
+in the netCDF dataset containing the aggregation variable.
+
+The effective dimensions of the aggregation variable are therefore
+found by inspecting the **`aggregated_dimensions`** attribute, rather
+than the variable's netCDF dimensions, as is usual for CF-netCDF
+variables. The presence of an **`aggregated_dimensions`** attribute
+will identify an aggregation variable, therefore the
+**`aggregated_dimensions`** attribute must not be present on any
+variables that do not have aggregated data.
 
 The dimensions listed by the **`aggregated_dimensions`** attribute
 constrain the dimensions that may be spanned by variables referenced
 from any of the other attributes, in the same way that the array
-dimensions perform that role for a non-aggregation variable. For
+dimensions perform that role for a ususal CF-netCDF variable. For
 instance, all variables named by the **`cell_measures`** attribute of
 an aggregated data variable must span a subset of zero or more of the
 dimensions given by the **`aggregated_dimensions`** attribute; or the
 variable named by the **`bounds`** attribute of an aggregated
 coordinate variable must span all of the aggregated dimensions in the
-same order, as well as the trailing bounds dimension. Any coordinate
-variable that shares its name with an aggregated dimension of an
-aggregated data variable will be considered as part of the data
-variable's domain definition.
+same order, as well as the trailing bounds dimension. Any CF
+coordinate variable that shares its name with an aggregated dimension
+of an aggregated data variable will be considered as part of the data
+variable's CF domain definition.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions as the aggregated data. Each
@@ -183,7 +269,7 @@ instruction terms, all of which are mandatory, are:
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
-### Example 1
+#### Example 1
 
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -248,7 +334,7 @@ external files are netCDF files, the `format` term of the
       aggregation_address = "temp", "temp" ;
 
 
-## Fragment Storage
+### Fragment Storage
 
 Each fragment has a generic form for which:
 
@@ -282,7 +368,7 @@ the application program that is managing the aggregation.
 
 The following fragment manipulations are allowed:
 
-### Units
+#### Units
  
 If a fragment has no defined units then its data is assumed to have
 the same units as the aggregated variable.
@@ -306,7 +392,7 @@ For instance, if the aggregation variable units are `"days since
 of the fragment's units are changed to the earlier date by adding 365
 to the fragment's data.
 
-### Missing size 1 dimensions
+#### Missing size 1 dimensions
 
 A fragment may omit from its data any size 1 dimension for which the
 size of the fragment's location along the corresponding aggregated
@@ -316,7 +402,7 @@ instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
-### Compression
+#### Compression
 
 A fragment may be stored in any compressed form, i.e. stored using
 fewer bits than its original uncompressed representation, for which
@@ -328,7 +414,7 @@ prior to insertion into the aggregated data. In this case, the
 the uncompressed fragment and the data type of the fragment is the
 data type of its uncompressed data.
 
-### Missing values
+#### Missing values
 
 A fragment may use any valid means for defining missing
 values. Missing values must be changed to values that the aggregation
@@ -336,7 +422,7 @@ variable recognises as missing. It is up to the creator of the dataset
 to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
-### Example 2
+#### Example 2
 
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -409,7 +495,7 @@ equivalent units to the aggregation variable, and omits the size 1
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-### Example 3
+#### Example 3
 
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment is stored in the same dataset and spans half
@@ -487,7 +573,7 @@ different but equivalent units to the aggregation variable.
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-### Example 4
+#### Example 4
 
 An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
@@ -586,7 +672,7 @@ used in the aggregated data.
                  "temp4", _ ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
-### Example 5
+#### Example 5
 
 An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
@@ -676,7 +762,7 @@ apply to both aggregation variables.
         address = "time", "time" ;
    }
    
-### Example 6
+#### Example 6
 
 An aggregation data variable for a collection of discrete sampling
 geometry timeseries features that have been compressed by use of a
@@ -766,7 +852,7 @@ separate external file.
       aggregation_address_lon = "lon", "lon", "lon" ;
 
 
-### Example 7
+#### Example 7
 
 An aggregation data variable whose aggregated data represents 32-bit
 floats packed into 16-bit integers. When created, the aggregated data
@@ -828,34 +914,8 @@ values 270.0, 270.1, ... 271.1.
         format = _, _ ;
         address = "/aggregation/temp1", "/aggregation/temp2" ;
    }
-   
-## Glossary
 
-**aggregated data**
+---
 
-The data of an *aggregation variable* that exists as a set of
-instructions on how to build an array from one or more other arrays
-stored elsewhere.
-
-**aggregation variable**
-
-A netCDF variable that does not contain its own data, rather it
-contains instructions on how to create its data as an aggregation of
-data from other sources.
-
-**fragment**
-
-An independent, possibly self-describing, array that defines a
-contiguous part of the *aggregated data*. The aggregated data is
-composed from a multi-dimensional orthogonal array of fragments.
-
-**fragment dimension**
-
-A dimension of the multi-dimensional orthogonal array of fragments
-that defines the *aggregated data*.
-
-**parent file**
-
-The netCDF file that contains the *aggregated variable*, and may also
-contain some or all of the *fragments*.
+## References
 
