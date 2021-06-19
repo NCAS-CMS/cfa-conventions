@@ -349,7 +349,7 @@ external files are netCDF files, the `format` term of the
 
 ## Fragment Storage
 
-Each fragment has a generic form for which:
+Each fragment has a canonical form for which:
 
 * The fragment's data provides the values for a unique part of the
   aggregated data, as defined by the `location` term of the
@@ -373,11 +373,14 @@ Each fragment has a generic form for which:
   variables associated with the fragment (such as coordinate
   variables), are ignored by the aggregation variable.
 
-In limited circumstances, however, a fragment may deviate from these
-requirements providing that it is possible to unambiguously convert
-the fragment to its generic form prior to it being used within the
-aggregated data. This manipulation of the fragment is carried out by
-the application program that is managing the aggregation.
+In particular circumstances, however, a fragment may deviate from
+these requirements providing that it is possible to unambiguously
+convert the fragment to its canonical form prior to it being used
+within the aggregated data. This allows the usability of a fragment in
+the aggregated data to be independent of the fragment's encoding in
+its file. The manipulation of a fragment to its generic form is
+carried out by the application program that is managing the
+aggregation.
 
 The following fragment manipulations are allowed:
 
