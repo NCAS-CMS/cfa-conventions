@@ -1,39 +1,35 @@
-# CF Aggregation (CFA) Conventions
-
----
+# NetCDF CF Aggregation (CFA) Conventions
 
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
 Version 0.6, 2021-06-??
 
----
 
 ## Abstract
 
 This document describes the CFA (Climate and Forecast Aggregation)
-conventions for storing climate and forecast datasets which do not
-contain the data of selected variables, rather those variables contain
-metadata that provide instructions on how to create their data as an
-aggregation of data from other sources. The CFA conventions are only
-concerned with the aggregation of external data sources, and must be
-used in conjunction with the CF (Climate and Forecast) metadata
+conventions for storing netCDF climate and forecast datasets which do
+not contain the data of selected variables, rather those variables
+contain metadata that provide instructions on how to create their data
+as an aggregation of data from other sources. The CFA conventions are
+only concerned with the aggregation of external data sources, and must
+be used in conjunction with the CF (Climate and Forecast) metadata
 conventions, that provide all of the metadata required to physically
 interpret geoscientific variables.
 
----
 
 ## Introduction
 
-Some backgound here ... on the need and what the CFA convnetions provide
+Some backgound here ... 
 
-When a variable's data may be wholly specified by the aggregation of
-the data of other variables, the CFA (Climate and Forecast
-Aggregation) conventions provide a framework for describing how to
-create that aggregation, and this may be used instead of creating the
-entire aggregation in the file as the variable's data as is ususal in
-netCDF files. A variable encoded in this manner is called an
-"aggregation variable".
+When a netCDF variable's data may be wholly specified by the
+aggregation of the data of other variables, the CFA (Climate and
+Forecast Aggregation) conventions provide a framework for describing
+how to create that aggregation, and this may be used instead of
+creating the entire aggregation in the file as the variable's data, as
+is ususal in netCDF files. A variable encoded in this manner is called
+an "aggregation variable".
 
 In general, netCDF variables always contain their own data and
 dimensions, but for an aggregation variable no actual data in the file
@@ -57,7 +53,6 @@ the metadata when the data is not present in the file (effectively a
 duplication of the functionality introduced in CF-1.9 for the domain
 variable)
 
----
 
 ## Identification of Conventions
 
@@ -69,7 +64,6 @@ geophysical metadata. For instance, a dataset which follows CF-1.9 and
 also, for some of its variables, CFA-0.6 could have a **`Conventions`**
 attribute of `"CF-1.9 CFA-0.6"`.
 
----
 
 ## Terminology
 
@@ -101,7 +95,6 @@ that defines the *aggregated data*.
 The netCDF file that contains the *aggregated variable*, and may also
 contain some or all of the *fragments*.
 
----
 
 ## Aggregation variables
 
@@ -288,6 +281,7 @@ instruction terms, all of which are mandatory, are:
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
+
 #### Example 1
 
 An aggregated data variable whose aggregated data comprises two
@@ -353,7 +347,7 @@ external files are netCDF files, the `format` term of the
       aggregation_address = "temp", "temp" ;
 
 
-### Fragment Storage
+## Fragment Storage
 
 Each fragment has a generic form for which:
 
@@ -387,7 +381,7 @@ the application program that is managing the aggregation.
 
 The following fragment manipulations are allowed:
 
-#### Units
+### Units
  
 If a fragment has no defined units then its data is assumed to have
 the same units as the aggregated variable.
@@ -411,7 +405,8 @@ For instance, if the aggregation variable units are `"days since
 of the fragment's units are changed to the earlier date by adding 365
 to the fragment's data.
 
-#### Missing size 1 dimensions
+
+### Missing size 1 dimensions
 
 A fragment may omit from its data any size 1 dimension for which the
 size of the fragment's location along the corresponding aggregated
@@ -421,7 +416,8 @@ instance, if the fragment's shape defined by the `location` term of
 the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
-#### Compression
+
+### Compression
 
 A fragment may be stored in any compressed form, i.e. stored using
 fewer bits than its original uncompressed representation, for which
@@ -433,7 +429,8 @@ prior to insertion into the aggregated data. In this case, the
 the uncompressed fragment and the data type of the fragment is the
 data type of its uncompressed data.
 
-#### Missing values
+
+### Missing values
 
 A fragment may use any valid means for defining missing
 values. Missing values must be changed to values that the aggregation
@@ -441,7 +438,8 @@ variable recognises as missing. It is up to the creator of the dataset
 to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
-#### Example 2
+
+### Example 2
 
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -691,6 +689,7 @@ used in the aggregated data.
                  "temp4", _ ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
+
 #### Example 5
 
 An aggregated data variable and an aggregated coordinate variable in
@@ -780,7 +779,8 @@ apply to both aggregation variables.
                    6, 11 ;
         address = "time", "time" ;
    }
-   
+
+
 #### Example 6
 
 An aggregation data variable for a collection of discrete sampling
@@ -934,7 +934,6 @@ values 270.0, 270.1, ... 271.1.
         address = "/aggregation/temp1", "/aggregation/temp2" ;
    }
 
----
 
 ## References
 
