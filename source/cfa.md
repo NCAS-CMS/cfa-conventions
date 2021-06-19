@@ -16,8 +16,8 @@ conventions for storing climate and forecast datasets which do not
 contain the data of selected variables, rather those variables contain
 metadata that provide instructions on how to create their data as an
 aggregation of data from other sources. The CFA conventions are only
-concerned with the aggregation of external data sources, and so must
-be used in conjunction with the CF (Climate and Forecast) metadata
+concerned with the aggregation of external data sources, and must be
+used in conjunction with the CF (Climate and Forecast) metadata
 conventions, that provide all of the metadata required to physically
 interpret geoscientific variables.
 
@@ -27,16 +27,35 @@ interpret geoscientific variables.
 
 Some backgound here ... on the need and what the CFA convnetions provide
 
+When a variable's data may be wholly specified by the aggregation of
+the data of other variables, the CFA (Climate and Forecast
+Aggregation) conventions provide a framework for describing how to
+create that aggregation, and this may be used instead of creating the
+entire aggregation in the file as the variable's data as is ususal in
+netCDF files. A variable encoded in this manner is called an
+"aggregation variable".
 
-The CF (Climate and Forecast) metadata conventions are designed to
-describe the geoscientific nature of climate and forecast data,
-i.e. for a netCDF data variable, they provide a description of the
-physical meaning of data and of its spatial, temporal, and other
-dimensional properties. The CFA (Climate and Forecast Aggregation)
-conventions described here are, by contrast, only concerned with the
-storage of the *data*, rather than the *metadata*, of selected netCDF
-variables. The CFA conventions do not duplicate nor re-define any of
-the metadata elements defined by the CF conventions.
+In general, netCDF variables always contain their own data and
+dimensions, but for an aggregation variable no actual data in the file
+is required. At the same time, an aggregation variable needs to be
+viewable as if it were encoded as a normal netCDF variable, i.e. one
+with data and their associated netCDF dimensions in the file. To
+provide this functionality the CFA framework essentially converts the
+variable to be scalar (with arbitrary single value) and provides extra
+attributes that identify the variable as an aggregation variable and
+from which both the variable's true dimensionality can be inferred,
+and the aggregeted data can be constructed.
+
+The CFA conventions only apply to the data definition of individual
+variables, so the CFA conventions have been designed to work alongside
+the CF (Climate and Forecast) conventions that specify the geophysical
+meaning of all variables in the file, whether their data are defined
+as aggregations or not. The CFA conventions do not duplicate nor
+re-define any of the metadata elements defined by the CF conventions,
+but a small extension to CF is needed to allow the interpretation of
+the metadata when the data is not present in the file (effectively a
+duplication of the functionality introduced in CF-1.9 for the domain
+variable)
 
 ---
 
@@ -45,9 +64,9 @@ the metadata elements defined by the CF conventions.
 Files that follow this version of the CFA Conventions must indicate
 this by setting the CF defined global attribute **`Conventions`** to a
 string value that contains `"CFA-0.6"`, in addition to the version of
-the CF conventions that, where not superceded by the CFA conventions,
-define the file structure and metadata. For instance, a dataset which
-follows CF-1.9 and also CFA-0.6 could have a **`Conventions`**
+the CF conventions that otherwise define the file structure and
+geophysical metadata. For instance, a dataset which follows CF-1.9 and
+also, for some of its variables, CFA-0.6 could have a **`Conventions`**
 attribute of `"CF-1.9 CFA-0.6"`.
 
 ---
