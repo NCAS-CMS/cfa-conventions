@@ -606,14 +606,12 @@ An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
 dimension, either the northern or southern hemisphere, and the whole
 of the other two aggregated dimensions. The fragments are stored in
-external netCDF files. As all of the external files are netCDF files,
-the `format` term of the **`aggregated_data`** attribute is not
-required. The aggregation definition variables are stored in a child
-group called `aggregation`. One of the fragments has been defined by
-two different external resources (one "local" and one "remote"), each
-of which is provided with its own address within its file (`temp3` and
-`t3` respectively). Either of these resources, but not both, may be
-used in the aggregated data.
+external netCDF files. The aggregation definition variables are stored
+in a child group called `aggregation`. One of the fragments has been
+defined by two different external resources (one "local" and one
+"remote"), each of which is provided with its own address within its
+file (`temp3` and `t3` respectively). Either of these resources, but
+not both, may be used in the aggregated data.
 
     dimensions:
       // Aggregated dimensions
