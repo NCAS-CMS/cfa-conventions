@@ -287,9 +287,7 @@ instruction terms, all of which are mandatory, are:
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
-in an external netCDF file in a variable call `temp`. As all of the
-external files are netCDF files, the `format` term of the
-**`aggregated_data`** attribute is not required.
+in an external netCDF file in a variable call `temp`.
 
     dimensions:
       // Aggregated dimensions
@@ -314,6 +312,7 @@ external files are netCDF files, the `format` term of the
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
+                                format: aggregation_format
                                 address: aggregation_address" ;
       // Coordinate variables
       double time(time) ;
@@ -344,6 +343,7 @@ external files are netCDF files, the `format` term of the
                              0, 72,
                              0, 143 ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
+      aggregation_format = "nc", "nc" ;
       aggregation_address = "temp", "temp" ;
 
 
@@ -448,11 +448,9 @@ An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions. One fragment
 is stored in an external file and the other is stored in the same
-dataset as variable `temp2`. As all of the external files are netCDF
-files, the `format` term of the **`aggregated_data`** attribute is not
-required. The fragment stored in the same dataset has different but
-equivalent units to the aggregation variable, and omits the size 1
-`level` dimension.
+dataset as variable `temp2`. The fragment stored in the same dataset
+has different but equivalent units to the aggregation variable, and
+omits the size 1 `level` dimension.
 
     dimensions:
       // Aggregated dimensions
@@ -477,6 +475,7 @@ equivalent units to the aggregation variable, and omits the size 1
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
+                                format: aggregation_format
                                 address: aggregation_address" ;
       // Coordinate variables
       double time(time) ;
@@ -494,6 +493,7 @@ equivalent units to the aggregation variable, and omits the size 1
       // Aggregation definition variables			 	  
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Fragment variable
       double temp2(time, latitude, longitude) ;
@@ -511,6 +511,7 @@ equivalent units to the aggregation variable, and omits the size 1
                              0, 72,
                              0, 143 ;
       aggregation_file = "January-June.nc", _ ;
+      aggregation_format = "nc", _ ;
       aggregation_address = "temp", "temp2" ;
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
@@ -522,10 +523,10 @@ fragments. Each fragment is stored in the same dataset and spans half
 of the aggregated `time` dimension and the whole of the `latitude` and
 `longitude` dimensions, but does not span the size 1 `level`
 dimension. As there are no external files, the `file` and `format`
-terms of the **`aggregated_data`** attribute are not required. The
-fragments and aggregation definition variables in this case are stored
-in a child group called `aggregation`. The `temp2` fragment has
-different but equivalent units to the aggregation variable.
+variables both contain missing data. The fragments and aggregation
+definition variables in this case are stored in a child group called
+`aggregation`. The `temp2` fragment has different but equivalent units
+to the aggregation variable.
 
     dimensions:
       // Aggregated dimensions
@@ -541,6 +542,8 @@ different but equivalent units to the aggregation variable.
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: /aggregation/location
+                                file: /aggregation/file
+                                format: /aggregation/format
                                 address: /aggregation/address" ;
       // Coordinate variables
       double time(time) ;
@@ -572,6 +575,8 @@ different but equivalent units to the aggregation variable.
       variables:
         // Aggregation definition variables
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+        string file(f_time, f_level, f_latitude, f_longitude) ;
+        string format(f_time, f_level, f_latitude, f_longitude) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
         // Fragment variables
         double temp1(time, latitude, longitude) ;
@@ -588,6 +593,8 @@ different but equivalent units to the aggregation variable.
                    0, 0,
                    0, 72,
                    0, 143 ;
+       file = _, _ ;
+       format = _, _ ;
        address = "temp1", "temp2" ;
        temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
@@ -623,6 +630,7 @@ used in the aggregated data.
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: /aggregation/location
                                 file: /aggregation/file
+                                format: /aggregation/format
                                 address: /aggregation/address" ;
       // Coordinate variables
       double time(time) ;
@@ -659,6 +667,7 @@ used in the aggregated data.
         // Aggregation definition variables			 	  
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
+	string format(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
         // Fragment variable
         double temp2(time, latitude, longitude) ;
@@ -686,6 +695,10 @@ used in the aggregated data.
               _, _,
               "/local/January-June_NH.nc", "/remote/January-June_NH.nc",
               "/remote/July-December_NH.nc", _ ;
+       format = "nc, _,
+                _, _,
+                "nc", "nc",
+                "nc", _ ;
        address = "temp1", _,
                  "temp2", _,
                  "temp3", "t3",
@@ -726,7 +739,8 @@ apply to both aggregation variables.
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: /aggregation_temp/location
-                                file: aggregation_file	
+                                file: aggregation_file
+                                format: aggregation_format
                                 address: /aggregation_temp/address" ;
       // Coordinate variables
       double time ;
@@ -734,7 +748,8 @@ apply to both aggregation variables.
         time:units = "days since 2001-01-01" ;
         temp:aggregated_dimensions = "time" ;
         temp:aggregated_data = "location: /aggregation_time/location
-                                file: aggregation_file	
+                                file: aggregation_file
+				format: aggregation_format
                                 address: /aggregation_time/address" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
@@ -752,6 +767,7 @@ apply to both aggregation variables.
       temp = _ ;
       time = _ ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
+      aggregation_format = "nc", "nc" ;
 
     group: aggregation_temp {
       variables:
