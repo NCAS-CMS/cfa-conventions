@@ -35,17 +35,17 @@ variable's aggregated data can be constructed.
 
 The CFA conventions only apply to the data definition of selected
 variables, so the CFA conventions have been designed to work alongside
-the CF (Climate and Forecast) conventions that specify the geophysical
-meaning of all variables in the file, whether their data are defined
-as aggregations or not. The CFA conventions do not duplicate, extend,
-nor re-define any of the metadata elements defined by the CF
-conventions. However, when CF-compliant software is used for reading
-the discovery metadata of a CFA-netCDF file, with no expectation of
-reading the data of aggregated variables, a small extension is needed
-to allow the correct interpretation of the dimensionality of
-aggregation variables (effectively a duplication of the functionality
-introduced in CF-1.9 for the domain variable, which also has
-dimensions but no data).
+the CF (Climate and Forecast) conventions [CF] that specify the
+geophysical meaning of all variables in the file, whether their data
+are defined as aggregations or not. The CFA conventions do not
+duplicate, extend, nor re-define any of the metadata elements defined
+by the CF conventions. However, when CF-compliant software is used for
+reading the discovery metadata of a CFA-netCDF file, with no
+expectation of reading the data of aggregated variables, a small
+extension is needed to allow the correct interpretation of the
+dimensionality of aggregation variables (effectively a duplication of
+the functionality introduced in CF-1.9 for the domain variable, which
+also has dimensions but no data).
 
 ## Identification of Conventions
 
@@ -435,7 +435,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-### Example 2
+#### Example 2
 
 An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -945,7 +945,24 @@ values 270.0, 270.1, ... 271.1.
    }
 
 
+## Revision History
+
+**Versions 0.1 to 0.3, 2012 to 2013 **
+Prototype versions
+
+**Version 0.4, 2014-02-27 **
+Prototype version
+
+**Version 0.5, 2021 **
+Prototype version. First introduction of `location`, `file`, `format`
+and `address` variables.
+
+**Version 0.6, 2021-06-?? **
+First stable release.
+
 ## References
+
+[CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org/cf-conventions/cf-conventions.html
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
 
