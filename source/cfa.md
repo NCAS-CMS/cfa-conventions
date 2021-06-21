@@ -20,9 +20,9 @@ In general, netCDF variables always contain their own data and
 dimensions. An aggregation variable, however, does not contain its
 data&mdash;and therefore nor its dimensions&mdash;in the usual manner
 and yet still needs to be viewable as if it were a usual netCDF
-variable. This is achieved by converting the variable to be scalar
-(with arbitrary single value) and providing extra variable attributes
-from which the variable's true dimensionality can be inferred, and the
+variable. This is achieved by encoding the variable as a scalar (with
+arbitrary single value) and providing extra variable attributes from
+which the variable's true dimensionality can be inferred, and the
 variable's aggregated data can be constructed.
 
 The CFA conventions only apply to the data definition of selected
