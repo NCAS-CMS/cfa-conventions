@@ -5,54 +5,40 @@ Bartholomew
 
 Version 0.6, 2021-06-??
 
-
-## Abstract
-
-This document describes the CFA (Climate and Forecast Aggregation)
-conventions for storing netCDF climate and forecast datasets which do
-not contain the data of selected variables, rather those variables
-contain metadata that provide instructions on how to create their data
-as an aggregation of data from other sources. The CFA conventions are
-only concerned with the aggregation of external data sources, and must
-be used in conjunction with the CF (Climate and Forecast) metadata
-conventions, that provide all of the metadata required to physically
-interpret geoscientific variables.
-
-
 ## Introduction
 
-Some backgound here ... 
-
-When a netCDF variable's data may be wholly specified by the
-aggregation of the data of other variables, the CFA (Climate and
-Forecast Aggregation) conventions provide a framework for describing
-how to create that aggregation, and this may be used instead of
-creating the entire aggregation in the file as the variable's data, as
-is ususal in netCDF files. A variable encoded in this manner is called
-an "aggregation variable".
+This document describes the CFA (Climate and Forecast Aggregation)
+conventions for storing a netCDF climate and forecast file which does
+not contain the data of selected variables ("aggregation variables"),
+rather those variables contain special metadata that provide
+instructions on how to create their data as an aggregation of data
+from other sources, which may be self-describing datasets in their own
+right.
 
 In general, netCDF variables always contain their own data and
-dimensions, but for an aggregation variable no actual data in the file
-is required. At the same time, an aggregation variable needs to be
-viewable as if it were encoded as a normal netCDF variable, i.e. one
-with data and their associated netCDF dimensions in the file. To
-provide this functionality the CFA framework essentially converts the
-variable to be scalar (with arbitrary single value) and provides extra
-attributes that identify the variable as an aggregation variable and
-from which both the variable's true dimensionality can be inferred,
-and the aggregeted data can be constructed.
+dimensions. An aggregation variable, however, still needs to be
+viewable as if it were a usual netCDF variable even though it does not
+contain its data and dimensions in the usual manner. This is achieved
+by converting the variable to be scalar (with arbitrary single value)
+and providing extra variable attributes from which both the variable's
+true dimensionality can be inferred, and the variable's aggregeted
+data can be constructed.
 
-The CFA conventions only apply to the data definition of individual
+The CFA conventions only apply to the data definition of selected
 variables, so the CFA conventions have been designed to work alongside
 the CF (Climate and Forecast) conventions that specify the geophysical
 meaning of all variables in the file, whether their data are defined
 as aggregations or not. The CFA conventions do not duplicate nor
 re-define any of the metadata elements defined by the CF conventions,
-but a small extension to CF is needed to allow the interpretation of
-the metadata when the data is not present in the file (effectively a
-duplication of the functionality introduced in CF-1.9 for the domain
-variable)
+but a small extension to CF is needed to allow the correct
+interpretation of the dimensionality of aggregation variables
+(effectively a duplication of the functionality introduced in CF-1.9
+for the domain variable, which also has dimensions but no data).
 
+A CFA-netCDF file is a view of a dataset that has been distributed
+across multiple files and storage systems, which contains exactly the
+same information as the dataset that could be created by copying all
+of the distributed files into a single CF-netCDF file.
 
 ## Identification of Conventions
 
