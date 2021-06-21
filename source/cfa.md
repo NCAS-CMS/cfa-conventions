@@ -942,7 +942,6 @@ values 270.0, 270.1, ... 271.1.
         file = _, _ ;
         format = _, _ ;
         address = "/aggregation/temp1", "/aggregation/temp2" ;
-   }
 
 
 ## Revision History
