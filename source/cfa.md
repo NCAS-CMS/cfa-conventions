@@ -948,8 +948,7 @@ values 270.0, 270.1, ... 271.1.
 ## Revision History
 
 _Versions 0.1 to 0.3, 2012 to 2013_
-
-Prototype versions
+: Prototype versions
 
 _Version 0.4, 2014-02-27_
 
