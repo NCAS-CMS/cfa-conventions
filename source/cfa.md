@@ -947,19 +947,21 @@ values 270.0, 270.1, ... 271.1.
 
 ## Revision History
 
-_Versions 0.1 to 0.3, 2012 to 2013_ 
+_Versions 0.1 to 0.3, 2012 to 2013_
+
 Prototype versions
 
-_Version 0.4, 2014-02-27_ 
+_Version 0.4, 2014-02-27_
+
 Prototype version
 
+_Version 0.5, 2021_
 
-
--Version 0.5, 2021_ 
 Prototype version. First introduction of `location`, `file`, `format`
 and `address` variables.
 
-_Version 0.6, 2021-06-??_ 
+_Version 0.6, 2021-06-??_
+
 First stable release.
 
 ## References
