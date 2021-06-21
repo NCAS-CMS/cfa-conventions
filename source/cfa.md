@@ -20,10 +20,10 @@ In general, netCDF variables always contain their own data and
 dimensions. An aggregation variable, however, does not contain its
 data&mdash;and therefore nor its dimensions&mdash;in the usual manner
 and yet still needs to be viewable as if it were a usual netCDF
-variable. This is achieved by encoding the variable as a scalar (with
-arbitrary single value) and providing extra variable attributes from
-which the variable's true dimensionality can be inferred, and the
-variable's aggregated data can be constructed.
+variable. This is achieved by encoding the aggregation variable as a
+scalar (with arbitrary single value) and providing extra variable
+attributes from which the variable's true dimensionality can be
+inferred, and the variable's aggregated data can be constructed.
 
 The CFA conventions only apply to the data definition of selected
 variables, so the CFA conventions have been designed to work alongside
@@ -38,16 +38,6 @@ extension is needed to allow the correct interpretation of the
 dimensionality of aggregation variables (effectively a duplication of
 the functionality introduced in CF-1.9 for the domain variable, which
 also has dimensions but no data).
-
-## Identification of Conventions
-
-Files that follow this version of the CFA Conventions must indicate
-this by setting the NetCDF User’s Guide [NUG] defined global attribute
-**`Conventions`** to a string value that contains `"CFA-0.6"`, in
-addition to any other conventions that define other aspects of the
-file structure and metadata. For instance, a dataset which follows
-CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
-`"CF-1.9 CFA-0.6"`.
 
 
 ## Terminology
@@ -74,6 +64,17 @@ composed from a multi-dimensional orthogonal array of fragments.
 
 A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
+
+
+## Identification of Conventions
+
+Files that follow this version of the CFA Conventions must indicate
+this by setting the NetCDF User’s Guide [NUG] defined global attribute
+**`Conventions`** to a string value that contains `"CFA-0.6"`, in
+addition to any other conventions that define other aspects of the
+file structure and metadata. For instance, a dataset which follows
+CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
+`"CF-1.9 CFA-0.6"`.
 
 
 ## Aggregation variables
