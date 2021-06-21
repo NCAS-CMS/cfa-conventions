@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6, 2021-06-??**
+**Version 0.6, 2021-06-21**
 
 
 ## Introduction
@@ -951,7 +951,7 @@ Prototype version
 Prototype version. First introduction of `location`, `file`, `format`
 and `address` variables.
 
-**Version 0.6, 2021-06-??**
+**Version 0.6, 2021-06-21**
 
 First stable release.
 
