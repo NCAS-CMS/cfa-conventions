@@ -26,12 +26,12 @@ variable's aggregated data can be constructed.
 
 In general, netCDF variables always contain their own data and
 dimensions. An aggregation variable, however, does not contain its
-data&mdash;and therefore nor its dimensions&mdash;in the usual manner yet
-still needs to be viewable as if it were a usual netCDF. This is
-achieved by converting the variable to be scalar (with arbitrary
-single value) and providing extra variable attributes from which the
-variable's true dimensionality can be inferred, and the variable's
-aggregated data can be constructed.
+data&mdash;and therefore nor its dimensions&mdash;in the usual manner
+and yet still needs to be viewable as if it were a usual netCDF
+variable. This is achieved by converting the variable to be scalar
+(with arbitrary single value) and providing extra variable attributes
+from which the variable's true dimensionality can be inferred, and the
+variable's aggregated data can be constructed.
 
 The CFA conventions only apply to the data definition of selected
 variables, so the CFA conventions have been designed to work alongside
@@ -53,7 +53,7 @@ Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User’s Guide (NUG) [NUG] defined global
 attribute **`Conventions`** to a string value that contains
 `"CFA-0.6"`, in addition to any other conventions that define other
-aspect of the file structure and metadata. For instance, a dataset
+aspects of the file structure and metadata. For instance, a dataset
 which follows CF-1.9 and also CFA-0.6 could have a **`Conventions`**
 attribute of `"CF-1.9 CFA-0.6"`.
 
