@@ -5,6 +5,7 @@ Bartholomew
 
 **Version 0.6, 2021-06-??**
 
+
 ## Introduction
 
 This document describes the CFA (Climate and Forecast Aggregation)
@@ -358,11 +359,12 @@ Each fragment has a canonical form for which:
 In particular circumstances, however, a fragment may deviate from
 these requirements providing that it is possible to unambiguously
 convert the fragment to its canonical form prior to it being used
-within the aggregated data. This is useful for cases when the framents
-were created independently of the CFA-netCDF file and were encoded
-with forms which are equivalent, but not equal to, the canonical
-form. The manipulation of a fragment to its canonical form is carried
-out by the application program that is managing the aggregation.
+within the aggregated data. This is useful for cases when the
+fragments were created independently of the CFA-netCDF file and were
+encoded with forms which are equivalent, but not equal to, the
+canonical form. The manipulation of a fragment to its canonical form
+is carried out by the application program that is managing the
+aggregation.
 
 The following fragment manipulations are allowed:
 
