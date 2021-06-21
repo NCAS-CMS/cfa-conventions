@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-Version 0.6, 2021-06-??
+**Version 0.6, 2021-06-??**
 
 ## Introduction
 
@@ -41,27 +41,27 @@ also has dimensions but no data).
 ## Identification of Conventions
 
 Files that follow this version of the CFA Conventions must indicate
-this by setting the NetCDF User’s Guide (NUG) [NUG] defined global
-attribute **`Conventions`** to a string value that contains
-`"CFA-0.6"`, in addition to any other conventions that define other
-aspects of the file structure and metadata. For instance, a dataset
-which follows CF-1.9 and also CFA-0.6 could have a **`Conventions`**
-attribute of `"CF-1.9 CFA-0.6"`.
+this by setting the NetCDF User’s Guide [NUG] defined global attribute
+**`Conventions`** to a string value that contains `"CFA-0.6"`, in
+addition to any other conventions that define other aspects of the
+file structure and metadata. For instance, a dataset which follows
+CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
+`"CF-1.9 CFA-0.6"`.
 
 
 ## Terminology
-
-**aggregated data**
-
-The data of an *aggregation variable* that exists as a set of
-instructions on how to build an array from one or more other arrays
-stored elsewhere.
 
 **aggregation variable**
 
 A netCDF variable that does not contain its own data, rather it
 contains instructions on how to create its data as an aggregation of
 data from other sources.
+
+**aggregated data**
+
+The data of an *aggregation variable* that exists as a set of
+instructions on how to build an array from one or more other arrays
+stored elsewhere.
 
 **fragment**
 
@@ -74,16 +74,11 @@ composed from a multi-dimensional orthogonal array of fragments.
 A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
 
-**parent file**
-
-The netCDF file that contains the *aggregated variable*, and may also
-contain some or all of the *fragments*.
-
 
 ## Aggregation variables
 
 A *aggregation variable* does not contain its own data, as is usual
-for CF-netCDF variables, instead it contains instructions on how to
+for netCDF variables, instead it contains instructions on how to
 create its data as an aggregation of data from other sources.
 
 When created by an application program, the data of an aggregation
@@ -127,7 +122,7 @@ dimensions perform that role for a usual CF-netCDF variable. For
 instance, all variables named by the **`cell_measures`** attribute of
 an aggregated data variable must span a subset of zero or more of the
 dimensions given by the **`aggregated_dimensions`** attribute; or the
-variable named by the **`bounds`** attribute of an aggregated
+variable named by the **`bounds`** attribute of an aggregated CF
 coordinate variable must span all of the aggregated dimensions in the
 same order, as well as the trailing bounds dimension. Any CF
 coordinate variable that shares its name with an aggregated dimension
@@ -143,7 +138,7 @@ the number of fragments that span its corresponding aggregated
 dimension. For instance, if an aggregated dimension of size 100 has
 been fragmented into three fragments spanning 20 values each and one
 fragment spanning 40 values, then the corresponding fragment dimension
-will have size 4; an aggregated dimension of any size may be
+will have size 4. An aggregated dimension of any size may be
 associated with a fragment dimension of size 1. The fragments must be
 arranged in the same relative multidimensional order as their
 positions in the aggregated data.
@@ -164,11 +159,14 @@ are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
 
-The value of a `term` token identifying an aggregation instruction
-may be standardized or non-standardized, with the understanding that
+The value of a `term` token identifying an aggregation instruction may
+be standardized or non-standardized, with the understanding that
 application programs should ignore terms that they do not recognise or
-which are irrelevant for their purposes. The standardized aggregation
-instruction terms, all of which are mandatory, are:
+which are irrelevant for their purposes. The purpose of allowing
+non-standardized tokens is to facilitate the aggregation of fragments
+stored in other file formats to those described by these
+conventions. The standardized aggregation instruction terms, all of
+which are mandatory, are:
 
 `location`
 
