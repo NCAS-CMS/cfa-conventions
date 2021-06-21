@@ -788,7 +788,7 @@ apply to both aggregation variables.
         location = 0, 5,
                    6, 11 ;
         address = "time", "time" ;
-   }
+    }
 
 
 #### Example 6
