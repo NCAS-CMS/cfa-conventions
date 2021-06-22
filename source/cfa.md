@@ -70,11 +70,11 @@ that defines the *aggregated data*.
 
 Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User's Guide [NUG] defined global attribute
-**`Conventions`** to a string value that contains `"CFA-0.6"`, in
+**`Conventions`** to a string value that contains `CFA-0.6`, in
 addition to any other conventions that define other aspects of the
 file structure and metadata. For instance, a dataset which follows
 CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
-`"CF-1.9 CFA-0.6"`.
+`CF-1.9 CFA-0.6`.
 
 
 ## Aggregation variables
@@ -148,7 +148,7 @@ positions in the aggregated data.
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
 attribute. This attribute takes a string value comprising
-blank-separated elements of the form `"term: variable"`, where `term`
+blank-separated elements of the form "`term: variable`", where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
@@ -225,7 +225,7 @@ which are mandatory, are:
   missing value.
   
 * A fragment in an external netCDF file is signified by a value of
-  `"nc"`.
+  `nc`.
 
 * Specification of other file formats is allowed, but not described in
   these conventions.
@@ -387,9 +387,9 @@ adding 32.
 For reference time units, the calendar of the aggregation variable and
 the calendars of the fragments must also be equivalent.
 
-For instance, if the aggregation variable units are `"days since
-2001-01-01"` in the Gregorian calendar and a fragment has units of
-`"days since 2002-01-1"` in the same calendar, then the reference time
+For instance, if the aggregation variable units are `days since
+2001-01-01` in the Gregorian calendar and a fragment has units of
+`days since 2002-01-1` in the same calendar, then the reference time
 of the fragment's units are changed to the earlier date by adding 365
 to the fragment's data.
 
@@ -956,7 +956,6 @@ and `address` variables.
 First stable release.
 
 ## References
-
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
