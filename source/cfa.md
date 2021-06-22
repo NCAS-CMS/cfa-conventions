@@ -961,4 +961,4 @@ First stable release.
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
 
-[NUG] The NetCDF User’s Guide for NetCDF version 4.4.1.1. http://www.unidata.ucar.edu/software/netcdf/docs/user_guide.html
+[NUG] NetCDF User’s Guide. https://www.unidata.ucar.edu/software/netcdf/documentation/NUG
