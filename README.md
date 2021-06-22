@@ -3,8 +3,8 @@
 The CFA (Climate and Forecast Aggregation) conventions are designed
 for storing a netCDF file which does not contain the data of selected
 variables ("aggregation variables"), rather those variables contain
-special metadata that provide instructions on how to create their data
-as an aggregation of data from other sources, which may be
+special attributes that provide instructions on how to create their
+data as an aggregation of data from other sources, which may be
 self-describing datasets in their own right.
 
 In general, netCDF variables always contain their own data and

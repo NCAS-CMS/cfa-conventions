@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6, 2021-06-21**
+**Version 0.6b1**
 
 
 ## Introduction
@@ -12,7 +12,7 @@ This document describes the CFA (Climate and Forecast Aggregation)
 conventions for storing a file created with the netCDF Application
 Programmer Interface [NetCDF] which does not contain the data of
 selected variables ("aggregation variables"), rather those variables
-contain special metadata that provide instructions on how to create
+contain special attributes that provide instructions on how to create
 their data as an aggregation of data from other sources, which may be
 self-describing datasets in their own right.
 
@@ -36,8 +36,8 @@ reading the discovery metadata of a CFA-netCDF file, with no
 expectation of reading the data of aggregated variables, a small
 extension is needed to allow the correct interpretation of the
 dimensionality of aggregation variables (effectively a duplication of
-the functionality introduced in CF-1.9 for the domain variable, which
-also has dimensions but no data).
+the functionality introduced in CF-1.9 for the CF domain variable,
+which has dimensions but no data).
 
 
 ## Terminology
@@ -69,7 +69,7 @@ that defines the *aggregated data*.
 ## Identification of Conventions
 
 Files that follow this version of the CFA Conventions must indicate
-this by setting the NetCDF User’s Guide [NUG] defined global attribute
+this by setting the NetCDF User's Guide [NUG] defined global attribute
 **`Conventions`** to a string value that contains `"CFA-0.6"`, in
 addition to any other conventions that define other aspects of the
 file structure and metadata. For instance, a dataset which follows
@@ -951,7 +951,7 @@ Prototype version
 Prototype version. First introduction of `location`, `file`, `format`
 and `address` variables.
 
-**Version 0.6, 2021-06-21**
+**Version 0.6, *Date to be fixed*
 
 First stable release.
 
