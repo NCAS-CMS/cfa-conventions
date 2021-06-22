@@ -957,7 +957,7 @@ First stable release.
 
 ## References
 
-[CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org/cf-conventions/cf-conventions.html
+[CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
 
