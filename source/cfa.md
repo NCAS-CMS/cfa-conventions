@@ -79,7 +79,7 @@ CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
 
 ## Aggregation variables
 
-A *aggregation variable* does not contain its own data, as is usual
+An *aggregation variable* does not contain its own data, as is usual
 for netCDF variables, instead it contains instructions on how to
 create its data as an aggregation of data from other sources.
 
@@ -583,7 +583,7 @@ to the aggregation variable.
        address = "temp1", "temp2" ;
        temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
-
+    }
 
 #### Example 4
 
@@ -687,7 +687,7 @@ not both, may be used in the aggregated data.
                  "temp3", "t3",
                  "temp4", _ ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
-
+    }
 
 #### Example 5
 
