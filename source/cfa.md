@@ -315,6 +315,9 @@ in an external netCDF file in a variable call `temp`.
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -483,7 +486,9 @@ omits the size 1 `level` dimension.
       // Fragment variable
       double temp2(time, latitude, longitude) ;
         temp:units = "degreesC" ;
-	
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -543,6 +548,9 @@ to the aggregation variable.
       double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -628,6 +636,9 @@ not both, may be used in the aggregated data.
       double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -746,6 +757,8 @@ apply to both aggregation variables.
       // Aggregation definition variable
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
 
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = _ ;
@@ -854,6 +867,7 @@ separate external file.
       string aggregation_address_lon(f_station) ;
 
     // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
       :featureType = "timeSeries";
     data:
       temp = _ ;    
@@ -902,7 +916,9 @@ values 270.0, 270.1, ... 271.1.
       float time(time) ;
         time:standard_name = "time" ;
         time:units = "days since 2001-01-01" ;
-    	
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
