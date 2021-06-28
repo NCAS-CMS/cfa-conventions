@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6b1**
+**Version 0.6b1**, 2021-07-??
 
 
 ## Introduction
@@ -70,11 +70,11 @@ that defines the *aggregated data*.
 
 Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User's Guide [NUG] defined global attribute
-**`Conventions`** to a string value that contains `CFA-0.6`, in
+**`Conventions`** to a string value that contains "`CFA-0.6`", in
 addition to any other conventions that define other aspects of the
 file structure and metadata. For instance, a dataset which follows
 CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
-`CF-1.9 CFA-0.6`.
+"`CF-1.9 CFA-0.6`".
 
 
 ## Aggregation variables
@@ -390,14 +390,14 @@ adding 32.
 For reference time units, the calendar of the aggregation variable and
 the calendars of the fragments must also be equivalent.
 
-For instance, if the aggregation variable units are `days since
-2001-01-01` in the Gregorian calendar and a fragment has units of
-`days since 2002-01-1` in the same calendar, then the reference time
-of the fragment's units are changed to the earlier date by adding 365
-to the fragment's data.
+For instance, if the aggregation variable units are "`days since
+2001-01-01`" in the Gregorian calendar and a fragment has units of
+"`days since 2002-01-01`" in the same calendar, then the reference
+time of the fragment's units are changed to the earlier date by adding
+365 to the fragment's data.
 
 
-### Missing size 1 dimensions
+### Size 1 dimensions
 
 A fragment may omit from its data any size 1 dimension for which the
 size of the fragment's location along the corresponding aggregated
