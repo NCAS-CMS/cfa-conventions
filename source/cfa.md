@@ -669,7 +669,7 @@ not both, may be used in the aggregated data.*
         // Aggregation definition variables			 	  
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
-	string format(f_time, f_level, f_latitude, f_longitude, k) ;
+        string format(f_time, f_level, f_latitude, f_longitude, k) ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
         // Fragment variable
         double temp2(time, latitude, longitude) ;
