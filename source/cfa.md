@@ -321,6 +321,7 @@ in an external netCDF file in a variable call `temp`.*
       // Aggregation definition variables			 	  
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
 
     // global attributes:
@@ -398,7 +399,7 @@ For reference time units, the calendar of the aggregation variable and
 the calendars of the fragments must also be equivalent.
 
 For instance, if the aggregation variable units are "`days since
-2001-01-01`" in the Gregorian calendar and a fragment has units of
+2001-01-01`" in the CF standard calendar and a fragment has units of
 "`days since 2002-01-01`" in the same calendar, then the reference
 time of the fragment's units are changed to the earlier date by adding
 365 to the fragment's data.
