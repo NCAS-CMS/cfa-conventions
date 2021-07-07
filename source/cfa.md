@@ -123,23 +123,25 @@ variables that do not have aggregated data.
 When the correct interpretation of an aggregation variable requires
 knowledge of its dimensions, the dimensions listed by the
 **`aggregated_dimensions`** attribute should be treated as if they
-were the variable's dimensions encoded in the usual netCDF manner.
+were the variable dimensions encoded in the usual netCDF manner.
 
-#### Example 1
-
-*For an aggregation variable that follows the CF conventions, the
-dimensions listed by the **`aggregated_dimensions`** attribute
-constrain the dimensions that may be spanned by variables referenced
-from any of the other attributes. For instance, all variables named by
-the **`cell_measures`** attribute of an aggregated CF data variable
-must span a subset of zero or more of the dimensions given by the
-**`aggregated_dimensions`** attribute; or the variable named by the
-**`bounds`** attribute of an aggregated CF coordinate variable must
-span all of the aggregated dimensions in the same order, as well as
-the trailing bounds dimension. Any CF coordinate variable that shares
-its name with an aggregated dimension of an aggregated CF data
-variable will be considered as part of the CF data variable's CF
-domain definition.*
+A variable that follows the CF conventions often has attributes that
+reference other variables which contain metadata that describes the
+parent variable. The dimensions spanned by such metadata variables are
+constrained by the parent variable dimensions. For instance, all
+variables named by the **`cell_measures`** attribute of a CF data
+variable must span a subset of zero or more of the parent variable
+dimensions; or the variable named by the **`bounds`** attribute of a
+CF coordinate variable must span all of the parent variable dimensions
+in the same order, as well as the trailing bounds dimension. An
+aggregated variable that follows the CF conventions applies these
+rules in a similar manner, except that the metadata variable
+dimensions are constrained by the aggregated dimensions, i.e. the
+ordered list of dimensions given by the **`aggregated_dimensions`**
+attribute. In particular, note that any CF coordinate variable that
+shares its name with an aggregated dimension of an aggregated CF data
+variable is be considered as part of that variable's CF domain
+definition.
 
 The fragments are organised into an orthogonal multidimensional array
 with the same number of dimensions as the aggregated data. Each
@@ -286,7 +288,7 @@ which are mandatory, are:
   these conventions.
 
 
-#### Example 2
+#### Example 1
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -453,7 +455,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-#### Example 3
+#### Example 2
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -529,7 +531,7 @@ omits the size 1 `level` dimension.*
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-#### Example 4
+#### Example 3
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment is stored in the same dataset and spans half
@@ -617,7 +619,7 @@ to the aggregation variable.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 5
+#### Example 4
 
 *An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
@@ -721,7 +723,7 @@ not both, may be used in the aggregated data.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 6
+#### Example 5
 
 *An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
@@ -818,7 +820,7 @@ apply to both aggregation variables.*
     }
 
 
-#### Example 7
+#### Example 6
 
 *An aggregation data variable for a collection of discrete sampling
 geometry timeseries features that have been compressed by use of a
@@ -910,7 +912,7 @@ separate external file.*
       aggregation_address_lon = "lon", "lon", "lon" ;
 
 
-#### Example 8
+#### Example 7
 
 *An aggregation data variable whose aggregated data represents 32-bit
 floats packed into 16-bit integers. When created, the aggregated data
