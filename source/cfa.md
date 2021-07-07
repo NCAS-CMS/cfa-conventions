@@ -229,11 +229,21 @@ which are mandatory, are:
 * Names the string-valued variable containing the case-insensitive
   file formats for fragments stored in external files.
 
-* The `format` variable must span exactly the same dimensions in the
-  same order as the `file` variable. Missing values must be used
-  whenever the corresponding location in the `file` variable is a
-  missing value.
+* The `format` variable must either be scalar or span exactly the same
+  dimensions in the same order as the `file` variable.
   
+* When the `format` variable spans the same dimensions as the `file`
+  variable, missing values must be used whenever the corresponding
+  location in the `file` variable is a missing value.
+  
+* A scalar `format` variable is a convenience feature that may be used
+  when all fragment files have the same format. In this case the
+  single value is assumed to apply to all fragments that have a file
+  representation, i.e. those fragments that correspond to non-missing
+  values in the `file` variable. If the `file` variable contains only
+  missing values, then the `format` variable is not used, and so may
+  take an arbitrary value.
+    
 * A fragment in an external netCDF file is signified by a value of
   `nc`.
 
@@ -281,7 +291,9 @@ which are mandatory, are:
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
-in an external netCDF file in a variable call `temp`.*
+in an external netCDF file in a variable call `temp`. Both fragment
+files have the same format, so the `format` variable can be stored as
+a scalar variable.*
 
     dimensions:
       // Aggregated dimensions
@@ -324,7 +336,7 @@ in an external netCDF file in a variable call `temp`.*
       // Aggregation definition variables			 	  
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
-      string aggregation_format(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
 
     // global attributes:
@@ -341,7 +353,7 @@ in an external netCDF file in a variable call `temp`.*
                              0, 72,
                              0, 143 ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
-      aggregation_format = "nc", "nc" ;
+      aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
 
 
@@ -492,7 +504,7 @@ omits the size 1 `level` dimension.*
       // Aggregation definition variables			 	  
       int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
-      string aggregation_format(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Fragment variable
       double temp2(time, latitude, longitude) ;
@@ -512,7 +524,7 @@ omits the size 1 `level` dimension.*
                              0, 72,
                              0, 143 ;
       aggregation_file = "January-June.nc", _ ;
-      aggregation_format = "nc", _ ;
+      aggregation_format = "nc" ;
       aggregation_address = "temp", "temp2" ;
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
@@ -523,8 +535,9 @@ omits the size 1 `level` dimension.*
 fragments. Each fragment is stored in the same dataset and spans half
 of the aggregated `time` dimension and the whole of the `latitude` and
 `longitude` dimensions, but does not span the size 1 `level`
-dimension. As there are no external files, the `file` and `format`
-variables both contain missing data. The fragments and aggregation
+dimension. As there are no external files, the `file` variable
+contains only missing values, and therefore the `format` variable may
+also be a scalar missing value. The fragments and aggregation
 definition variables in this case are stored in a child group called
 `aggregation`. The `temp2` fragment has different but equivalent units
 to the aggregation variable.*
@@ -580,7 +593,7 @@ to the aggregation variable.*
         // Aggregation definition variables
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude) ;
-        string format(f_time, f_level, f_latitude, f_longitude) ;
+        string format ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
         // Fragment variables
         double temp1(time, latitude, longitude) ;
@@ -598,7 +611,7 @@ to the aggregation variable.*
                    0, 72,
                    0, 143 ;
        file = _, _ ;
-       format = _, _ ;
+       format = _ ;
        address = "temp1", "temp2" ;
        temp1 = 270.3, 272.5, 274.1, 278.5, 280.3, 283.6, ... ;
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
@@ -672,7 +685,7 @@ not both, may be used in the aggregated data.*
         // Aggregation definition variables			 	  
         int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
-        string format(f_time, f_level, f_latitude, f_longitude, k) ;
+        string format ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
         // Fragment variable
         double temp2(time, latitude, longitude) ;
@@ -700,10 +713,7 @@ not both, may be used in the aggregated data.*
               _, _,
               "/local/January-June_NH.nc", "/remote/January-June_NH.nc",
               "/remote/July-December_NH.nc", _ ;
-       format = "nc, _,
-                _, _,
-                "nc", "nc",
-                "nc", _ ;
+       format = "nc" ;
        address = "temp1", _,
                  "temp2", _,
                  "temp3", "t3",
@@ -767,6 +777,7 @@ apply to both aggregation variables.*
         longitude:units = "degrees_east" ;
       // Aggregation definition variable
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format ;
 
     // global attributes:
       :Conventions = "CF-1.9 CFA-0.6" ;
@@ -774,7 +785,7 @@ apply to both aggregation variables.*
       temp = _ ;
       time = _ ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
-      aggregation_format = "nc", "nc" ;
+      aggregation_format = "nc" ;
 
     group: aggregation_temp {
       variables:
@@ -872,6 +883,7 @@ separate external file.*
       // Aggregation definition variables			 	  
       int aggregation_location(f_station, i, j) ;
       string aggregation_file(f_station) ;
+      string aggregation_format ;
       string aggregation_address_temp(f_station) ;
       string aggregation_address_time(f_station) ;
       string aggregation_address_lat(f_station) ;
@@ -891,7 +903,7 @@ separate external file.*
                                     1, 1
                                     2, 2 ;
       aggregation_file = "Harwell.nc", "Abingdon.nc", "Lambourne.nc" ;
-      aggregation_format = "nc", "nc", "nc" ;
+      aggregation_format = "nc" ;
       aggregation_address_temp = "tas", "tas", "tas" ;
       aggregation_address_time = "time", "time", "time" ;
       aggregation_address_lat = "lat", "lat", "lat" ;
@@ -950,7 +962,7 @@ values 270.0, 270.1, ... 271.1.*
         // Aggregation definition variables
         int location(f_time, i, j) ;
         string file(f_time) ;
-        string format(f_time) ;	
+        string format ;	
         string address(f_time) ;
       
       data:    	  
@@ -959,7 +971,7 @@ values 270.0, 270.1, ... 271.1.*
         location = 0, 5,
                    6, 11,
         file = _, _ ;
-        format = _, _ ;
+        format = _ ;
         address = "/aggregation/temp1", "/aggregation/temp2" ;
     }
 
