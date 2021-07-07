@@ -57,6 +57,10 @@ The data of an *aggregation variable* that exists as a set of
 instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
+**aggregated dimension**
+
+A netCDF dimension that defines a dimension of the aggregated data.
+
 **fragment**
 
 An independent, possibly self-describing, array that defines a
@@ -140,7 +144,7 @@ dimensions are constrained by the aggregated dimensions, i.e. the
 ordered list of dimensions given by the **`aggregated_dimensions`**
 attribute. In particular, note that any CF coordinate variable that
 shares its name with an aggregated dimension of an aggregated CF data
-variable is be considered as part of that variable's CF domain
+variable is considered to be part of that variable's CF domain
 definition.
 
 The fragments are organised into an orthogonal multidimensional array
@@ -187,14 +191,30 @@ which are mandatory, are:
 * For each fragment, identifies the part of the aggregated data for
   which the fragment provides values.
 
-* Names the integer-valued variable containing the index ranges of the
-  aggregated dimensions that correspond to each fragment. For each
-  fragment and each aggregated dimension, this variable stores the
-  first and last of the range of zero-based indices that defines the
-  position of the fragment along the aggregated dimension. Therefore,
-  the `location` variable requires two extra trailing dimensions. The
-  size of the first is equal to the number of aggregation dimensions,
-  and the second has size 2.
+* Names the integer-valued variable containing the sizes, in index
+  space, of the fragments along each fragment dimension. From these
+  sizes, the location of each fragment in the aggregated data can be
+  determined unambiguously.
+
+* When there is at least one aggregated dimension, the `location`
+  variable has two dimensions. The size of the first dimension is the
+  number of fragment dimensions, and the size of the second dimension
+  is the size of the largest fragment dimension.
+
+* The first dimension indexes the fragment dimensions in the same
+  order as their corresponding aggregated dimensions, as given by the
+  **`aggregated_dimensions`** attribute.
+
+* For each position of a fragment dimension, the second dimension of
+  the `location` variable gives, in increasing index space order, the
+  number of elements spanned by the fragements that occupy that
+  position. For each fragment dimension that is smaller than the
+  largest fragment dimension, the second dimension is padded with
+  missing values.
+
+* When there are no aggregated dimensions (i.e. when the aggregated
+  data is a scalar), the `location` variable must be one-dimensionsal
+  and of size one, and contain the value `1`.
 
 `file`
 
@@ -239,7 +259,7 @@ which are mandatory, are:
   location in the `file` variable is a missing value.
   
 * A scalar `format` variable is a convenience feature that may be used
-  when all fragment files have the same format. In this case the
+  when all named fragment files have the same format. In this case the
   single value is assumed to apply to all fragments that have a file
   representation, i.e. those fragments that correspond to non-missing
   values in the `file` variable. If the `file` variable contains only
@@ -336,7 +356,7 @@ a scalar variable.*
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
-      int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+      int aggregation_location(i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
@@ -346,14 +366,10 @@ a scalar variable.*
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
-      aggregation_location = 0, 5,
-                             0, 0,
-                             0, 72,
-                             0, 143,
-                             6, 11,
-                             0, 0,
-                             0, 72,
-                             0, 143 ;
+      aggregation_location = 6, 6,
+                             1, _,
+                             73, _,
+                             144, _ ;
       aggregation_file = "January-June.nc", "July-December.nc" ;
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
@@ -504,7 +520,7 @@ omits the size 1 `level` dimension.*
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
       // Aggregation definition variables			 	  
-      int aggregation_location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+      int aggregation_location(i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
@@ -517,14 +533,10 @@ omits the size 1 `level` dimension.*
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
-      aggregation_location = 0, 5,
-                             0, 0,
-                             0, 72,
-                             0, 143,
-                             6, 11,
-                             0, 0,
-                             0, 72,
-                             0, 143 ;
+      aggregation_location = 6, 6,
+                             1, _,
+                             73, _,
+                             144, _ ;
       aggregation_file = "January-June.nc", _ ;
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp2" ;
@@ -593,7 +605,7 @@ to the aggregation variable.*
         j = 2 ;
       variables:
         // Aggregation definition variables
-        int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+        int location(i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude) ;
         string format ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
@@ -604,14 +616,10 @@ to the aggregation variable.*
           temp2:units = "degreesC" ;
 
       data:    	   
-        location = 0, 5,
-                   0, 0,
-                   0, 72,
-                   0, 143,
-                   6, 11,
-                   0, 0,
-                   0, 72,
-                   0, 143 ;
+        location = 6, 6,
+                   1, _,
+                   73, _,
+                   144, _ ;
        file = _, _ ;
        format = _ ;
        address = "temp1", "temp2" ;
@@ -685,7 +693,7 @@ not both, may be used in the aggregated data.*
         k = 2 ;
       variables:
         // Aggregation definition variables			 	  
-        int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+        int location(i, j) ;
         string file(f_time, f_level, f_latitude, f_longitude, k) ;
         string format ;
         string address(f_time, f_level, f_latitude, f_longitude, k) ;
@@ -695,22 +703,10 @@ not both, may be used in the aggregated data.*
           temp2:units = "degreesC" ;
 	      
       data:    	   
-        location = 0, 5,
-                   0, 0,
-                   0, 35,
-                   0, 143,
-                   0, 5,
-                   0, 0,
-                   36, 72,
-                   0, 143,
-                   6, 11,
-                   0, 0,
-                   0, 36,
-                   0, 143,
-                   6, 11,
-                   0, 0,
-                   36, 72,
-                   0, 143 ;
+        location = 6, 6,
+                   1, _,
+                   36, 37,
+                   144, _ ;
        file = "/remote/January-June_SH.nc", _,
               _, _,
               "/local/January-June_NH.nc", "/remote/January-June_NH.nc",
@@ -747,6 +743,7 @@ apply to both aggregation variables.*
       f_longitude = 1 ;
       // Extra dimensions
       i = 4 ;
+      ii = 1 ;
       j = 2 ;
     variables:
       // Data variable
@@ -756,7 +753,7 @@ apply to both aggregation variables.*
         temp:cell_methods = "time: mean" ;
         temp:aggregated_dimensions = "time level latitude longitude" ;
         temp:aggregated_data = "location: /aggregation_temp/location
-                                file: aggregation_file
+                                file: /aggregation_temp/aggregation_file
                                 format: aggregation_format
                                 address: /aggregation_temp/address" ;
       // Coordinate variables
@@ -765,8 +762,8 @@ apply to both aggregation variables.*
         time:units = "days since 2001-01-01" ;
         temp:aggregated_dimensions = "time" ;
         temp:aggregated_data = "location: /aggregation_time/location
-                                file: aggregation_file
-				format: aggregation_format
+                                file: /aggregation_time/file
+				format: agregation_format
                                 address: /aggregation_time/address" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
@@ -777,8 +774,7 @@ apply to both aggregation variables.*
       double longitude(longitude) ;
         longitude:standard_name = "longitude" ;
         longitude:units = "degrees_east" ;
-      // Aggregation definition variable
-      string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      // Aggregation definition variables
       string aggregation_format ;
 
     // global attributes:
@@ -786,36 +782,34 @@ apply to both aggregation variables.*
     data:
       temp = _ ;
       time = _ ;
-      aggregation_file = "January-June.nc", "July-December.nc" ;
       aggregation_format = "nc" ;
 
     group: aggregation_temp {
       variables:
-        // Aggregation definition variables
-        int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
+        // Temperature aggregation definition variables
+        int location(i, j) ;
+        string file(f_time, f_level, f_latitude, f_longitude) ;
         string address(f_time, f_level, f_latitude, f_longitude) ;
 
       data:    	   
-        location = 0, 5,
-                   0, 0,
-                   0, 72,
-                   0, 143,
-                   6, 11,
-                   0, 0,
-                   0, 72,
-                   0, 143 ;
-       address = "temp", "temp" ;
+        location = 6, 6,
+                   1, _,
+                   73, _,
+                   144, _ ;
+        file = "January-June.nc", "July-December.nc" ;
+        address = "temp", "temp" ;
     }
     
     group: aggregation_time {
       variables:
-        // Aggregation definition variables
-        int location(f_time, f_level, f_latitude, f_longitude, i, j) ;
-        string address(f_time, f_level, f_latitude, f_longitude) ;
+        // Time aggregation definition variables
+        int location(i, j) ;
+        string aggregation_file(f_time) ;
+        string address(f_time) ;
 
       data:    	   
-        location = 0, 5,
-                   6, 11 ;
+        location = 6, 6 ;
+        file = "January-June.nc", "July-December.nc" ;
         address = "time", "time" ;
     }
 
@@ -838,7 +832,7 @@ separate external file.*
       f_station = 3 ;
       // Extra dimensions
       i = 1 ;
-      j = 2 ;
+      j = 3 ;
     variables:
       // Data variable
       float temp(obs) ;
@@ -883,7 +877,8 @@ separate external file.*
         row_size:long_name = "number of observations per station" ;
         row_size:sample_dimension = "obs" ;
       // Aggregation definition variables			 	  
-      int aggregation_location(f_station, i, j) ;
+      int aggregation_location(i, j) ;
+      int aggregation_location_latlon(i, j) ;
       string aggregation_file(f_station) ;
       string aggregation_format ;
       string aggregation_address_temp(f_station) ;
@@ -898,12 +893,8 @@ separate external file.*
       temp = _ ;    
       time = _ ;
       row_size = 4, 5, 6 ;
-      aggregation_location = 0, 3,
-                             4, 8,
-                             9, 14 ;
-      aggregation_location_latlon = 0, 0
-                                    1, 1
-                                    2, 2 ;
+      aggregation_location = 3, 4, 5 ;
+      aggregation_location_latlon = 1, 1, 1 ;
       aggregation_file = "Harwell.nc", "Abingdon.nc", "Lambourne.nc" ;
       aggregation_format = "nc" ;
       aggregation_address_temp = "tas", "tas", "tas" ;
@@ -962,7 +953,7 @@ values 270.0, 270.1, ... 271.1.*
         short temp1(t) ;
         short temp2(t) ;
         // Aggregation definition variables
-        int location(f_time, i, j) ;
+        int location(i, j) ;
         string file(f_time) ;
         string format ;	
         string address(f_time) ;
@@ -970,8 +961,7 @@ values 270.0, 270.1, ... 271.1.*
       data:    	  
         temp1 = 0, 5958, 11916, 17874, 23832, 29790 ;
         temp2 = 35749, 41707, 47665, 53623, 59581, 65539 ; 
-        location = 0, 5,
-                   6, 11,
+        location = 6, 6 ;
         file = _, _ ;
         format = _ ;
         address = "/aggregation/temp1", "/aggregation/temp2" ;
