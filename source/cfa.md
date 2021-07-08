@@ -763,7 +763,7 @@ apply to both aggregation variables.*
         temp:aggregated_dimensions = "time" ;
         temp:aggregated_data = "location: /aggregation_time/location
                                 file: /aggregation_time/file
-				format: agregation_format
+                                format: agregation_format
                                 address: /aggregation_time/address" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
@@ -803,7 +803,7 @@ apply to both aggregation variables.*
     group: aggregation_time {
       variables:
         // Time aggregation definition variables
-        int location(i, j) ;
+        int location(ii, j) ;
         string aggregation_file(f_time) ;
         string address(f_time) ;
 
