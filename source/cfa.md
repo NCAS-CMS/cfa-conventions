@@ -12,6 +12,7 @@ Bartholomew
 * [Identification of Conventions](#Identification-of-Conventions)
 * [Aggregation variables](#Aggregation-variables)
 * [Fragment Storage](#Fragment-Storage)
+  * [Units](#Units)
 * [Revision History](#Revision-History)
 * [References](#References)
 
@@ -67,7 +68,7 @@ instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
 **aggregated dimension**
-
+###
 A netCDF dimension that defines a dimension of the aggregated data.
 
 **fragment**
