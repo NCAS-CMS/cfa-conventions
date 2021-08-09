@@ -1,6 +1,6 @@
 # NetCDF Climate and Forecast Aggregation (CFA) Conventions
 
-[**The CFA-netCDF conventions document**](https://github.com/NCAS-CMS/cfa-conventions/blob/master/source/cfa.md)
+## [The CFA-netCDF conventions document](https://github.com/NCAS-CMS/cfa-conventions/blob/master/source/cfa.md)
 
 The CFA (Climate and Forecast Aggregation) conventions describe how a
 netCDF file can be used to describe a dataset distributed across
