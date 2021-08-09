@@ -9,10 +9,10 @@ Bartholomew
 
 * [Introduction](#Introduction)
 * [Terminology](#Terminology)
-* [Identification of Conventions](#Identification of Conventions)
-* [Aggregation variables](#Aggregation variables)
+* [Identification of Conventions](#Identification-of-Conventions)
+* [Aggregation variables](#Aggregation-variables)
 * [Fragment Storage](#Fragment-Storage)
-* [Revision History](#Revision History)
+* [Revision History](#Revision-History)
 * [References](#References)
 
 ## Introduction
@@ -82,7 +82,7 @@ A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
 
 
-## Identification of Conventions
+## Identification of Conventions <a name="Identification-of-Conventions"></a>
 
 Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User's Guide [NUG] defined global attribute
@@ -93,7 +93,7 @@ CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
 "`CF-1.9 CFA-0.6`".
 
 
-## Aggregation variables
+## Aggregation variables <a name="Aggregation-variables"></a>
 
 An *aggregation variable* does not contain its own data, as is usual
 for netCDF variables, instead it contains instructions on how to
@@ -976,7 +976,7 @@ values 270.0, 270.1, ... 271.1.*
         address = "/aggregation/temp1", "/aggregation/temp2" ;
     }
 
-## Revision History
+## Revision History <a name="Revision-History"></a>
 
 **Versions 0.1 to 0.3**, 2012 to 2013
 
