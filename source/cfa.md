@@ -11,11 +11,13 @@ Bartholomew
 * [Terminology](#Terminology)
 * [Identification of Conventions](#Identification-of-Conventions)
 * [Aggregation variables](#Aggregation-variables)
+  * [Example 1](#Example-1)
 * [Fragment Storage](#Fragment-Storage)
   * [Units](#Units)
   * [Size 1 dimensions](#Size-1-dimensions)
   * [Compression](#Compression)
   * [Missing values](#Missing-values)
+  * [Example 2](#Example-2)
 * [Revision History](#Revision-History)
 * [References](#References)
 
@@ -321,7 +323,7 @@ which are mandatory, are:
   these conventions.
 
 
-#### Example 1
+#### Example 1 <a name="Example-1"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -484,7 +486,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-#### Example 2
+#### Example 2 <a name="Example-2"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
