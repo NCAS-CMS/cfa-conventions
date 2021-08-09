@@ -7,7 +7,7 @@ Bartholomew
 
 ## Contents
 
-* **Introduction** [Introduction][#Introduction]
+* **Introduction** [Introduction](#Introduction)
 * **Terminology**
 * **Identification of Conventions**
 * **Aggregation variables**
