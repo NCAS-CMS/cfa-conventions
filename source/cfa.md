@@ -5,6 +5,15 @@ Bartholomew
 
 **Version 0.6**, 2021-07-27
 
+## Contents
+
+* Introduction
+* Terminology
+* Identification of Conventions
+* Aggregation variables
+* Fragment Storage
+* Revision History
+* References
 
 ## Introduction
 
