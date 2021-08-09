@@ -18,6 +18,11 @@ Bartholomew
   * [Compression](#Compression)
   * [Missing values](#Missing-values)
   * [Example 2](#Example-2)
+  * [Example 3](#Example-3)
+  * [Example 4](#Example-4)
+  * [Example 5](#Example-5)
+  * [Example 6](#Example-6)
+  * [Example 7](#Example-7)
 * [Revision History](#Revision-History)
 * [References](#References)
 
@@ -73,7 +78,7 @@ instructions on how to build an array from one or more other arrays
 stored elsewhere.
 
 **aggregated dimension**
-###
+
 A netCDF dimension that defines a dimension of the aggregated data.
 
 **fragment**
@@ -558,7 +563,7 @@ omits the size 1 `level` dimension.*
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-#### Example 3
+#### Example 3 <a name="Example-3"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment is stored in the same dataset and spans half
@@ -642,7 +647,7 @@ to the aggregation variable.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 4
+#### Example 4 <a name="Example-4"></a>
 
 *An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
@@ -734,7 +739,7 @@ not both, may be used in the aggregated data.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 5
+#### Example 5 <a name="Example-5"></a>
 
 *An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
@@ -829,7 +834,7 @@ apply to both aggregation variables.*
     }
 
 
-#### Example 6
+#### Example 6 <a name="Example-6"></a>
 
 *An aggregation data variable for a collection of discrete sampling
 geometry timeseries features that have been compressed by use of a
@@ -918,7 +923,7 @@ separate external file.*
       aggregation_address_lon = "lon", "lon", "lon" ;
 
 
-#### Example 7
+#### Example 7 <a name="Example-7"></a>
 
 *An aggregation data variable whose aggregated data represents 32-bit
 floats packed into 16-bit integers. When created, the aggregated data
