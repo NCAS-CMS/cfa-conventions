@@ -30,7 +30,7 @@ Bartholomew
 * [Example 7](#Example-7)
 
 
-## Introduction
+## Introduction <a name="Introduction"></a>
 
 
 The CFA (Climate and Forecast Aggregation) conventions describe how a
@@ -437,7 +437,7 @@ aggregation.
 
 The following fragment manipulations are allowed:
 
-### Units
+### Units <a name="Units"></a>
  
 If a fragment has no defined units then its data is assumed to have
 the same units as the aggregated variable.
@@ -473,7 +473,7 @@ the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 
-### Compression
+### Compression <a name="Compression"></a>
 
 A fragment may be stored in any compressed form, i.e. stored using
 fewer bits than its original uncompressed representation, for which
@@ -1010,7 +1010,7 @@ and `address` variables.
 
 First stable release.
 
-## References
+## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
