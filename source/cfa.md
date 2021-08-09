@@ -7,13 +7,13 @@ Bartholomew
 
 ## Contents
 
-* **Introduction** [Introduction](#Introduction)
-* **Terminology**
-* **Identification of Conventions**
-* **Aggregation variables**
-* **Fragment Storage**
-* **Revision History**
-* **References**
+* [Introduction](#Introduction)
+* [Terminology](#Terminology)
+* [Identification of Conventions](#Identification of Conventions)
+* [Aggregation variables](#Aggregation variables)
+* [Fragment Storage](#Fragment Storage)
+* [Revision History](#Revision History)
+* [References](#References)
 
 ## Introduction
 
