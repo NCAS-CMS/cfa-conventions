@@ -11,7 +11,7 @@ Bartholomew
 * [Terminology](#Terminology)
 * [Identification of Conventions](#Identification of Conventions)
 * [Aggregation variables](#Aggregation variables)
-* [Fragment Storage](#Fragment Storage)
+* [Fragment Storage](#Fragment-Storage)
 * [Revision History](#Revision History)
 * [References](#References)
 
@@ -384,7 +384,7 @@ a scalar variable.*
       aggregation_address = "temp", "temp" ;
 
 
-## Fragment Storage
+## Fragment Storage <a name="Fragment-Storage"></a>
 
 Each fragment has a canonical form for which:
 
