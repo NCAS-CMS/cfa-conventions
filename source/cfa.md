@@ -5,8 +5,32 @@ Bartholomew
 
 **Version 0.6**, 2021-07-27
 
+## Contents
 
-## Introduction
+* [Introduction](#Introduction)
+* [Terminology](#Terminology)
+* [Identification of Conventions](#Identification-of-Conventions)
+* [Aggregation variables](#Aggregation-variables)
+* [Fragment Storage](#Fragment-Storage)
+  * [Units](#Units)
+  * [Size 1 dimensions](#Size-1-dimensions)
+  * [Compression](#Compression)
+  * [Missing values](#Missing-values)
+* [Revision History](#Revision-History)
+* [References](#References)
+
+#### Examples
+
+* [Example 1](#Example-1)
+* [Example 2](#Example-2)
+* [Example 3](#Example-3)
+* [Example 4](#Example-4)
+* [Example 5](#Example-5)
+* [Example 6](#Example-6)
+* [Example 7](#Example-7)
+
+
+## Introduction <a name="Introduction"></a>
 
 
 The CFA (Climate and Forecast Aggregation) conventions describe how a
@@ -43,7 +67,7 @@ the functionality introduced in CF-1.9 for the CF domain variable,
 which has dimensions but no data).
 
 
-## Terminology
+## Terminology <a name="Terminology"></a>
 
 **aggregation variable**
 
@@ -73,7 +97,7 @@ A dimension of the multi-dimensional orthogonal array of fragments
 that defines the *aggregated data*.
 
 
-## Identification of Conventions
+## Identification of Conventions <a name="Identification-of-Conventions"></a>
 
 Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User's Guide [NUG] defined global attribute
@@ -84,7 +108,7 @@ CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
 "`CF-1.9 CFA-0.6`".
 
 
-## Aggregation variables
+## Aggregation variables <a name="Aggregation-variables"></a>
 
 An *aggregation variable* does not contain its own data, as is usual
 for netCDF variables, instead it contains instructions on how to
@@ -308,7 +332,7 @@ which are mandatory, are:
   these conventions.
 
 
-#### Example 1
+#### Example 1 <a name="Example-1"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -375,7 +399,7 @@ a scalar variable.*
       aggregation_address = "temp", "temp" ;
 
 
-## Fragment Storage
+## Fragment Storage <a name="Fragment-Storage"></a>
 
 Each fragment has a canonical form for which:
 
@@ -413,7 +437,7 @@ aggregation.
 
 The following fragment manipulations are allowed:
 
-### Units
+### Units <a name="Units"></a>
  
 If a fragment has no defined units then its data is assumed to have
 the same units as the aggregated variable.
@@ -438,7 +462,7 @@ time of the fragment's units are changed to the earlier date by adding
 365 to the fragment's data.
 
 
-### Size 1 dimensions
+### Size 1 dimensions <a name="Size-1-dimensions"></a>
 
 A fragment may omit from its data any size 1 dimension for which the
 size of the fragment's location along the corresponding aggregated
@@ -449,7 +473,7 @@ the aggregation instructions is `(6, 1, 73, 144)`, then the fragment's
 data could have shape `(6, 1, 73, 144)` or `(6, 73, 144)`.
 
 
-### Compression
+### Compression <a name="Compression"></a>
 
 A fragment may be stored in any compressed form, i.e. stored using
 fewer bits than its original uncompressed representation, for which
@@ -462,7 +486,7 @@ the uncompressed fragment and the data type of the fragment is the
 data type of its uncompressed data.
 
 
-### Missing values
+### Missing values <a name="Missing-values"></a>
 
 A fragment may use any valid means for defining missing
 values. Missing values must be changed to values that the aggregation
@@ -471,7 +495,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-#### Example 2
+#### Example 2 <a name="Example-2"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -543,7 +567,7 @@ omits the size 1 `level` dimension.*
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-#### Example 3
+#### Example 3 <a name="Example-3"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment is stored in the same dataset and spans half
@@ -627,7 +651,7 @@ to the aggregation variable.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 4
+#### Example 4 <a name="Example-4"></a>
 
 *An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
@@ -719,7 +743,7 @@ not both, may be used in the aggregated data.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-#### Example 5
+#### Example 5 <a name="Example-5"></a>
 
 *An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
@@ -814,7 +838,7 @@ apply to both aggregation variables.*
     }
 
 
-#### Example 6
+#### Example 6 <a name="Example-6"></a>
 
 *An aggregation data variable for a collection of discrete sampling
 geometry timeseries features that have been compressed by use of a
@@ -903,7 +927,7 @@ separate external file.*
       aggregation_address_lon = "lon", "lon", "lon" ;
 
 
-#### Example 7
+#### Example 7 <a name="Example-7"></a>
 
 *An aggregation data variable whose aggregated data represents 32-bit
 floats packed into 16-bit integers. When created, the aggregated data
@@ -967,7 +991,7 @@ values 270.0, 270.1, ... 271.1.*
         address = "/aggregation/temp1", "/aggregation/temp2" ;
     }
 
-## Revision History
+## Revision History <a name="Revision-History"></a>
 
 **Versions 0.1 to 0.3**, 2012 to 2013
 
@@ -986,7 +1010,7 @@ and `address` variables.
 
 First stable release.
 
-## References
+## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
 
 [NetCDF] NetCDF Software Package. UNIDATA Program Center of the University Corporation for Atmospheric Research. http://www.unidata.ucar.edu/netcdf/index.html
