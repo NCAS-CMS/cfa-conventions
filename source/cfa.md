@@ -13,6 +13,9 @@ Bartholomew
 * [Aggregation variables](#Aggregation-variables)
 * [Fragment Storage](#Fragment-Storage)
   * [Units](#Units)
+  * [Size 1 dimensions](#Size-1-dimensions)
+  * [Compression](#Compression)
+  * [Missing values](#Missing-values)
 * [Revision History](#Revision-History)
 * [References](#References)
 
@@ -448,7 +451,7 @@ time of the fragment's units are changed to the earlier date by adding
 365 to the fragment's data.
 
 
-### Size 1 dimensions
+### Size 1 dimensions <a name="Size-1-dimensions"></a>
 
 A fragment may omit from its data any size 1 dimension for which the
 size of the fragment's location along the corresponding aggregated
@@ -472,7 +475,7 @@ the uncompressed fragment and the data type of the fragment is the
 data type of its uncompressed data.
 
 
-### Missing values
+### Missing values <a name="Missing-values"></a>
 
 A fragment may use any valid means for defining missing
 values. Missing values must be changed to values that the aggregation
