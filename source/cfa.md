@@ -7,13 +7,13 @@ Bartholomew
 
 ## Contents
 
-* Introduction
-* Terminology
-* Identification of Conventions
-* Aggregation variables
-* Fragment Storage
-* Revision History
-* References
+* **Introduction**
+* **Terminology**
+* **Identification of Conventions**
+* **Aggregation variables**
+* **Fragment Storage**
+* **Revision History**
+* **References**
 
 ## Introduction
 
