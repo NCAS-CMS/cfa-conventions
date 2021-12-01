@@ -784,8 +784,8 @@ apply to both aggregation variables.*
       double time ;
         time:standard_name = "time" ;
         time:units = "days since 2001-01-01" ;
-        temp:aggregated_dimensions = "time" ;
-        temp:aggregated_data = "location: /aggregation_time/location
+        time:aggregated_dimensions = "time" ;
+        time:aggregated_data = "location: /aggregation_time/location
                                 file: /aggregation_time/file
                                 format: agregation_format
                                 address: /aggregation_time/address" ;
@@ -873,8 +873,8 @@ separate external file.*
         time:standard_name = "time" ;
         time:long_name = "time of measurement" ;
         time:units = "days since 1970-01-01" ;
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location
+        time:aggregated_dimensions = "obs" ;
+        time:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
                                 format: aggregation_format
                                 address: aggregation_address_time" ;     
@@ -882,20 +882,20 @@ separate external file.*
         lon:standard_name = "longitude";
         lon:long_name = "station longitude";
         lon:units = "degrees_east";
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location_latlon
-                                file: aggregation_file
-                                format: aggregation_format
-                                address: aggregation_address_lon" ;
+        lon:aggregated_dimensions = "obs" ;
+        lon:aggregated_data = "location: aggregation_location_latlon
+                               file: aggregation_file
+                               format: aggregation_format
+                               address: aggregation_address_lon" ;
       float lat(station) ;
         lat:standard_name = "latitude";
         lat:long_name = "station latitude" ;
         lat:units = "degrees_north" ;
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location_latlon
-                                file: aggregation_file
-                                format: aggregation_format
-                                address: aggregation_address_lat" ;
+        lat:aggregated_dimensions = "obs" ;
+        lat:aggregated_data = "location: aggregation_location_latlon
+                               file: aggregation_file
+                               format: aggregation_format
+                               address: aggregation_address_lat" ;
       // Compression encoding variable
       int row_size(station) ;
         row_size:long_name = "number of observations per station" ;
