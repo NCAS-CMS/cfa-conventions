@@ -1008,7 +1008,7 @@ Prototype version
 
 **Version 0.6**, 2021-07-27
 
-First stable release.
+* First stable release.
 
 **Version 0.6.1**, 2021-12-02
 
