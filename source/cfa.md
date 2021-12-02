@@ -995,7 +995,7 @@ values 270.0, 270.1, ... 271.1.*
 
 **Versions 0.1 to 0.3**, 2012 to 2013
 
-Prototype versions
+* Prototype versions
 
 **Version 0.4**, 2014-02-27
 
@@ -1003,12 +1003,17 @@ Prototype version
 
 **Version 0.5**, 2021
 
-Prototype version. First introduction of `location`, `file`, `format`
-and `address` variables.
+* Prototype version. First introduction of `location`, `file`,
+  `format` and `address` variables.
 
 **Version 0.6**, 2021-07-27
 
 First stable release.
+
+**Version 0.6.1**, 2021-12-02
+
+* Corrected the CDL in examples 5 and 6.
+* Added links for navigating the document navigation.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
