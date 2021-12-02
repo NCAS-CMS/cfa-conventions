@@ -999,7 +999,7 @@ values 270.0, 270.1, ... 271.1.*
 
 **Version 0.4**, 2014-02-27
 
-Prototype version
+* Prototype version.
 
 **Version 0.5**, 2021
 
