@@ -1,0 +1,812 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. A complete description of netCDF NCA attributes describing the aggregated data</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="" href="index.html" />
+    <link rel="prev" title="3. The NCA convention" href="nca.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nca.html" title="3. The NCA convention"
+             accesskey="P">previous</a> |</li>
+  <li><a href="index.html">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.4/index.html">0.4
+  <option value="../0.3/index.html">0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html">0.2.1
+  <option value="../0.2/index.html"selected>0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="index.html"></a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-complete-description-of-netcdf-nca-attributes-describing-the-aggregated-data">
+<h1>4. A complete description of netCDF NCA attributes describing the aggregated data<a class="headerlink" href="#a-complete-description-of-netcdf-nca-attributes-describing-the-aggregated-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cf-role">
+<span id="id1"></span><h2>4.1. cf_role<a class="headerlink" href="#cf-role" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">cf_role</span></tt></dt>
+<dd><p class="first">This standard CF property <em>must</em> be used to mark the netCDF variable
+as either an <a class="reference internal" href="nca.html#nca-variable"><em>NCA variable</em></a> or a <a class="reference internal" href="nca.html#private-nca-variable"><em>private
+NCA variable</em></a>.</p>
+<p>It takes values of <tt class="docutils literal"><span class="pre">&quot;nca&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;nca_private&quot;</span></tt> for an NCA
+variable or a private NCA variable respectively.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="89%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&quot;nca&quot;</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&quot;nca_private&quot;</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="nca-dimensions">
+<span id="id2"></span><h2>4.2. nca_dimensions<a class="headerlink" href="#nca-dimensions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">nca_dimensions</span></tt></dt>
+<dd><p class="first">A netCDF property whose value is a string containing the ordered,
+space delimited set of the master array&#8217;s dimension names. The
+specified dimensions are all defined as netCDF dimensions in the
+NCA file.</p>
+<p>If missing, an empty sting or a string contianing only spaces then
+the master array is assumed to be scalar.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="90%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&quot;time</span> <span class="pre">lat</span> <span class="pre">lon&quot;</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&quot;</span>&nbsp; <span class="pre">&quot;</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p class="last">The master array&#8217;s dimensions are stored outside of the
+<a class="reference internal" href="#nca-array"><em>nca_array</em></a> attribute in order to provide useful information
+about the master array without having to decode the <tt class="docutils literal"><span class="pre">nca_array</span></tt>
+string (which may not be possible in all APIs).</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="nca-array">
+<span id="id3"></span><h2>4.3. nca_array<a class="headerlink" href="#nca-array" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">nca_array</span></tt></dt>
+<dd><p class="first">A netCDF property whose value is a JSON encoded string containing
+parameters required for constructing the aggregated data array.</p>
+<p id="shape">Note that the <strong>dimensions</strong>, <strong>shape</strong>, <strong>dtype</strong>, <strong>units</strong> and
+<strong>calendar</strong> parameters are specified elsewhere (by attributes of
+the netCDF NCA variable or inferrable from the netCDF dimensions in
+NCA file) and so are not required.</p>
+<p>The JSON <em>decoded</em> parameter names and types are described here.</p>
+<dl class="docutils" id="base">
+<dt><strong>base</strong></dt>
+<dd><p class="first">A string giving the base for any relative file names given by
+<a class="reference internal" href="#file"><em>file</em></a>. May be a location on the local system or a
+URL.</p>
+<p>If missing then it is assumed that either file names are
+relative to the local directory or URL base containing the NCA
+file or they are absolute paths (local files or URLs).</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="93%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'/data/archive'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'../archive/'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'http://archive/files'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>directions</strong></dt>
+<dd><p class="first">An associative array mapping each dimension of the master array
+to a direction. Each direction is described as <tt class="docutils literal"><span class="pre">true</span></tt>
+(increasing) or <tt class="docutils literal"><span class="pre">false</span></tt> (decreasing).</p>
+<p>If the master array is a scalar then a boolean rather than an
+associative array is given.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="96%" />
+<col width="4%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">{'time',</span> <span class="pre">true,</span> <span class="pre">'lat':</span> <span class="pre">false,</span> <span class="pre">'lon',</span> <span class="pre">true}</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">true</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">false</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A scalar master array may have an implied direction,
+e.g. if there are bounds associated with it or if it
+contains a pressure datum.</p>
+</div>
+</dd>
+</dl>
+<p id="pmdimensions"><strong>pmdimensions</strong></p>
+<blockquote>
+<div><p>An ordered list of the dimensions along which the master array
+is partitioned. Each of these dimensions is one those specified
+by the <a class="reference internal" href="#nca-dimensions"><em>nca_dimensions</em></a> attribute (and is therefore defined
+as a netCDF dimension in the NCA file).</p>
+<p>If missing then it is assumed that the master array comprises a
+single partition.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="90%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">['lat',</span> <span class="pre">'time']</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">['height']</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="last docutils">
+<dt><strong>pmshape</strong></dt>
+<dd><p class="first">An ordered list containing the number of partitions along each
+partitioned dimension of the master array. The sizes correspond
+to the <a class="reference internal" href="#pmdimensions"><em>pmdimensions</em></a> list. This is the
+shape of the partition matrix. For</p>
+<p>If missing then a shape of <tt class="docutils literal"><span class="pre">[1]</span></tt> is assumed, i.e. the master
+array comprises a single partition.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="83%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">[2,</span> <span class="pre">3]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">[87]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>Partitions</strong></dt>
+<dd><p class="first">A list whose elements define each of the master array&#8217;s
+partitions. The order of the list is arbitrary since each
+element contains its (possibly multidimensional) index in the
+partition matrix.</p>
+<p>Each element of the list specifies a partition with the
+following parameters:</p>
+<dl class="docutils">
+<dt><strong>index</strong></dt>
+<dd><p class="first">An ordered list of indices specifying the position of the
+partition in the partition matrix. The indices correspond to
+the <a class="reference internal" href="#pmdimensions"><em>pmdimensions</em></a> list.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="83%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">[0]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">[2,</span> <span class="pre">1]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Indices count from zero.</p>
+</div>
+</dd>
+</dl>
+<dl class="docutils" id="location">
+<dt><strong>location</strong></dt>
+<dd><p class="first">An ordered list of the ranges of indices for each dimension
+of the master array which describe the section of the master
+array spanned by this partition&#8217;s data array.</p>
+<p>Each range gives a <em>start</em> and <em>stop</em> index for its
+dimension.  For example, the range <tt class="docutils literal"><span class="pre">[3,</span> <span class="pre">5]</span></tt> is equivalent
+to indices <tt class="docutils literal"><span class="pre">3</span></tt>, <tt class="docutils literal"><span class="pre">4</span></tt> and <tt class="docutils literal"><span class="pre">5</span></tt>; and the range <tt class="docutils literal"><span class="pre">[6,</span> <span class="pre">6]</span></tt>
+is equivalent to index <tt class="docutils literal"><span class="pre">6</span></tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="94%" />
+<col width="6%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">[[2,</span> <span class="pre">2],</span> <span class="pre">[3,</span> <span class="pre">5],</span> <span class="pre">[2,</span> <span class="pre">56]]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Indices count from zero.</p>
+</div>
+</dd>
+</dl>
+<dl class="docutils" id="pdimensions">
+<dt><strong>pdimensions</strong> (<em>optional</em>)</dt>
+<dd><p class="first">An ordered list of the partition&#8217;s data array&#8217;s dimension
+names. The specified dimensions are all defined as netCDF
+dimensions in the NCA file.</p>
+<p>If there are any size 1 dimensions of the partition which are
+not spanned by the master array then the partition&#8217;s
+dimensions <em>must</em> be specified.</p>
+<p>If missing then it is assumed to be equal to dimensions of
+the master array.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="93%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">['lon',</span> <span class="pre">'time',</span> <span class="pre">lat']</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ifa partition&#8217;s data array&#8217;s dimensions are not
+specified and the partition&#8217;s sub-array is stored
+in another file then it is required <em>only</em> that the
+sub-array has the same number of dimensions, with
+the same physical meaning and in the same order as
+the master array. For example, if the sub-array
+were in another netCDF file, its dimensions may
+have different names and sizes relative to the
+equivalent dimensions in the NCA file.</p>
+</div>
+</dd>
+<dt><strong>format</strong> (<em>optional</em>)</dt>
+<dd><p class="first">A string naming the format of the file containing the
+partition&#8217;s data array.</p>
+<p>If missing then the format is assumed to the same as the NCA
+file.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="86%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'netCDF'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'PP'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="docutils" id="pdirections">
+<dt><strong>pdirections</strong> (<em>optional</em>)</dt>
+<dd><p class="first">An associative array of the partition&#8217;s data array&#8217;s
+dimension directions.</p>
+<p>Any dimension not specified is assumed to have the same
+direction as the corresponding master array dimension. If
+there are any size 1 dimensions of the partition which are
+not spanned by the master array then their directions <em>must</em>
+be specified. The specified dimensions are all defined as
+netCDF dimensions in the NCA file.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="96%" />
+<col width="4%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">{'time',</span> <span class="pre">true,</span> <span class="pre">'lat':</span> <span class="pre">true,</span> <span class="pre">'lon',</span> <span class="pre">false}</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A size 1 dimension may have an implied direction,
+e.g. if there are bounds associated with it or if
+it contains a pressure datum.</p>
+</div>
+</dd>
+<dt><strong>units</strong> (<em>optional</em>)</dt>
+<dd><p class="first">A string containing the units of the partition&#8217;s data
+array.</p>
+<p>If missing then it is assumed to be equal to units of the
+master array.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="86%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'m</span> <span class="pre">s-1'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">''</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>calendar</strong> (<em>optional</em>)</dt>
+<dd><p class="first">A string containing the calendar of the partition&#8217;s data
+array.</p>
+<p>If missing then it is assumed to be equal to calendar of the
+master array.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="87%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'noleap'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="docutils" id="part">
+<dt><strong>part</strong> (<em>optional</em>)</dt>
+<dd><p class="first">A string defining the part of the partition&#8217;s sub-array which
+comprises the partition&#8217;s data array.</p>
+<p>For each of the partition&#8217;s dimensions, the string describes
+the indices which define the partition&#8217;s data array. The
+indices correspond to to the <a class="reference internal" href="#pdimensions"><em>pdimensions</em></a>
+list.</p>
+<p>Indices are contained within square or round brackets. Square
+brackets specify a sequence of indices along that
+dimension. Round brackets describe a strictly monotonic
+sequence of indices for the dimension via <em>start</em>, <em>stop</em> and
+<em>step</em> values. For example, <tt class="docutils literal"><span class="pre">(10,</span> <span class="pre">4,</span> <span class="pre">-2)</span></tt> is equivalent to
+<tt class="docutils literal"><span class="pre">[10,</span> <span class="pre">8,</span> <span class="pre">6,</span> <span class="pre">4]</span></tt>.</p>
+<p>If missing then it is assumed that the whole of the sub-array
+applies to this partition (i.e. the data array is identical
+to the sub-array).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="96%" />
+<col width="4%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'[(2,</span> <span class="pre">5,</span> <span class="pre">1),</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">7],</span> <span class="pre">(0,</span> <span class="pre">11,</span> <span class="pre">2)]'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'[(5,</span> <span class="pre">1,</span> <span class="pre">-4),</span> <span class="pre">[5,</span> <span class="pre">2,</span> <span class="pre">1],</span> <span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">1)]'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Indices count from zero.</p>
+</div>
+</dd>
+</dl>
+<dl class="last docutils" id="data">
+<dt><strong>data</strong></dt>
+<dd><p class="first">Parameters required to define the partition&#8217;s sub-array. Only
+a subset of these will be required, depending on the storage
+format of the sub-array.</p>
+<dl class="docutils">
+<dt><strong>pshape</strong></dt>
+<dd><p class="first">An ordered list of the partition&#8217;s sub-array&#8217;s dimension
+sizes. The sizes correspond to to the <a class="reference internal" href="#pdimensions"><em>pdimensions</em></a> list.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="87%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">[4,</span> <span class="pre">7,</span> <span class="pre">3]</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These are <em>not</em> the sizes of partition&#8217;s data
+array.</p>
+</div>
+</dd>
+</dl>
+<dl class="last docutils" id="file">
+<dt><strong>file</strong> (<em>optional</em>)</dt>
+<dd><p class="first">A string naming the file which holds the partition&#8217;s
+sub-array. May be a local file or a URL.</p>
+<p>If the file name has a relative path (local file or URL)
+then it is assumed to be relative to <a class="reference internal" href="#base"><em>base</em></a>,
+if it is set, otherwise to the local directory or URL
+base containing the NCA file.</p>
+<p>If the file name can not be resolved as a relative path
+then it is assumed to be an absolute path.</p>
+<p>If missing then it is assumed to be the NCA file itself.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="94%" />
+<col width="6%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'/home/me/file.nc'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'../file2.pp'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'file3.nc'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'http://archive/data/file.nc'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'data/file.nc'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>pdtype</strong> (<em>optional</em>)</dt>
+<dd><p class="first">The data type of the partition&#8217;s sub-array. Any of the
+netCDF data type strings are allowed.</p>
+<p>If missing then the data type of the master array is
+assumed.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="86%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'double'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">'byte'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'char'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>ncvar</strong> (<em>optional</em>, but required for netCDF files*)</dt>
+<dd><p class="first">The name of the netCDF variable containing the partition&#8217;s
+sub-array.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="82%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">'tas'</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>file_offset</strong> (<em>optional</em>)</dt>
+<dd><p class="first">The non-negative integer word address of the file where
+the partition&#8217;s sub-array starts.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="85%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">8460364</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>lbpack</strong> (<em>optional, PP files only</em>)</dt>
+<dd><p class="first">The PP integer packing code of the array.</p>
+<p>If missing then it is assumed to be <tt class="docutils literal"><span class="pre">0</span></tt>, i.e. unpacked.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="80%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">1</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>scale_factor</strong> (<em>optional, non-netCDF files only</em>)</dt>
+<dd><p class="first">The numeric scale factor (in the CF sense) of the
+partition&#8217;s sub-array.</p>
+<p>For netCDF files, it is assumed that the scale factor will
+be accounted for when reading the file. Otherwise, if
+missing then it is assumed to be <tt class="docutils literal"><span class="pre">1</span></tt> (unscaled).</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="82%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">100.0</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>add_offset</strong> (<em>optional, non-netCDF files only</em>)</dt>
+<dd><p class="first">The numeric additive offset (in the CF sense) of the
+partition&#8217;s sub-array.</p>
+<p>For netCDF files, it is assumed that the additive factor
+will be accounted for when reading the file. Otherwise, if
+missing then it is assumed to be <tt class="docutils literal"><span class="pre">0</span></tt> (no additive
+offset).</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="83%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Examples</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">273.15</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. A complete description of netCDF NCA attributes describing the aggregated data</a><ul>
+<li><a class="reference internal" href="#cf-role">4.1. cf_role</a></li>
+<li><a class="reference internal" href="#nca-dimensions">4.2. nca_dimensions</a></li>
+<li><a class="reference internal" href="#nca-array">4.3. nca_array</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nca.html"
+                        title="previous chapter">3. The NCA convention</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/nca_attributes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search term.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nca.html" title="3. The NCA convention"
+             >previous</a> |</li>
+  <li><a href="index.html">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.4/index.html">0.4
+  <option value="../0.3/index.html">0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html">0.2.1
+  <option value="../0.2/index.html"selected>0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="index.html"></a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, David Hassell.
+      Last updated on Feb 27, 2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The CFA conventions for the storage of aggregated fields (v0.3)</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="" href="#" />
+    <link rel="next" title="1. Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             accesskey="N">next</a> |</li>
+  <li><a href="#">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.3/index.html"selected>0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html">0.2.1
+  <option value="../0.2/index.html">0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="#"></a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-cfa-conventions-for-the-storage-of-aggregated-fields-version">
+<h1>The CFA conventions for the storage of aggregated fields (v0.3)<a class="headerlink" href="#the-cfa-conventions-for-the-storage-of-aggregated-fields-version" title="Permalink to this headline">¶</a></h1>
+<p>David Hassell, <a class="reference external" href="http://www.ncas.ac.uk/">NCAS</a></p>
+<p>With thanks to Phil Bentley, John Caron, Jonathan Gregory, Stephen
+Pascoe and Ag Stephens.</p>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://cf-pcmdi.llnl.gov/trac/ticket/78">proposed CF aggregation rules</a> describe how multiple CF
+fields may be combined into one, larger field. These rules are fully
+general and are based purely on CF metadata. To make full use of such
+an algorithm, it is necessary that such an aggregated field may be
+stored within software memory (for field creation and manipulation)
+and on disk (for long term storage).</p>
+<p>This document proposes the abstract <strong>CFA framework</strong> for the storage
+of CF-aggregated CF fields, and the <strong>CFA-netCDF conventions</strong> for
+their efficient storage in netCDF files.</p>
+<p>As with other similar file storage conventions, on-disk storage is
+efficient because, wherever possible, the component fields from which
+an aggregated field is composed are stored as references to the files
+containing the original datasets.</p>
+<p>Both the abstract framework and the ability to read and write NCA
+files are implemented in the <a class="reference external" href="http://cfpython.bitbucket.org/">cf-python (v0.9.7)</a> software library.</p>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework.html">2. The CFA framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cfa.html">3. The CFA-netCDF conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cfa_attributes.html">4. CFA-netCDF properties</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The CFA conventions for the storage of aggregated fields (v0.3)</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#search">Search</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="next chapter">1. Introduction</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search term.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             >next</a> |</li>
+  <li><a href="#">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.3/index.html"selected>0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html">0.2.1
+  <option value="../0.2/index.html">0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="#"></a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+      Last updated on Sep 22, 2013.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

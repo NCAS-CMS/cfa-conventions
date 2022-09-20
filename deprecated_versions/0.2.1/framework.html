@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. A conceptual framework for the in-memory storage of aggregated arrays</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="" href="index.html" />
+    <link rel="next" title="3. The NCA convention" href="nca.html" />
+    <link rel="prev" title="1. Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nca.html" title="3. The NCA convention"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             accesskey="P">previous</a> |</li>
+  <li><a href="index.html">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.4/index.html">0.4
+  <option value="../0.3/index.html">0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html"selected>0.2.1
+  <option value="../0.2/index.html">0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="index.html"></a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-conceptual-framework-for-the-in-memory-storage-of-aggregated-arrays">
+<h1>2. A conceptual framework for the in-memory storage of aggregated arrays<a class="headerlink" href="#a-conceptual-framework-for-the-in-memory-storage-of-aggregated-arrays" title="Permalink to this headline">¶</a></h1>
+<p>A <strong>master data array</strong> is one which is constructed from the one or
+more <strong>sub-arrays</strong>.</p>
+<p>The simplest master data array has just one sub-array which is equal
+to itself, but in general, a master data array may have up to as many,
+non-overlapping sub-arrays as is it has elements and each sub-array
+contains a contiguous subset of the master data array values. See
+<a class="reference internal" href="#figure1a"><em>figure 1a</em></a> and <a class="reference internal" href="#figure2a"><em>figure 2a</em></a> for
+examples of master data arrays and their constituent sub-arrays.</p>
+<p>A master data array constructed from sub-arrays arises naturally from
+an aggregation process, such as by the <a class="reference external" href="https://cf-pcmdi.llnl.gov/trac/ticket/78">CF aggregation rules</a>.</p>
+<p>Sub-arrays may be be combined in arbitrary ways to create
+hyperrectangular <a class="footnote-reference" href="#f1" id="id1">[1]</a> master data arrays, which poses storage and
+access difficulties since there may be different numbers of sub-arrays
+across different sections of the same master data array dimension. For
+example, the master data array in <a class="reference internal" href="#figure2a"><em>figure 2a</em></a> has
+three sub-arrays spanning the first two rows (values 0 to 6 and 7 to
+13) but only two sub-arrays spanning third row (values 14 to 20). It
+is clear that such an irregular construction would, for example,
+complicate finding which sub-array contained a particular element or
+complicate the recombination of sub-arrays into an equivalent master
+data array (an operation required by the CF aggregation process).</p>
+<p>The solution is to decompose the master data array into a
+hyperrectangular <strong>partition matrix</strong> such that its elements
+(called <strong>partitions</strong>) span all or part of exactly one sub-array. A
+given <strong>partition&#8217;s data array</strong> is then a reference to a unique part
+of a unique sub-array. See <a class="reference internal" href="#figure1b"><em>figure 1b</em></a>, <a class="reference internal" href="#figure1c"><em>figure
+1c</em></a> and <a class="reference internal" href="#figure2b"><em>figure 2b</em></a> for examples.</p>
+<p>The master data array may be therefore be considered as being
+constructed from a hyperrectangular matrix of partitions. See
+<a class="reference internal" href="#example1"><em>example 1</em></a> and <a class="reference internal" href="#example2"><em>example 2</em></a>.</p>
+<p>A guaranteed hyperrectangular decomposition renders easy any
+operations requiring knowledge of the partition locations within the
+master data array (such as element location or partition matrix
+transposition).</p>
+<div class="section" id="partition-matrix-properties">
+<h2>2.1. Partition matrix properties<a class="headerlink" href="#partition-matrix-properties" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The partition matrix&#8217;s dimensions are always a subset of the master
+data array&#8217;s dimensions. I.e. each dimension of partition matrix
+index space corresponds to a dimension of the master data array.</li>
+<li>The partition matrix may be a scalar, if it contains exactly one
+partition whose data array spans the entire master data array.</li>
+<li>The partition matrix may span fewer dimensions than the master data
+array (see <a class="reference internal" href="#figure1b"><em>figure 1b</em></a>, in which the partition
+matrix is 1-dimensionsal but the master data array is
+2-dimensionsal), but never more.</li>
+<li>The order of the partition matrix&#8217;s dimensions may be different to
+the relative ordering of the equivalent dimensions of the master
+data array.</li>
+<li>The creation of an arbitrary subspace of the master data array may
+result in one or more partitions which reference a non-contiguous
+part of a sub-array (see the <a class="reference internal" href="nca_attributes.html#part"><em>part</em></a> parameter).</li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h2>2.2. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-1">
+<span id="example1"></span><h3>2.2.1. Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h3>
+<p>The 2-dimensional 2 x 7 master data array in <strong>figure 1a</strong> is composed
+from 3 sub-arrays. The most efficient way of partitioning the master
+data array into a hyperrectangular partition matrix such that each
+partition contains all or part of exactly one sub-array is shown in
+<strong>figure 1b</strong>. Note that, in this case:</p>
+<ul class="simple">
+<li>The partitions&#8217; data arrays are not all of the same size or shape</li>
+<li>Each partition&#8217;s data array spans an entire sub-array</li>
+<li>The partition matrix has fewer dimensions than the master data
+array.</li>
+</ul>
+<div class="figure" id="figure1a">
+<img alt="_images/partitions1a.png" src="_images/partitions1a.png" />
+<p class="caption"><strong>Figure 1a</strong>. The 3 sub-arrays of the master data array.</p>
+</div>
+<div class="figure" id="figure1b">
+<img alt="_images/partitions1b.png" src="_images/partitions1b.png" />
+<p class="caption"><strong>Figure 1b</strong>. A 1-dimensional, 3 element partition matrix of the
+master data array. Each block of colour represents one of the 3
+sub-arrays and each partition of the partition matrix is
+labelled P<sub>x</sub>. For example, the partition data array of P<sub>0</sub> contains values 0 and 7.</p>
+</div>
+<p>Another, equally valid partitioning of the master data array is shown
+in <strong>figure 1c</strong>. Note that, in this case:</p>
+<ul class="simple">
+<li>No partitions&#8217; data arrays span an entire sub-array.</li>
+<li>The partition matrix has the same number of dimensions as the master
+data array.</li>
+</ul>
+<div class="figure" id="figure1c">
+<img alt="_images/partitions1c.png" src="_images/partitions1c.png" />
+<p class="caption"><strong>Figure 1c</strong>. A 2-dimensional, 2 x 4 element partition matrix of
+the master data array. Each block of colour represents one of the 3
+sub-arrays and each partition of the partition matrix is is
+labelled P<sub>yx</sub>. For example, the partition data array of P<sub>11</sub> contains values 8 and 9 and the partition data array of
+P<sub>12</sub> contains value 10.</p>
+</div>
+</div>
+<div class="section" id="example-2">
+<span id="example2"></span><h3>2.2.2. Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h3>
+<p>The 2-dimensional 8 x 7 master data array in <strong>figure 2a</strong> is composed
+from 10 sub-arrays. The most efficient way of partitioning the master
+data array into a hyperrectangular partition matrix such that each
+partition contains all or part of exactly one sub-array is shown in
+<strong>figure 2b</strong>. Note that, in this case:</p>
+<ul class="simple">
+<li>The partitions&#8217; data arrays are not all of the same size or shape</li>
+<li>Some partitions&#8217; data arrays span an entire sub-array (P<sub>00</sub>
+and P<sub>33</sub>), but the rest do not.</li>
+</ul>
+<div class="figure" id="figure2a">
+<img alt="_images/partitions1.png" src="_images/partitions1.png" />
+<p class="caption"><strong>Figure 2a</strong>. The 10 sub-arrays of the master data array.</p>
+</div>
+<div class="figure" id="figure2b">
+<img alt="_images/partitions2.png" src="_images/partitions2.png" />
+<p class="caption"><strong>Figure 2b</strong>. A 2-dimensional, 4 x 6 element partition matrix of
+the master data array. Each block of colour represents one of the
+10 sub-arrays and each partition of the partition matrix is
+labelled P<sub>yx</sub>. For example, the partition data array of P<sub>30</sub> contains value 49; the partition data array of P<sub>31</sub> contains values 50 and 51; and the partition data array
+of P<sub>32</sub> contains value 52.</p>
+</div>
+</div>
+</div>
+<div class="section" id="accounting-for-arbitrary-partition-data-array-properties">
+<h2>2.3. Accounting for arbitrary partition data array properties<a class="headerlink" href="#accounting-for-arbitrary-partition-data-array-properties" title="Permalink to this headline">¶</a></h2>
+<p>There are properties of a partition&#8217;s data array which are arbitrary
+in the sense that, whilst these properties may differ to their
+equivalents in the master data array, the partition&#8217;s data array may
+always be altered to conform with the master data array with no loss
+of information.</p>
+<p>A partition&#8217;s data array inherits these properties, unchanged, from
+the sub-array which contains it.</p>
+<p>The properties for which a partition&#8217;s data array may differ from its
+master data array are:</p>
+<ul class="simple">
+<li>The order of dimensions.</li>
+<li>The number of size 1 dimensions.</li>
+<li>The sense in which dimensions run.</li>
+<li>The units of the data values.</li>
+<li>The missing data value.</li>
+</ul>
+<p>When a partition&#8217;s data array is required by the master data array, it
+needs to be <strong>conformed</strong> by doing any or none of:</p>
+<ul class="simple">
+<li>Reordering its dimensions to the same order as the master data
+array.</li>
+<li>Removing size 1 dimensions which don&#8217;t exist in the master data
+array.</li>
+<li>Adding size 1 dimensions which exist in the master data array but
+not in the partition&#8217;s data array.</li>
+<li>Reversing dimensions which run in the opposite direction to the
+master data array.</li>
+<li>Converting the data values to have the same units as the master
+array.</li>
+<li><em>Either</em> the missing data value is converted to that of the master
+array (accounting for conflicts with non-missing data values) <em>or</em>,
+if arrays are stored with ancillary missing data masks (as can be
+the case with <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/maskedarray.html">python numpy arrays</a>), the
+partition&#8217;s data array&#8217;s missing data value may be ignored.</li>
+</ul>
+</div>
+<div class="section" id="parameters-required-for-specifying-a-master-data-array">
+<h2>2.4. Parameters required for specifying a master data array<a class="headerlink" href="#parameters-required-for-specifying-a-master-data-array" title="Permalink to this headline">¶</a></h2>
+<p>It follows that a master data array and its partitions may be
+completely specified by a small number of parameters.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When a partition has a parameter value equal to the master
+array then there is some redundancy which will be exploited
+when storing the array by its parameters with the <a class="reference internal" href="nca.html#nca-convention"><em>NCA
+convention</em></a>.</p>
+</div>
+<div class="section" id="master-data-array-parameters">
+<h3>2.4.1. Master data array parameters<a class="headerlink" href="#master-data-array-parameters" title="Permalink to this headline">¶</a></h3>
+<p>The master data array comprises:</p>
+<blockquote>
+<div><dl class="docutils" id="frame-dtype">
+<dt><strong>dtype</strong></dt>
+<dd>The data type of the master data array.</dd>
+</dl>
+<dl class="docutils" id="frame-units">
+<dt><strong>units</strong></dt>
+<dd>The units of the master data array.</dd>
+<dt><strong>calendar</strong> (<em>if required by</em> <a class="reference internal" href="#frame-units"><em>units</em></a>)</dt>
+<dd>The calendar of the master data array.</dd>
+</dl>
+<dl class="docutils" id="frame-dimensions">
+<dt><strong>dimensions</strong></dt>
+<dd>An ordered list of the master data array&#8217;s dimensions.</dd>
+<dt><strong>shape</strong></dt>
+<dd>An ordered list of the master data array&#8217;s dimension sizes. The
+sizes correspond to the <a class="reference internal" href="#frame-dimensions"><em>dimensions</em></a>
+list.</dd>
+<dt><strong>directions</strong></dt>
+<dd>An ordered list of the master data array&#8217;s dimension
+directions. The directions correspond to the <a class="reference internal" href="#frame-dimensions"><em>dimensions</em></a> list.</dd>
+</dl>
+<dl class="docutils" id="frame-pmdimensions">
+<dt><strong>pmdimensions</strong></dt>
+<dd>An ordered list of the dimensions along which the master data
+array is partitioned. Each of these dimensions is one those
+specified by the <a class="reference internal" href="#frame-dimensions"><em>dimensions</em></a> parameter.</dd>
+</dl>
+<dl class="docutils" id="frame-pmshape">
+<dt><strong>pmshape</strong></dt>
+<dd>An ordered list containing the number of partitions along each
+partitioned dimension of the master data array. The sizes
+correspond to the <a class="reference internal" href="#frame-pmdimensions"><em>pmdimensions</em></a> list.</dd>
+</dl>
+<dl class="docutils" id="frame-partitions">
+<dt><strong>Partitions</strong></dt>
+<dd>A matrix of the master data array&#8217;s partitions. Each partition
+is described by its <a class="reference internal" href="#frame-partitions"><em>partition parameters</em></a>.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="partition-parameters">
+<h3>2.4.2. Partition parameters<a class="headerlink" href="#partition-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Each partition of the partition matrix comprises:</p>
+<blockquote>
+<div><dl class="docutils" id="frame-pdimensions">
+<dt><strong>pdimensions</strong></dt>
+<dd>An ordered list of the partition&#8217;s data array&#8217;s dimensions.</dd>
+</dl>
+<dl class="docutils" id="frame-directions">
+<dt><strong>pdirections</strong></dt>
+<dd>An ordered list of the partition&#8217;s data array&#8217;s dimension
+directions. The directions correspond to the <a class="reference internal" href="#frame-pdimensions"><em>pdimensions</em></a> list.</dd>
+</dl>
+<dl class="docutils" id="frame-punits">
+<dt><strong>punits</strong></dt>
+<dd>The units of the partition&#8217;s data array.</dd>
+<dt><strong>pcalendar</strong> (<em>if required by</em> <a class="reference internal" href="#frame-punits"><em>punits</em></a>)</dt>
+<dd>The calendar of the partition&#8217;s data array.</dd>
+</dl>
+<dl class="docutils" id="frame-location">
+<dt><strong>location</strong></dt>
+<dd>An ordered list of ranges of indices, one for each dimension of
+the <em>master data array</em>, which describe the contiguous section
+of the master data array spanned by this partition. The ranges
+correspond to the <a class="reference internal" href="#frame-dimensions"><em>dimensions</em></a> list.</dd>
+</dl>
+<dl class="docutils" id="frame-part">
+<dt><strong>part</strong></dt>
+<dd>An ordered list of indices for each dimension of the partition&#8217;s
+data array which describe the part of the sub-array which is
+spanned by this partition. The indices correspond to the
+<a class="reference internal" href="#frame-pdimensions"><em>pdimensions</em></a> list.</dd>
+</dl>
+<dl class="docutils" id="frame-sub-array">
+<dt><strong>sub_array</strong></dt>
+<dd>A reference to the sub-array which contains the partition&#8217;s data
+array.</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The generalization of a rectangle for higher dimensions.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. A conceptual framework for the in-memory storage of aggregated arrays</a><ul>
+<li><a class="reference internal" href="#partition-matrix-properties">2.1. Partition matrix properties</a></li>
+<li><a class="reference internal" href="#examples">2.2. Examples</a><ul>
+<li><a class="reference internal" href="#example-1">2.2.1. Example 1</a></li>
+<li><a class="reference internal" href="#example-2">2.2.2. Example 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accounting-for-arbitrary-partition-data-array-properties">2.3. Accounting for arbitrary partition data array properties</a></li>
+<li><a class="reference internal" href="#parameters-required-for-specifying-a-master-data-array">2.4. Parameters required for specifying a master data array</a><ul>
+<li><a class="reference internal" href="#master-data-array-parameters">2.4.1. Master data array parameters</a></li>
+<li><a class="reference internal" href="#partition-parameters">2.4.2. Partition parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">1. Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nca.html"
+                        title="next chapter">3. The NCA convention</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/framework.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search term.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nca.html" title="3. The NCA convention"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             >previous</a> |</li>
+  <li><a href="index.html">CFA</a>
+      <select onchange="location = this.options[this.selectedIndex].value;">
+  <option value="../0.4/index.html">0.4
+  <option value="../0.3/index.html">0.3
+  <option value="../0.2.2/index.html">0.2.2
+  <option value="../0.2.1/index.html"selected>0.2.1
+  <option value="../0.2/index.html">0.2
+  <option value="../0.1/index.html">0.1
+  </select>
+  </li>
+
+  
+        <li><a href="index.html"></a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, David Hassell.
+      Last updated on Feb 27, 2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
