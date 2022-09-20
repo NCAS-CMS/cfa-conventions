@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6**, 2021-07-27
+**Version 0.6.1**, 2021-12-02
 
 ## Contents
 
@@ -784,8 +784,8 @@ apply to both aggregation variables.*
       double time ;
         time:standard_name = "time" ;
         time:units = "days since 2001-01-01" ;
-        temp:aggregated_dimensions = "time" ;
-        temp:aggregated_data = "location: /aggregation_time/location
+        time:aggregated_dimensions = "time" ;
+        time:aggregated_data = "location: /aggregation_time/location
                                 file: /aggregation_time/file
                                 format: agregation_format
                                 address: /aggregation_time/address" ;
@@ -873,8 +873,8 @@ separate external file.*
         time:standard_name = "time" ;
         time:long_name = "time of measurement" ;
         time:units = "days since 1970-01-01" ;
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location
+        time:aggregated_dimensions = "obs" ;
+        time:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
                                 format: aggregation_format
                                 address: aggregation_address_time" ;     
@@ -882,20 +882,20 @@ separate external file.*
         lon:standard_name = "longitude";
         lon:long_name = "station longitude";
         lon:units = "degrees_east";
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location_latlon
-                                file: aggregation_file
-                                format: aggregation_format
-                                address: aggregation_address_lon" ;
+        lon:aggregated_dimensions = "obs" ;
+        lon:aggregated_data = "location: aggregation_location_latlon
+                               file: aggregation_file
+                               format: aggregation_format
+                               address: aggregation_address_lon" ;
       float lat(station) ;
         lat:standard_name = "latitude";
         lat:long_name = "station latitude" ;
         lat:units = "degrees_north" ;
-        temp:aggregated_dimensions = "obs" ;
-        temp:aggregated_data = "location: aggregation_location_latlon
-                                file: aggregation_file
-                                format: aggregation_format
-                                address: aggregation_address_lat" ;
+        lat:aggregated_dimensions = "obs" ;
+        lat:aggregated_data = "location: aggregation_location_latlon
+                               file: aggregation_file
+                               format: aggregation_format
+                               address: aggregation_address_lat" ;
       // Compression encoding variable
       int row_size(station) ;
         row_size:long_name = "number of observations per station" ;
@@ -995,20 +995,25 @@ values 270.0, 270.1, ... 271.1.*
 
 **Versions 0.1 to 0.3**, 2012 to 2013
 
-Prototype versions
+* Prototype versions
 
 **Version 0.4**, 2014-02-27
 
-Prototype version
+* Prototype version.
 
 **Version 0.5**, 2021
 
-Prototype version. First introduction of `location`, `file`, `format`
-and `address` variables.
+* Prototype version. First introduction of `location`, `file`,
+  `format` and `address` variables.
 
 **Version 0.6**, 2021-07-27
 
-First stable release.
+* First stable release.
+
+**Version 0.6.1**, 2021-12-02
+
+* Corrected the CDL in examples 5 and 6.
+* Added links for navigating the document navigation.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
