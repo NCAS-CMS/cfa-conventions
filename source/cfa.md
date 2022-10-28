@@ -13,7 +13,7 @@ Bartholomew
 * [Aggregation variables](#Aggregation-variables)
 * [Aggregation instructions](#Aggregation-instructions)
   * [Standardized aggregation instructions](#Standardized-aggregation-instructions)
-  * [Non-standardized aggregation instructions](#Non-standardized-aggregation-instructions)
+  * [Non-standardized terms](#Non-standardized-terms)
 * [Fragment Storage](#Fragment-Storage)
   * [Units](#Units)
   * [Size 1 dimensions](#Size-1-dimensions)
@@ -399,13 +399,13 @@ a scalar variable.*
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
 
-### Non-standardized `term` tokens<a name="Non-standardized-tokens"></a>
+### Non-standardized terms<a name="Non-standardized-terms"</a>
 
 Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
 Non-standardized `term` tokens may be included for any purpose, for example:
 
-* As extra agregation instructions to enable the aggregation of fragments stored in a file format for which the standardized `address` term is insufficient to define the fragment's data.
+* As extra agregation instructions to enable the aggregation of fragments stored in a file format for which the standardized `address` term alone is insufficient to define the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
