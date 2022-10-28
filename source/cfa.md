@@ -411,11 +411,11 @@ Non-standardized instuctions may be included for any purpose, for example:
 
 * To enable the aggregation of fragments stored in a file format for which a unique address per fragment is insufficient to define the fragment's data.
 
-* To provide a means of storing metadata that relate to each fragment, but which is not necessary for the creation of the aggregated data.
-  In particular, it may be convenient for metadata properties that are found within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
-  Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because its dimensions do not match those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the values to the aggregated dimensions.
+* To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
+  In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
+  Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because its dimensions do not match those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
 
-#### Example 1b <a name="Example-1b"></a>
+##### Example 1b <a name="Example-1b"></a>
 
 *As for [example 1a](#Example-1a), but with the inclusion of the non-standard aggregation instruction `tracking_id: fragment_id` that defines an attribute for each fragment stored in the `fragment_id` variable.*
 
@@ -577,7 +577,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-#### Example 2 <a name="Example-2"></a>
+##### Example 2 <a name="Example-2"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
