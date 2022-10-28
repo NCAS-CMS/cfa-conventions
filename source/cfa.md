@@ -443,7 +443,7 @@ Non-standardized instuctions may be included for any purpose, for example:
         temp:aggregated_data = "location: aggregation_location
                                 file: aggregation_file
                                 format: aggregation_format
-                                address: aggregation_address"
+                                address: aggregation_address
                                 tracking_id: fragment_id" ;		
       // Coordinate variables
       double time(time) ;
@@ -464,10 +464,10 @@ Non-standardized instuctions may be included for any purpose, for example:
       string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
       // Fragament metadata variables
-      string tracking_id(f_time, f_level, f_latitude, f_longitude) ;
+      string fragment_id(f_time, f_level, f_latitude, f_longitude) ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -1088,14 +1088,14 @@ values 270.0, 270.1, ... 271.1.*
 * Prototype version. First introduction of `location`, `file`,
   `format` and `address` variables.
 
-**Version 0.6**, 2021-07-27
-
-* First stable release.
-
 **Version 0.6.1**, 2021-12-02
 
 * Corrected the CDL in examples 5 and 6.
 * Added links for navigating the document navigation.
+
+**Version 0.6.2**, 2022-??-??
+
+* Clarified the use of non-standarized aggregation instructions.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
