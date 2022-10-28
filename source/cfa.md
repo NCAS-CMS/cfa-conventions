@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6.1**, 2021-12-02
+**Version 0.6.2**, 2022-??-??
 
 ## Contents
 
@@ -105,11 +105,11 @@ that defines the *aggregated data*.
 
 Files that follow this version of the CFA Conventions must indicate
 this by setting the NetCDF User's Guide [NUG] defined global attribute
-**`Conventions`** to a string value that contains "`CFA-0.6`", in
+**`Conventions`** to a string value that contains "`CFA-0.6.2`", in
 addition to any other conventions that define other aspects of the
 file structure and metadata. For instance, a dataset which follows
-CF-1.9 and also CFA-0.6 could have a **`Conventions`** attribute of
-"`CF-1.9 CFA-0.6`".
+CF-1.10 and also CFA-0.6.2 could have a **`Conventions`** attribute of
+"`CF-1.10 CFA-0.6.2`".
 
 
 ## Aggregation variables <a name="Aggregation-variables"></a>
@@ -391,7 +391,7 @@ a scalar variable.*
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -635,7 +635,7 @@ omits the size 1 `level` dimension.*
         temp:units = "degreesC" ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -694,7 +694,7 @@ to the aggregation variable.*
         longitude:units = "degrees_east" ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -778,7 +778,7 @@ not both, may be used in the aggregated data.*
         longitude:units = "degrees_east" ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
@@ -884,7 +884,7 @@ apply to both aggregation variables.*
       string aggregation_format ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = _ ;
@@ -993,7 +993,7 @@ separate external file.*
       string aggregation_address_lon(f_station) ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
       :featureType = "timeSeries";
     data:
       temp = _ ;    
@@ -1040,7 +1040,7 @@ values 270.0, 270.1, ... 271.1.*
         time:units = "days since 2001-01-01" ;
 
     // global attributes:
-      :Conventions = "CF-1.9 CFA-0.6" ;
+      :Conventions = "CF-1.10 CFA-0.6.2" ;
     data:
       temp = _ ;
       time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
