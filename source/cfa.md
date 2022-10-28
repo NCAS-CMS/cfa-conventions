@@ -198,10 +198,7 @@ blank-separated elements of the form "`term: variable`", where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
-significant. The value of a `term` token identifying an aggregation
-instruction may be
-[standardized](#Standardized-aggregation-instructions) or
-[non-standardized](#Non-standardized-aggregation-instructions).
+significant.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
@@ -210,10 +207,9 @@ are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
 
-### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
+### Standardized aggregation instructions <a name="Standardized-aggregation-instructions"></a>
 
-The standardized aggregation instruction terms, all of which are
-mandatory, define the following variables:
+The standardized aggregation instruction `term` tokens, all of which are mandatory, define the following variables:
 
 `location`
 
@@ -403,17 +399,18 @@ a scalar variable.*
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
 
-### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
+### Non-standardized `term` tokens<a name="Non-standardized-tokens"></a>
 
-Any number of non-standardized instructions are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
+Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
-Non-standardized instructions may be included for any purpose, for example:
+Non-standardized `term` tokens may be included for any purpose, for example:
 
-* To enable the aggregation of fragments stored in a file format for which the standardized `address` term is insufficient to define the fragment's data.
+* As extra agregation instructions to enable the aggregation of fragments stored in a file format for which the standardized `address` term is insufficient to define the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
-  Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because its dimensions do not match those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
+  Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because it spans the fragment dimensions rather than those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
+
 
 #### Example 1b <a name="Example-1b"></a>
 
