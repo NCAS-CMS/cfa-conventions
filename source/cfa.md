@@ -405,11 +405,11 @@ a scalar variable.*
 
 #### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
 
-Any number of non-standardized instuctions are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
+Any number of non-standardized instructions are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
-Non-standardized instuctions may be included for any purpose, for example:
+Non-standardized instructions may be included for any purpose, for example:
 
-* To enable the aggregation of fragments stored in a file format for which a unique address per fragment is insufficient to define the fragment's data.
+* To enable the aggregation of fragments stored in a file format for which a single address per fragment is insufficient to define the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
@@ -463,7 +463,7 @@ Non-standardized instuctions may be included for any purpose, for example:
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
       string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
-      // Fragament metadata variables
+      // Fragment metadata variables
       string fragment_id(f_time, f_level, f_latitude, f_longitude) ;
 
     // global attributes:
@@ -1095,7 +1095,7 @@ values 270.0, 270.1, ... 271.1.*
 
 **Version 0.6.2**, 2022-??-??
 
-* Clarified the use of non-standarized aggregation instructions.
+* Clarified the use of non-standardized aggregation instructions.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
