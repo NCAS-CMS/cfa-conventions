@@ -21,7 +21,8 @@ Bartholomew
 
 #### Examples
 
-* [Example 1](#Example-1)
+* [Example 1a](#Example-1a)
+* [Example 1b](#Example-1b)
 * [Example 2](#Example-2)
 * [Example 3](#Example-3)
 * [Example 4](#Example-4)
@@ -185,6 +186,8 @@ associated with a fragment dimension of size 1. The fragments must be
 arranged in the same relative multidimensional order as their
 positions in the aggregated data.
 
+### Aggregation instructions <a name="Aggregation-instructions"></a>
+
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
 attribute. This attribute takes a string value comprising
@@ -204,11 +207,12 @@ instructions.
 The value of a `term` token identifying an aggregation instruction may
 be standardized or non-standardized, with the understanding that
 application programs should ignore terms that they do not recognise or
-which are irrelevant for their purposes. The purpose of allowing
-non-standardized tokens is to facilitate the aggregation of fragments
-stored in other file formats to those described by these
-conventions. The standardized aggregation instruction terms, all of
-which are mandatory, are:
+which are irrelevant for their purposes.
+
+#### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
+
+The standardized aggregation instruction terms, all of which are
+mandatory, are:
 
 `location`
 
@@ -231,13 +235,13 @@ which are mandatory, are:
 
 * For each position of a fragment dimension, the second dimension of
   the `location` variable gives, in increasing index space order, the
-  number of elements spanned by the fragements that occupy that
+  number of elements spanned by the fragments that occupy that
   position. For each fragment dimension that is smaller than the
   largest fragment dimension, the second dimension is padded with
   missing values.
 
 * When there are no aggregated dimensions (i.e. when the aggregated
-  data is a scalar), the `location` variable must be one-dimensionsal
+  data is a scalar), the `location` variable must be one-dimensional
   and of size one, and contain the value `1`.
 
 `file`
@@ -332,7 +336,7 @@ which are mandatory, are:
   these conventions.
 
 
-#### Example 1 <a name="Example-1"></a>
+#### Example 1a <a name="Example-1a"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -397,6 +401,83 @@ a scalar variable.*
       aggregation_file = "January-June.nc", "July-December.nc" ;
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
+
+#### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
+
+Any number of non-standardized `term` tokens are allowed, on the understanding that the application reading the aggregation variable will either know how to correctly interpret the associated variables, or else ignore any tokens that it does not understand.
+
+Non-standardized tokens may be included for any purpose, for example:
+
+* To enable the aggregation of fragments stored in a file format for which a unique address per fragment is insufficient to define the fragment's data
+
+* To provide a means of storing metadata that relate to each fragment, but which is not necessary for the creation of the aggregated data.
+  In particular, it may be convenient for metadata properties that are found within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
+  Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because its dimensions do not match those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the values to the aggregated dimensions.
+
+#### Example 1b <a name="Example-1b"></a>
+
+*As for [example 1a](#Example-1a), but with the inclusion of a non-standard aggregation instruction `tracking_id: fragment_id` that defines an attribute for each fragment stored in the `fragment_id` variable.*
+
+    dimensions:
+      // Aggregated dimensions
+      time = 12 ;
+      level = 1 ;
+      latitude = 73 ;
+      longitude = 144 ;
+      // Fragment dimensions
+      f_time = 2 ;
+      f_level = 1 ;
+      f_latitude = 1 ;
+      f_longitude = 1 ;
+      // Extra dimensions
+      i = 4 ;
+      j = 2 ;
+    variables:
+      // Data variable
+      double temp ;
+        temp:standard_name = "air_temperature" ;
+        temp:units = "K" ;
+        temp:cell_methods = "time: mean" ;
+        temp:aggregated_dimensions = "time level latitude longitude" ;
+        temp:aggregated_data = "location: aggregation_location
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address"
+                                tracking_id: fragment_id" ;		
+      // Coordinate variables
+      double time(time) ;
+        time:standard_name = "time" ;
+        time:units = "days since 2001-01-01" ;
+      double level(level) ;
+        level:standard_name = "height_above_mean_sea_level" ;
+        level:units = "m" ;
+      double latitude(latitude) ;
+        latitude:standard_name = "latitude" ;
+        latitude:units = "degrees_north" ;
+      double longitude(longitude) ;
+        longitude:standard_name = "longitude" ;
+        longitude:units = "degrees_east" ;
+      // Aggregation definition variables			 	  
+      int aggregation_location(i, j) ;
+      string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+      string aggregation_format ;
+      string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
+      // Fragament metadata variables
+      string tracking_id(f_time, f_level, f_latitude, f_longitude) ;
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
+    data:
+      temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
+      aggregation_location = 6, 6,
+                             1, _,
+                             73, _,
+                             144, _ ;
+      aggregation_file = "January-June.nc", "July-December.nc" ;
+      aggregation_format = "nc" ;
+      aggregation_address = "temp", "temp" ;
+      fragment_id = "764489ad-7bee-4228", "a4f8deb3-fae1-26b6";
 
 
 ## Fragment Storage <a name="Fragment-Storage"></a>
@@ -787,7 +868,7 @@ apply to both aggregation variables.*
         time:aggregated_dimensions = "time" ;
         time:aggregated_data = "location: /aggregation_time/location
                                 file: /aggregation_time/file
-                                format: agregation_format
+                                format: aggregation_format
                                 address: /aggregation_time/address" ;
       double level(level) ;
         level:standard_name = "height_above_mean_sea_level" ;
