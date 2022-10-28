@@ -407,7 +407,7 @@ Any number of non-standardized `term` tokens are allowed, on the understanding t
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   The corresponding variable does not comprise metadata as recognized by the CF data model, because it spans the fragment dimensions rather than those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
-  In particular, it may be convenient for a metadata property that is defined within each fragment file to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
+  For instance, it may be convenient for a metadata property that is defined within each fragment file to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
 
 
 #### Example 1b <a name="Example-1b"></a>
