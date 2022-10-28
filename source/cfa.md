@@ -399,7 +399,7 @@ a scalar variable.*
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
 
-### Non-standardized terms<a name="Non-standardized-terms"</a>
+### Non-standardized terms <a name="Non-standardized-terms"</a>
 
 Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
