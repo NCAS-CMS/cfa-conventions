@@ -213,7 +213,7 @@ instructions.
 #### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
 
 The standardized aggregation instruction terms, all of which are
-mandatory, are:
+mandatory, define the following variables:
 
 `location`
 
@@ -409,7 +409,7 @@ Any number of non-standardized instructions are allowed, on the understanding th
 
 Non-standardized instructions may be included for any purpose, for example:
 
-* To enable the aggregation of fragments stored in a file format for which a single address per fragment is insufficient to define the fragment's data.
+* To enable the aggregation of fragments stored in a file format for which the standardized `address` term is insufficient to define the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
