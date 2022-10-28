@@ -198,9 +198,10 @@ blank-separated elements of the form "`term: variable`", where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
-significant. The `term` token identifying an aggregation instruction
-may have [standardized](#Standardized-aggregation-instructions) or
-[non-standardized](#Non-standardized-aggregation-instructions) values.
+significant. The value of a `term` token identifying an aggregation
+instruction may be
+[standardized](#Standardized-aggregation-instructions) or
+[non-standardized](#Non-standardized-aggregation-instructions).
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
@@ -208,11 +209,6 @@ dimensions, with the possibility of extra trailing dimensions if these
 are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
-
-The value of a `term` token identifying an aggregation instruction may
-be standardized or non-standardized, with the understanding that
-application programs should ignore terms that they do not recognise or
-which are irrelevant for their purposes.
 
 #### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
 
