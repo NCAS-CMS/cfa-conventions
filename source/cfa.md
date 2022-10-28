@@ -1075,27 +1075,27 @@ values 270.0, 270.1, ... 271.1.*
 
 ## Revision History <a name="Revision-History"></a>
 
-**Version 0.6.2**, 202?-??-??
+**Versions 0.1 to 0.3**, 2012 to 2013
 
-* Clarified the use of non-standardized aggregation instructions.
+* Prototype versions
 
-**Version 0.6.1**, 2021-12-02
+**Version 0.4**, 2014-02-27
 
-* Corrected the CDL in examples 5 and 6.
-* Added links for navigating the document navigation.
+* Prototype version.
 
 **Version 0.5**, 2021
 
 * Prototype version. First introduction of `location`, `file`,
   `format` and `address` variables.
 
-**Version 0.4**, 2014-02-27
+**Version 0.6.1**, 2021-12-02
 
-* Prototype version.
+* Corrected the CDL in examples 5 and 6.
+* Added links for navigating the document navigation.
 
-**Versions 0.1 to 0.3**, 2012 to 2013
+**Version 0.6.2**, 202?-??-??
 
-* Prototype versions
+* Clarified the use of non-standardized aggregation instructions, including a new example.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
