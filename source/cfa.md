@@ -11,6 +11,7 @@ Bartholomew
 * [Terminology](#Terminology)
 * [Identification of Conventions](#Identification-of-Conventions)
 * [Aggregation variables](#Aggregation-variables)
+*   [Aggregation instructions](#Aggregation-instructions)
 * [Fragment Storage](#Fragment-Storage)
   * [Units](#Units)
   * [Size 1 dimensions](#Size-1-dimensions)
@@ -404,11 +405,11 @@ a scalar variable.*
 
 #### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
 
-Any number of non-standardized `term` tokens are allowed, on the understanding that the application reading the aggregation variable will either know how to correctly interpret the associated variables, or else ignore any tokens that it does not understand.
+Any number of non-standardized instuctions are allowed, on the understanding that the application reading the aggregation variable may choose to ignore any tokens that it does not understand.
 
-Non-standardized tokens may be included for any purpose, for example:
+Non-standardized instuctions may be included for any purpose, for example:
 
-* To enable the aggregation of fragments stored in a file format for which a unique address per fragment is insufficient to define the fragment's data
+* To enable the aggregation of fragments stored in a file format for which a unique address per fragment is insufficient to define the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which is not necessary for the creation of the aggregated data.
   In particular, it may be convenient for metadata properties that are found within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
@@ -416,7 +417,7 @@ Non-standardized tokens may be included for any purpose, for example:
 
 #### Example 1b <a name="Example-1b"></a>
 
-*As for [example 1a](#Example-1a), but with the inclusion of a non-standard aggregation instruction `tracking_id: fragment_id` that defines an attribute for each fragment stored in the `fragment_id` variable.*
+*As for [example 1a](#Example-1a), but with the inclusion of the non-standard aggregation instruction `tracking_id: fragment_id` that defines an attribute for each fragment stored in the `fragment_id` variable.*
 
     dimensions:
       // Aggregated dimensions
