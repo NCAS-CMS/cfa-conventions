@@ -189,7 +189,7 @@ associated with a fragment dimension of size 1. The fragments must be
 arranged in the same relative multidimensional order as their
 positions in the aggregated data.
 
-### Aggregation instructions <a name="Aggregation-instructions"></a>
+## Aggregation instructions <a name="Aggregation-instructions"></a>
 
 The definitions of the fragments and the instructions on how to
 aggregate them are provided by the **`aggregated_data`**
@@ -210,7 +210,7 @@ are allowed or required by the aggregation instruction. No other
 dimensions may be spanned by variables containing aggregation
 instructions.
 
-#### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
+### Standardized aggregation instructions<a name="Standardized-aggregation-instructions"></a>
 
 The standardized aggregation instruction terms, all of which are
 mandatory, define the following variables:
@@ -337,7 +337,7 @@ mandatory, define the following variables:
   these conventions.
 
 
-##### Example 1a <a name="Example-1a"></a>
+#### Example 1a <a name="Example-1a"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -403,7 +403,7 @@ a scalar variable.*
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
 
-#### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
+### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
 
 Any number of non-standardized instructions are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
@@ -415,7 +415,7 @@ Non-standardized instructions may be included for any purpose, for example:
   In particular, it may be convenient for metadata properties that are defined within the fragment files to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
   Note that an array of metadata in this form does not comprise metadata as recognized by the CF data model, because its dimensions do not match those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
 
-##### Example 1b <a name="Example-1b"></a>
+#### Example 1b <a name="Example-1b"></a>
 
 *As for [example 1a](#Example-1a), but with the inclusion of the non-standard aggregation instruction `tracking_id: fragment_id` that defines an attribute for each fragment stored in the `fragment_id` variable.*
 
@@ -577,7 +577,7 @@ to ensure that non-missing values in a fragment are not registered as
 missing in the aggregated data.
 
 
-##### Example 2 <a name="Example-2"></a>
+#### Example 2 <a name="Example-2"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
@@ -649,7 +649,7 @@ omits the size 1 `level` dimension.*
       temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
 
 
-##### Example 3 <a name="Example-3"></a>
+#### Example 3 <a name="Example-3"></a>
 
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment is stored in the same dataset and spans half
@@ -733,7 +733,7 @@ to the aggregation variable.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-##### Example 4 <a name="Example-4"></a>
+#### Example 4 <a name="Example-4"></a>
 
 *An aggregated data variable whose aggregated data comprises four
 fragments. Each fragment spans half of the aggregated `time`
@@ -825,7 +825,7 @@ not both, may be used in the aggregated data.*
        temp2 = 4.5, 3.0, 0.0, -2.6, -5.6, -10.2, ... ;
     }
 
-##### Example 5 <a name="Example-5"></a>
+#### Example 5 <a name="Example-5"></a>
 
 *An aggregated data variable and an aggregated coordinate variable in
 the same dataset. There are two external netCDF files, each of which
@@ -920,7 +920,7 @@ apply to both aggregation variables.*
     }
 
 
-##### Example 6 <a name="Example-6"></a>
+#### Example 6 <a name="Example-6"></a>
 
 *An aggregation data variable for a collection of discrete sampling
 geometry timeseries features that have been compressed by use of a
@@ -1009,7 +1009,7 @@ separate external file.*
       aggregation_address_lon = "lon", "lon", "lon" ;
 
 
-##### Example 7 <a name="Example-7"></a>
+#### Example 7 <a name="Example-7"></a>
 
 *An aggregation data variable whose aggregated data represents 32-bit
 floats packed into 16-bit integers. When created, the aggregated data
