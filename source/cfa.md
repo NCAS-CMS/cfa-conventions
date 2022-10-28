@@ -11,7 +11,9 @@ Bartholomew
 * [Terminology](#Terminology)
 * [Identification of Conventions](#Identification-of-Conventions)
 * [Aggregation variables](#Aggregation-variables)
-*   [Aggregation instructions](#Aggregation-instructions)
+  * [Aggregation instructions](#Aggregation-instructions)
+    * [Standardized aggregation instructions](#Standardized-aggregation-instructions)
+    * [Non-standardized aggregation instructions](#Non-standardized-aggregation-instructions)
 * [Fragment Storage](#Fragment-Storage)
   * [Units](#Units)
   * [Size 1 dimensions](#Size-1-dimensions)
@@ -196,7 +198,9 @@ blank-separated elements of the form "`term: variable`", where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
 that instruction for each fragment. The order of elements is not
-significant.
+significant. The `term` token identifying an aggregation instruction
+may have [standardized](#Standardized-aggregation-instructions) or
+[non-standardized](#Non-standardized-aggregation-instructions) values.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
@@ -405,7 +409,7 @@ a scalar variable.*
 
 #### Non-standardized aggregation instructions<a name="Non-standardized-aggregation-instructions"></a>
 
-Any number of non-standardized instuctions are allowed, on the understanding that the application reading the aggregation variable may choose to ignore any tokens that it does not understand.
+Any number of non-standardized instuctions are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any `term` tokens that it does not understand or which are irrelevant for its purpose.
 
 Non-standardized instuctions may be included for any purpose, for example:
 
