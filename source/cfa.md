@@ -135,10 +135,11 @@ dimensions*, must be stored with the scalar aggregation variable's
 **`aggregated_dimensions`** attribute. The value of the
 **`aggregated_dimensions`** attribute is a blank separated list of the
 aggregated dimension names given in the order which matches the
-dimensions of the aggregated data. If the aggregated data is scalar
-then the value of the **`aggregated_dimensions`** attribute must be an
-empty string. The named aggregated dimensions must exist as dimensions
-in the netCDF dataset containing the aggregation variable.
+dimensions of the aggregated data, and following the CF group search
+algorithms. If the aggregated data is scalar then the value of the
+**`aggregated_dimensions`** attribute must be an empty string. The
+named aggregated dimensions must exist as dimensions in the netCDF
+dataset containing the aggregation variable.
 
 The effective dimensions of the aggregation variable are therefore
 found by inspecting the **`aggregated_dimensions`** attribute, rather
@@ -191,8 +192,8 @@ attribute. This attribute takes a string value comprising
 blank-separated elements of the form "`term: variable`", where `term`
 is a case-insensitive keyword that identifies a particular aggregation
 instruction, and `variable` is the name of a variable that configures
-that instruction for each fragment. The order of elements is not
-significant.
+that instruction for each fragment, following the CF group search
+algorithms. The order of elements is not significant.
 
 A variable referenced by the **`aggregated_data`** attribute must span
 the fragment dimensions in the same relative order as the aggregated
@@ -325,8 +326,9 @@ which are mandatory, are:
   otherwise addresses are dependent on the format of the fragment's
   external file.
 
-* For an external netCDF file, the address is the name of the variable
-  that contains the fragment.
+* For a fragment in a netCDF file, the address is the name of the
+  variable that contains the fragment, following the CF group search
+  algorithms within the file that contains the fragment.
 
 * Addressing for other file formats is allowed, but not described in
   these conventions.
