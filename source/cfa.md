@@ -401,7 +401,8 @@ a scalar variable.*
 
 ### Non-standardized terms <a name="Non-standardized-terms"></a>
 
-Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any terms that it does not understand or which are irrelevant for its purpose. Non-standardized terms may be included for any purpose, for example:
+Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any terms that it does not understand or which are irrelevant for its purpose.
+Example use cases for non-standardized terms could be:
 
 * As extra aggregation instructions to enable the aggregation of fragments stored in a file format for which the standardized `address` term alone is insufficient to define the fragment's data.
 
