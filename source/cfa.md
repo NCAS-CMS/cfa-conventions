@@ -22,6 +22,7 @@ Bartholomew
 #### Examples
 
 * [Example 1](#Example-1)
+* [Example 1c](#Example-1c)
 * [Example 2](#Example-2)
 * [Example 3](#Example-3)
 * [Example 4](#Example-4)
@@ -254,7 +255,7 @@ which are mandatory, are:
   The order of elements is not significant.
 
   A URI must be one of a fully qualified URL, a file URI, or a file name whose path is relative to the location of the CFA-netCDF file.
-  Which one of these applies to a given URI is ascertained after any substitions have been applied, and if it is not a URL nor a file URI then it is assumed to be a relative path.
+  Which one of these applies to a given URI is ascertained after any substitutions have been applied, and if it is not a URL nor a file URI then it is assumed to be a relative path.
 
 * An extra trailing dimension may be included to describe multiple
   URIs for the same fragment, any one of which may equally be used to
@@ -345,9 +346,10 @@ which are mandatory, are:
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
-in an external netCDF file in a variable call `temp`. Both fragment
-files have the same format, so the `format` variable can be stored as
-a scalar variable.*
+in an external netCDF file in a variable call `temp`. The fragment
+URIs define file loctions relative to the CFA-netCDF file. Both
+fragment files have the same format, so the `format` variable can be
+stored as a scalar variable.*
 
     dimensions:
       // Aggregated dimensions
@@ -409,7 +411,7 @@ a scalar variable.*
 
 #### Example 1c <a name="Example-1c"></a>
 
-*As for [example 1a](#Example-1a), but with the the fragment URIs given as file URIs that are partly defined by a substition.*
+*As for [example 1a](#Example-1a), but with the the fragment URIs given as file URIs that are partly defined by a substitution.*
 
     dimensions:
       // Aggregated dimensions
@@ -452,7 +454,7 @@ a scalar variable.*
       // Aggregation definition variables			 	  
       int aggregation_location(i, j) ;
       string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
-        aggregation_file:subsitutions = "${BASE}: file://data1/" ;
+        aggregation_file:substitutions = "${BASE}: file://data1/" ;
       string aggregation_format ;
       string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
 
