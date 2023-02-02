@@ -248,6 +248,13 @@ which are mandatory, are:
   which may be fully qualified URLs, containing the fragments. Each
   value identifies the external resource which contains the fragment.
 
+  The URI may contain a string substitution defined by the **`substitutions`** attribute of the `file` variable.
+  This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of a file URI which is to be replaced by the string defined by `substitution`.
+  The value of `base` must have the form `${...}`, where `...` represents one or more letters, digits, and underscores.
+  The order of elements is not significant.
+  A URI must be one of a fully qualified URL, a file URI, or a file name whose path is relative to the location of the CFA-netCDF file.
+  Which one of these applies to a given URI is ascertained after any substitions have been applied, and if it is not a URL nor a file URI then it is assumed to be a relative path.
+
 * An extra trailing dimension may be included to describe multiple
   URIs for the same fragment, any one of which may equally be used to
   fill its position in the aggregated data. In this case, it is up to
@@ -266,7 +273,7 @@ which are mandatory, are:
   conjunction with a missing value in the corresponding location of
   the `address` variable. If there is a trailing dimension then all of
   that dimension must comprise missing values.
-  
+
 `format`
 
 * For each fragment, identifies the format of the file in which it is
