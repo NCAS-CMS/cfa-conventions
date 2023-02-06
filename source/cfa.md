@@ -404,11 +404,11 @@ a scalar variable.*
 Any number of non-standardized `term` tokens are allowed, on the understanding that an application reading the aggregation variable may choose to ignore any terms that it does not understand or which are irrelevant for its purpose.
 Example use cases for non-standardized terms could be:
 
-* As extra aggregation instructions to enable the aggregation of fragments stored in a file format for which the standardized `address` term alone is insufficient to define the fragment's data.
+* To provide extra aggregation instructions that enable the aggregation of fragments stored in a file format for which the standardized `address` term alone is insufficient to identify the fragment's data.
 
 * To provide a means of storing metadata that relate to each fragment, but which are not necessary for the creation of the aggregated data.
   The corresponding variable does not comprise metadata as recognized by the CF data model, because it spans the fragment dimensions rather than those of the aggregated data, but an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the array values to the aggregated dimensions.
-  For instance, it may be convenient for a metadata property that is defined within each fragment file to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
+  For instance, it may be convenient for a particular global attribute that is defined within each fragment file to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
 
 
 #### Example 1b <a name="Example-1b"></a>
