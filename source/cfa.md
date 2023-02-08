@@ -348,7 +348,7 @@ which are mandatory, are:
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
 in an external netCDF file in a variable call `temp`. The fragment
-URIs define file loctions relative to the CFA-netCDF file. Both
+URIs define file locations relative to the CFA-netCDF file. Both
 fragment files have the same format, so the `format` variable can be
 stored as a scalar variable.*
 
