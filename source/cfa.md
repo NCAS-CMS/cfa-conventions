@@ -475,7 +475,7 @@ Example use cases for non-standardized terms could be:
       aggregation_file = "January-June.nc", "July-December.nc" ;
       aggregation_format = "nc" ;
       aggregation_address = "temp", "temp" ;
-      fragment_id = "764489ad-7bee-4228", "a4f8deb3-fae1-26b6";
+      fragment_id = "764489ad-7bee-4228", "a4f8deb3-fae1-26b6" ;
 
 
 ## Fragment Storage <a name="Fragment-Storage"></a>
