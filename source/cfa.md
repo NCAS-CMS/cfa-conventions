@@ -136,7 +136,7 @@ dimensions*, must be stored with the scalar aggregation variable's
 **`aggregated_dimensions`** attribute is a blank separated list of the
 aggregated dimension names given in the order which matches the
 dimensions of the aggregated data, and following the CF group search
-algorithms. If the aggregated data is scalar then the value of the
+algorithms [CF]. If the aggregated data is scalar then the value of the
 **`aggregated_dimensions`** attribute must be an empty string. The
 named aggregated dimensions must exist as dimensions in the netCDF
 dataset containing the aggregation variable.
@@ -328,7 +328,7 @@ which are mandatory, are:
 
 * For a fragment in a netCDF file, the address is the name of the
   variable that contains the fragment, following the CF group search
-  algorithms within the file that contains the fragment.
+  algorithms [CF] within the file that contains the fragment.
 
 * Addressing for other file formats is allowed, but not described in
   these conventions.
