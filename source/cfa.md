@@ -407,8 +407,8 @@ Example use cases for non-standardized terms could be:
 * To provide extra aggregation instructions that enable the aggregation of fragments stored in a file format for which the standardized `address` term alone is insufficient to identify the fragment's data.
 
 * To provide a means of storing metadata that relate to the fragments, but which are not necessary for the creation of the aggregated data.
-  The corresponding variable does not comprise metadata as recognized by the CF data model, because it spans the fragment dimensions rather than those of the aggregated data.
-  However, if there are no extra trailing dimensions then an application could choose to implement it as a CF-compliant auxiliary coordinate variable by broadcasting the scalar value corresponding to each fragment across the aggregated dimensions.
+  The corresponding variable does not comprise metadata as recognized by the CF data model [CF], because it spans the fragment dimensions rather than those of the aggregated data.
+  However, if there are no extra trailing dimensions then an application could choose to implement it as a field ancillary or auxilary coordinate construct of the CF data model, by broadcasting the scalar values corresponding to each fragment across the aggregated dimensions.
   For instance, it may be convenient for a global attribute that is common to each fragment file to be made available to the aggregated variable, without having to open and inspect the fragment files themselves.
 
 
