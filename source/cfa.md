@@ -252,7 +252,7 @@ which are mandatory, are:
   This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of a file URI which is to be replaced by the string defined by `substitution`.
   The value of `base` must have the form `${...}`, where `...` represents one or more letters, digits, and underscores.
   The order of elements is not significant.
-  The use of substitutions can save space in the file and, if the fragment files were to be moved, provides a means of updating the CFA-netCDF file without having to access the `file` variable's data. 
+  The use of substitutions can save space in the file and, in the event that the fragment files have moved from their original locations, the creation of the aggregated data can be facilitated by changing the substitutions rather than the URI strings given by the `file` variable.
 
   A URI must be a fully qualified URL, a file URI, or else a file path which is relative to the location of the CFA-netCDF file.
   Which one of these applies to a given URI is ascertained after any substitutions have been applied, and if it is not a URL nor a file URI then it is assumed to be a relative path.
