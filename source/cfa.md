@@ -245,9 +245,8 @@ which are mandatory, are:
 
 * For each fragment, identifies the file in which it is stored.
 
-* Names the string-valued variable containing the URIs of the files,
-  which may be fully qualified URLs, containing the fragments. Each
-  value identifies the external resource which contains the fragment.
+* Names the string-valued variable containing the URIs of the files containing the fragments.
+  Each value identifies the external resource which contains the fragment.
 
   The URI may contain a string substitution defined by the **`substitutions`** attribute of the `file` variable.
   This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of a file URI which is to be replaced by the string defined by `substitution`.
