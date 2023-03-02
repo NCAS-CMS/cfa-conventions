@@ -245,17 +245,18 @@ which are mandatory, are:
 
 * For each fragment, identifies the file in which it is stored.
 
-* Names the string-valued variable containing the URIs of the files containing the fragments.
-  Each value identifies the external resource which contains the fragment.
+* Names the string-valued variable containing the names of the files containing the fragments.
+  Each value identifies the resource which contains the fragment.
 
-  The URI may contain a string substitution defined by the **`substitutions`** attribute of the `file` variable.
-  This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of a file URI which is to be replaced by the string defined by `substitution`.
+  A file name may contain a string substitution defined by the **`substitutions`** attribute of the `file` variable.
+  This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of the name which is to be replaced by the string defined by `substitution`.
   The value of `base` must have the form `${...}`, where `...` represents one or more letters, digits, and underscores.
   The order of elements is not significant.
-  The use of substitutions can save space in the file and, in the event that the fragment files have moved from their original locations, the creation of the aggregated data can be facilitated by changing the substitutions rather than the URI strings given by the `file` variable.
+  The use of substitutions can save space in the file and, in the event that the fragment files have moved from their original locations, the creation of the aggregated data can be facilitated by changing the substitutions rather than the file names given by the `file` variable.
 
-  A URI must be a fully qualified URL, a file URI, or else a file path which is relative to the location of the CFA-netCDF file.
-  Which one of these applies to a given URI is ascertained after any substitutions have been applied, and if it is not a URL nor a file URI then it is assumed to be a relative path.
+  A file name must be either a fully qualified URI that resolves to a file, or else a file path that is relative to the location of the CFA-netCDF file.
+  Which one of these applies is ascertained after any substitutions have been applied, and if it is not a URI then it is assumed to be a relative path.
+  Note that relative file paths are taken as being relative to the location of the CFA-netCDF file at the time of inspection, rather than its original location, which may be different.
 
 * An extra trailing dimension may be included to describe multiple
   URIs for the same fragment, any one of which may equally be used to
