@@ -328,6 +328,10 @@ which are mandatory, are:
 * For an external netCDF file, the address is the name of the variable
   that contains the fragment.
 
+* A scalar `address` variable is a convenience feature that may be used when all named fragment files have identical addresses.
+  In this case the single value is assumed to apply to all fragments that have a file representation, i.e. those fragments that correspond to non-missing values in the `file` variable.
+  If the `file` variable contains only missing values, then the `address` variable is not used, and so may take an arbitrary value.
+    
 * Addressing for other file formats is allowed, but not described in
   these conventions.
 
