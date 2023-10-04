@@ -1175,9 +1175,10 @@ values 270.0, 270.1, ... 271.1.*
 
 **Version 0.6.2**, 2023-10-04
 
-* Allow the `address` aggregation instruction variable to be scalar (https://github.com/NCAS-CMS/cfa-conventions/issues/45)
-* Clarified the use of non-standardized aggregation instructions, including a new example (https://github.com/NCAS-CMS/cfa-conventions/issues/41)
 * Relative path names for fragments (https://github.com/NCAS-CMS/cfa-conventions/issues/36)
+* Clarify group searches (https://github.com/NCAS-CMS/cfa-conventions/issues/40)
+* Clarified the use of non-standardized aggregation instructions, including a new example (https://github.com/NCAS-CMS/cfa-conventions/issues/41)
+* Allow the `address` aggregation instruction variable to be scalar (https://github.com/NCAS-CMS/cfa-conventions/issues/45)
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
