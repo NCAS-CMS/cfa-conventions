@@ -26,6 +26,7 @@ Bartholomew
 
 * [Example 1a](#Example-1a)
 * [Example 1b](#Example-1b)
+* [Example 1c](#Example-1c)
 * [Example 2](#Example-2)
 * [Example 3](#Example-3)
 * [Example 4](#Example-4)
@@ -245,9 +246,18 @@ The standardized aggregation instruction `term` tokens, all of which are mandato
 
 * For each fragment, identifies the file in which it is stored.
 
-* Names the string-valued variable containing the URIs of the files,
-  which may be fully qualified URLs, containing the fragments. Each
-  value identifies the external resource which contains the fragment.
+* Names the string-valued variable containing the names of the files containing the fragments.
+  Each value identifies the resource which contains the fragment.
+
+  A file name may contain a string substitution defined by the **`substitutions`** attribute of the `file` variable.
+  This attribute takes a string value comprising blank-separated elements of the form "`base: substitution`", where `base` is a case-sensitive keyword that defines the part of the name which is to be replaced by the string defined by `substitution`.
+  The value of `base` must have the form `${...}`, where `...` represents one or more letters, digits, and underscores.
+  The order of elements is not significant.
+  The use of substitutions can save space in the file and, in the event that the fragment files have moved from their original locations, the creation of the aggregated data can be facilitated by changing the substitutions rather than the file names given by the `file` variable.
+
+  A file name must be either a fully qualified URI that resolves to a file, or else a file path that is relative to the location of the CFA-netCDF file.
+  Which one of these applies is ascertained after any substitutions have been applied, and if it is not a URI then it is assumed to be a relative path.
+  Note that relative file paths are taken as being relative to the location of the CFA-netCDF file at the time of inspection, rather than its original location, which may be different.
 
 * An extra trailing dimension may be included to describe multiple
   URIs for the same fragment, any one of which may equally be used to
@@ -267,7 +277,7 @@ The standardized aggregation instruction `term` tokens, all of which are mandato
   conjunction with a missing value in the corresponding location of
   the `address` variable. If there is a trailing dimension then all of
   that dimension must comprise missing values.
-  
+
 `format`
 
 * For each fragment, identifies the format of the file in which it is
@@ -346,9 +356,10 @@ The standardized aggregation instruction `term` tokens, all of which are mandato
 *An aggregated data variable whose aggregated data comprises two
 fragments. Each fragment spans half of the aggregated `time` dimension
 and the whole of the other three aggregated dimensions, and is stored
-in an external netCDF file in a variable call `temp`. Both fragment
-files have the same format, so the `format` variable can be stored as
-a scalar variable.*
+in an external netCDF file in a variable call `temp`. The fragment
+URIs define file locations relative to the CFA-netCDF file. Both
+fragment files have the same format, so the `format` variable can be
+stored as a scalar variable.*
 
     dimensions:
       // Aggregated dimensions
@@ -485,6 +496,68 @@ Example use cases for non-standardized terms could be:
       aggregation_address = "temp", "temp" ;
       fragment_id = "764489ad-7bee-4228", "a4f8deb3-fae1-26b6" ;
 
+
+#### Example 1c <a name="Example-1c"></a>
+
+*As for [example 1a](#Example-1a), but with the the fragment URIs given as file URIs that are partly defined by a substitution.*
+
+    dimensions:
+      // Aggregated dimensions
+      time = 12 ;
+      level = 1 ;
+      latitude = 73 ;
+      longitude = 144 ;
+      // Fragment dimensions
+      f_time = 2 ;
+      f_level = 1 ;
+      f_latitude = 1 ;
+      f_longitude = 1 ;
+      // Extra dimensions
+      i = 4 ;
+      j = 2 ;
+    variables:
+      // Data variable
+      double temp ;
+        temp:standard_name = "air_temperature" ;
+        temp:units = "K" ;
+        temp:cell_methods = "time: mean" ;
+        temp:aggregated_dimensions = "time level latitude longitude" ;
+        temp:aggregated_data = "location: aggregation_location
+                                file: aggregation_file
+                                format: aggregation_format
+                                address: aggregation_address" ;
+      // Coordinate variables
+      double time(time) ;
+        time:standard_name = "time" ;
+        time:units = "days since 2001-01-01" ;
+      double level(level) ;
+        level:standard_name = "height_above_mean_sea_level" ;
+        level:units = "m" ;
+      double latitude(latitude) ;
+        latitude:standard_name = "latitude" ;
+        latitude:units = "degrees_north" ;
+      double longitude(longitude) ;
+        longitude:standard_name = "longitude" ;
+        longitude:units = "degrees_east" ;
+      // Aggregation definition variables			 	  
+      int aggregation_location(i, j) ;
+      string aggregation_file(f_time, f_level, f_latitude, f_longitude) ;
+        aggregation_file:substitutions = "${BASE}: file://data1/" ;
+      string aggregation_format ;
+      string aggregation_address(f_time, f_level, f_latitude, f_longitude) ;
+
+    // global attributes:
+      :Conventions = "CF-1.9 CFA-0.6" ;
+    data:
+      temp = _ ;
+      time = 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ;
+      aggregation_location = 6, 6,
+                             1, _,
+                             73, _,
+                             144, _ ;
+      aggregation_file = "${BASE}January-June.nc", ""${BASE}July-December.nc" ;
+      aggregation_format = "nc" ;
+      aggregation_address = "temp", "temp" ;
 
 ## Fragment Storage <a name="Fragment-Storage"></a>
 
