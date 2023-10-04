@@ -3,7 +3,7 @@
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
 
-**Version 0.6.2**, 202?-??-??
+**Version 0.6.2**, 2023-10-04
 
 ## Contents
 
