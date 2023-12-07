@@ -1,4 +1,4 @@
-`# NetCDF Climate and Forecast Aggregation (CFA) Conventions
+# NetCDF Climate and Forecast Aggregation (CFA) Conventions
 
 David Hassell, Jonathan Gregory, Neil Massey, Bryan Lawrence, Sadie
 Bartholomew
