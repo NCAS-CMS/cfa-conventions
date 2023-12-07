@@ -1178,7 +1178,7 @@ values 270.0, 270.1, ... 271.1.*
 
 **Versions 0.1 to 0.3**, 2012 to 2013
 
-* Prototype versions
+* Prototype versions.
 
 ## References <a name="References"></a>
 [CF] NetCDF Climate and Forecast (CF) Metadata Conventions. https://cfconventions.org
