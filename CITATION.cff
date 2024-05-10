@@ -1,0 +1,59 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: NetCDF Climate and Forecast Aggregation (CFA) Conventions
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: David
+    family-names: Hassell
+    email: david.hassell@ncas.ac.uk
+    orcid: 'https://orcid.org/0000-0001-5106-7502'
+    affiliation: >-
+      National Centre for Atmospheric Science and University
+      of Reading
+  - given-names: Jonathan
+    family-names: Gregory
+    email: j.m.gregory@reading.ac.uk
+    orcid: 'https://orcid.org/0000-0003-1296-8644'
+    affiliation: >-
+      National Centre for Atmospheric Science and University
+      of Reading and Met Office Hadley Centre
+  - given-names: Neil R.
+    family-names: Massey
+    orcid: 'https://orcid.org/0000-0003-1211-1341'
+    affiliation: >-
+      Science and Technology Facilities Council and National
+      Centre for Atmospheric Science
+  - affiliation: >-
+      National Centre for Atmospheric Science and University
+      of Reading
+    given-names: Bryan N.
+    family-names: Lawrence
+    orcid: 'https://orcid.org/0000-0001-9262-7860'
+    email: bryan.lawrence@ncas.ac.uk
+  - affiliation: >-
+      National Centre for Atmospheric Science and University
+      of Reading
+    given-names: Sadie L.
+    family-names: Bartholomew
+    email: sadie.bartholomew@ncas.ac.uk
+    orcid: 'https://orcid.org/0000-0002-6180-3603'
+url: >-
+  https://github.com/NCAS-CMS/cfa-conventions/blob/main/source/cfa.md
+abstract: >-
+  The CFA (Climate and Forecast Aggregation) conventions
+  describe how a netCDF file can be used to describe a
+  dataset distributed across multiple other data files.
+keywords:
+  - metadata
+  - netCDF
+  - aggregation
+  - CF
+  - climate
+  - forecast
+  - standard
+  - convention
