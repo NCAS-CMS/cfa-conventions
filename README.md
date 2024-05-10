@@ -1,6 +1,6 @@
 # NetCDF Climate and Forecast Aggregation (CFA) Conventions
 
-### [The CFA-netCDF conventions document](https://github.com/NCAS-CMS/cfa-conventions/blob/master/source/cfa.md)
+### [The CFA-netCDF conventions document](https://github.com/NCAS-CMS/cfa-conventions/blob/main/source/cfa.md)
 
 ### Introduction
 
